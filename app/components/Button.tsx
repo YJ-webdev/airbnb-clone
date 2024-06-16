@@ -1,5 +1,6 @@
 "use client";
 
+import { cn } from "@/lib/utils";
 import { IconType } from "react-icons";
 
 interface ButtonProps {
@@ -23,16 +24,13 @@ export const Button = ({
     <button
       onClick={onClick}
       disabled={disabled}
-      className={`relative disabled:opacity-70 disabled:cursor-not-allowed rounded-lg hover:opacity-80 transition w-full
-        ${outline ? "bg-white" : "bg-rose-500"}
-        ${outline ? "border-black" : "border-rose-500"}
-        ${outline ? "text-black" : "text-white"}
-        ${small ? "py-1" : "py-3"}
-        ${small ? "text-sm" : "text-md"}
-        ${small ? "font-light" : "font-semibold"}
-        ${small ? "border-[1px]" : "border-2"} `}
+      className={cn(
+        "relative py-3 text-md text-white font-semibold border-[1px] border-rose-500 bg-rose-500 disabled:opacity-70 disabled:cursor-not-allowed rounded-lg hover:opacity-80 transition w-full",
+        outline && "bg-white text-black border-black",
+        small && "py-1 text-sm font-light"
+      )}
     >
-      {Icon && <Icon size={24} className="absolute left-4 top-3" />}
+      {Icon && <Icon size={22} className="absolute left-4 top-3" />}
       {label}
     </button>
   );
