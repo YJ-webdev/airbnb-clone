@@ -1,10 +1,9 @@
 "use client";
 
-import { UserMenu } from "./user-menu";
-
 import { Container } from "../container";
 import { Logo } from "./logo";
 import { Search } from "./search";
+import { UserMenu } from "./user-menu";
 
 export const Navbar = () => {
   return (

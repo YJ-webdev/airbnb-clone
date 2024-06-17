@@ -44,7 +44,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         const isMatched = await compare(password, user.hashedPassword);
 
         if (!isMatched) {
-          throw new Error("Invalid password");
+          throw new Error("Password does not match");
         }
 
         return user;

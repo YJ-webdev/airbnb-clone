@@ -12,13 +12,13 @@ import { Social } from "./social";
 import { FormError } from "../form-error";
 import { FormSuccess } from "../form-success";
 import { useEffect, useState, useTransition } from "react";
+import { Input } from "../Input";
 
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import {
@@ -27,7 +27,6 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
-import { Input } from "../Input";
 
 interface LoginDialogProps {
   isOpen: boolean;
@@ -76,62 +75,57 @@ export const LoginDialog = ({ isOpen, onClose }: LoginDialogProps) => {
             subtitle="Welcome to Airbnb"
           />
         </DialogTitle>
-        <DialogDescription>
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-              <div className="space-y-4">
-                <FormField
-                  control={form.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="hidden">email</FormLabel>
-                      <FormControl>
-                        <Input
-                          {...field}
-                          id="email"
-                          type="email"
-                          label="Email"
-                          errors={form.formState.errors}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />{" "}
-                <FormField
-                  control={form.control}
-                  name="password"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="hidden">password</FormLabel>
-                      <FormControl>
-                        <Input
-                          {...field}
-                          id="password"
-                          type="password"
-                          label="Password"
-                          errors={form.formState.errors}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-              <FormError message={error} />
-              <FormSuccess message={success} />
-              <Button
-                disabled={isPending}
-                type="submit"
-                className="rounded-lg w-full font-semibold text-[16px] py-6 bg-gradient-to-r from-[#d31152] to-[#ec316f]"
-              >
-                Log in
-              </Button>
-            </form>
-          </Form>
-          <Social />
-        </DialogDescription>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <div className="space-y-4">
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        id="email"
+                        label="Email"
+                        errors={form.formState.errors}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />{" "}
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        id="password"
+                        type="password"
+                        label="Password"
+                        errors={form.formState.errors}
+                      />
+                    </FormControl>{" "}
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <FormError message={error} />
+            <FormSuccess message={success} />
+            <Button
+              disabled={isPending}
+              type="submit"
+              className="rounded-lg w-full font-semibold text-[16px] py-6 bg-gradient-to-r from-[#d31152] to-[#e3326d]"
+            >
+              Log in
+            </Button>
+          </form>
+        </Form>
+        <Social />
       </DialogContent>
     </Dialog>
   );

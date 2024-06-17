@@ -12,8 +12,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useState } from "react";
 
-import { LoginDialog } from "../modals/login-dialog";
 import { RegisterDialog } from "../modals/register-dialog";
+import { LoginDialog } from "../modals/login-dialog";
 
 export const UserMenu = () => {
   const [isLoginDialogOpen, setIsLoginDialogOpen] = useState(false);
@@ -50,7 +50,10 @@ export const UserMenu = () => {
               <AiOutlineMenu className="md:ml-1" />
               <div className="hidden md:block">
                 <Avatar className="w-8 h-8 m-1">
-                  <AvatarImage src="images/user.png" />
+                  <AvatarImage
+                    src="images/user.png"
+                    className="w-auto h-auto"
+                  />
                   <AvatarFallback>CN</AvatarFallback>
                 </Avatar>
               </div>

@@ -12,6 +12,7 @@ import { Social } from "./social";
 import { FormError } from "../form-error";
 import { FormSuccess } from "../form-success";
 import { useEffect, useState, useTransition } from "react";
+import { Input } from "../Input";
 
 import {
   Form,
@@ -26,7 +27,6 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
-import { Input } from "../Input";
 
 interface LoginDialogProps {
   isOpen: boolean;
@@ -73,77 +73,75 @@ export const RegisterDialog = ({ isOpen, onClose }: LoginDialogProps) => {
         <DialogTitle>
           <Header title="Sign up" subtitle="Welcome to Airbnb" />
         </DialogTitle>
-        <DialogDescription>
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-              <div className="space-y-4">
-                <FormField
-                  control={form.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormControl>
-                        <Input
-                          id="email"
-                          {...field}
-                          type="email"
-                          label="Email"
-                          errors={form.formState.errors}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />{" "}
-                <FormField
-                  control={form.control}
-                  name="name"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormControl>
-                        <Input
-                          id="name"
-                          {...field}
-                          label="Name"
-                          errors={form.formState.errors}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="password"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormControl>
-                        <Input
-                          id="password"
-                          {...field}
-                          type="password"
-                          label="Password"
-                          errors={form.formState.errors}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-              <FormError message={error} />
-              <FormSuccess message={success} />
-              <Button
-                disabled={isPending}
-                type="submit"
-                className="rounded-lg w-full font-semibold text-[16px] py-6 bg-gradient-to-r from-[#d31152] to-[#ec316f]"
-              >
-                Create an account
-              </Button>
-            </form>
-          </Form>
-          <Social />
-        </DialogDescription>
+
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <div className="space-y-4">
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input
+                        id="email"
+                        {...field}
+                        label="Email"
+                        errors={form.formState.errors}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />{" "}
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input
+                        id="name"
+                        {...field}
+                        label="Name"
+                        errors={form.formState.errors}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input
+                        id="password"
+                        {...field}
+                        type="password"
+                        label="Password"
+                        errors={form.formState.errors}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <FormError message={error} />
+            <FormSuccess message={success} />
+            <Button
+              disabled={isPending}
+              type="submit"
+              className="rounded-lg w-full font-semibold text-[16px] py-6 bg-gradient-to-r from-[#d31152] to-[#ec316f]"
+            >
+              Create an account
+            </Button>
+          </form>
+        </Form>
+        <Social />
       </DialogContent>
     </Dialog>
   );
