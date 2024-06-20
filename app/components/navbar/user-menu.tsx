@@ -11,11 +11,16 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useState } from "react";
+import { LoginDialog } from "../dialog/login-dialog";
+import { RegisterDialog } from "../dialog/register-dialog";
+import { User } from "@prisma/client";
+import { logOut } from "@/action/login";
 
-import { RegisterDialog } from "../modals/register-dialog";
-import { LoginDialog } from "../modals/login-dialog";
+interface UserMenuProps {
+  currentUser?: User | null;
+}
 
-export const UserMenu = () => {
+export const UserMenu = ({ currentUser }: UserMenuProps) => {
   const [isLoginDialogOpen, setIsLoginDialogOpen] = useState(false);
   const [isRegisterDialogOpen, setIsRegisterDialogOpen] = useState(false);
 
@@ -62,25 +67,69 @@ export const UserMenu = () => {
               align="end"
               className="rounded-xl shadow-[0_-1px_20px_3px_rgba(0,0,0,0.05)] w-48 bg-white overflow-hidden top-12 border-none py-3 space-y-2"
             >
-              <DropdownMenuItem
-                className="px-3 py-2 cursor-pointer"
-                onClick={handleLoginClick}
-              >
-                Log in
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                onClick={handleRegisterClick}
-                className="px-3 py-2 cursor-pointer"
-              >
-                Sign up
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem
-                onClick={() => {}}
-                className="px-3 py-2 cursor-pointer"
-              >
-                Airbnb your home
-              </DropdownMenuItem>
+              {currentUser ? (
+                <>
+                  <DropdownMenuItem
+                    className="px-3 py-2 cursor-pointer"
+                    onClick={() => {}}
+                  >
+                    My trips
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    className="px-3 py-2 cursor-pointer"
+                    onClick={() => {}}
+                  >
+                    My favorites
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    className="px-3 py-2 cursor-pointer"
+                    onClick={() => {}}
+                  >
+                    My reservations
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    className="px-3 py-2 cursor-pointer"
+                    onClick={() => {}}
+                  >
+                    Airbnb my home
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    className="px-3 py-2 cursor-pointer"
+                    onClick={() => {}}
+                  >
+                    My property
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem
+                    className="px-3 py-2 cursor-pointer"
+                    onClick={() => logOut()}
+                  >
+                    Log out
+                  </DropdownMenuItem>
+                </>
+              ) : (
+                <>
+                  <DropdownMenuItem
+                    className="px-3 py-2 cursor-pointer"
+                    onClick={handleLoginClick}
+                  >
+                    Log in
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={handleRegisterClick}
+                    className="px-3 py-2 cursor-pointer"
+                  >
+                    Sign up
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem
+                    onClick={() => {}}
+                    className="px-3 py-2 cursor-pointer"
+                  >
+                    Airbnb your home
+                  </DropdownMenuItem>
+                </>
+              )}
             </DropdownMenuContent>
           </DropdownMenu>
         </div>

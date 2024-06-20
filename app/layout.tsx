@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Nunito } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "./components/navbar/navbar";
+import { getCurrentUser } from "@/data/user";
 
 const font = Nunito({ subsets: ["latin"] });
 
@@ -10,15 +11,17 @@ export const metadata: Metadata = {
   description: "Airbnb clone",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const currentUser = await getCurrentUser();
+
   return (
     <html lang="en">
       <body className={font.className}>
-        <Navbar />
+        <Navbar currentUser={currentUser} />
         {children}
       </body>
     </html>

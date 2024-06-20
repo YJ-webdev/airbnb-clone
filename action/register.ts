@@ -1,13 +1,12 @@
 "use server";
 
-import { z } from "zod";
-import { registerSchema } from "@/schema";
+import { Register, RegisterSchema } from "@/schema";
 import { hash } from "bcryptjs";
 import db from "@/app/lib/db";
 import { getUserByEmail } from "@/data/user";
 
-export const register = async (values: z.infer<typeof registerSchema>) => {
-  const validatedfields = registerSchema.safeParse(values);
+export const register = async (values: Register) => {
+  const validatedfields = RegisterSchema.safeParse(values);
 
   if (!validatedfields.success) {
     return { error: "Invalid fields" };

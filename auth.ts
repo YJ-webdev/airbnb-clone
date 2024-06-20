@@ -1,39 +1,32 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import { compare } from "bcryptjs";
-import Github from "next-auth/providers/github";
+import { PrismaAdapter } from "@auth/prisma-adapter";
 import Google from "next-auth/providers/google";
-import db from "./app/lib/db";
+import Github from "next-auth/providers/github";
+import prisma from "./app/lib/db";
+import { compare } from "bcryptjs";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
+  adapter: PrismaAdapter(prisma),
   providers: [
-    Github({
-      clientId: process.env.GITHUB_CLIENT_ID,
-      clientSecret: process.env.GITHUB_CLIENT_SECRET,
-    }),
-
-    Google({
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    }),
-
+    Google,
+    Github,
     Credentials({
-      name: "Credentials",
       credentials: {
-        email: { label: "Email", type: "email" },
+        email: { label: "Email", type: "text" },
         password: { label: "Password", type: "password" },
       },
       authorize: async (credentials) => {
-        const email = credentials.email as string;
-        const password = credentials.password as string;
+        const email = credentials.email as string | undefined;
+        const password = credentials.password as string | undefined;
 
-        if (!email || !password) {
-          throw new Error("Please provide both email and password");
+        if (!credentials || !email || !password) {
+          throw new Error("Invalid");
         }
 
-        const user = await db.user.findUnique({
+        const user = await prisma.user.findUnique({
           where: {
-            email: email,
+            email,
           },
         });
 
@@ -47,13 +40,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           throw new Error("Password does not match");
         }
 
-        return user;
+        const userData = {
+          email: user.email,
+          id: user.id,
+        };
+
+        return userData;
       },
     }),
   ],
-
-  pages: {
-    signIn: "/",
-  },
-  // Additional NextAuth configuration options (e.g., session, callbacks) can go here
 });
