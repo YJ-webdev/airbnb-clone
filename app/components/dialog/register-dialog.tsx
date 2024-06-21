@@ -87,9 +87,10 @@ export const RegisterDialog = ({ isOpen, onClose }: RegisterDialogProps) => {
                     <FormItem>
                       <FormControl>
                         <Input
-                          id="email"
                           {...field}
+                          id="email"
                           label="Email"
+                          disabled={isPending}
                           errors={form.formState.errors}
                         />
                       </FormControl>
@@ -107,6 +108,7 @@ export const RegisterDialog = ({ isOpen, onClose }: RegisterDialogProps) => {
                           id="name"
                           {...field}
                           label="Name"
+                          disabled={isPending}
                           errors={form.formState.errors}
                         />
                       </FormControl>
@@ -125,6 +127,7 @@ export const RegisterDialog = ({ isOpen, onClose }: RegisterDialogProps) => {
                           {...field}
                           type="password"
                           label="Password"
+                          disabled={isPending}
                           errors={form.formState.errors}
                         />
                       </FormControl>

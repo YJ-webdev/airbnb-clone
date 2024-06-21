@@ -1,7 +1,8 @@
 "use server";
 
-import { signIn, auth, signOut } from "@/auth";
+import { signIn, auth } from "@/auth";
 import { Login, LoginSchema } from "@/schema";
+import { AuthError } from "next-auth";
 
 export const login = async (values: Login) => {
   const validatedfields = LoginSchema.safeParse(values);
@@ -10,7 +11,28 @@ export const login = async (values: Login) => {
     return { error: "Invalid fields" };
   }
 
-  return { success: "Email sent!" };
+  const { email, password } = validatedfields.data;
+
+  try {
+    await signIn("credentials", {
+      email,
+      password,
+    });
+  } catch (error) {
+    if (error instanceof AuthError) {
+      switch (error.type) {
+        case "CredentialsSignin":
+          return { error: "Invalid credentials" };
+        case "CallbackRouteError":
+          return { error: "Incorrect email or password." };
+        default:
+          return {
+            error: "Sorry, something went wrong. please try later again.",
+          };
+      }
+    }
+    throw error;
+  }
 };
 
 export const socialLogIn = async (provider: "google" | "github") => {
@@ -18,8 +40,4 @@ export const socialLogIn = async (provider: "google" | "github") => {
   const session = await auth();
   if (!session?.user) return null;
   return session.user;
-};
-
-export const logOut = async () => {
-  await signOut();
 };

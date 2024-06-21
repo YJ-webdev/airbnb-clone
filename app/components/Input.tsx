@@ -15,11 +15,23 @@ interface InputProps {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
   name?: string;
+  disabled?: boolean;
 }
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
   (
-    { id, label, type, formatPrice, errors, value, onChange, onBlur, name },
+    {
+      id,
+      label,
+      disabled,
+      type,
+      formatPrice,
+      errors,
+      value,
+      onChange,
+      onBlur,
+      name,
+    },
     ref
   ) => {
     return (
@@ -38,9 +50,10 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           onBlur={onBlur}
           name={name}
           type={type}
+          disabled={disabled}
           autoComplete="on"
           className={cn(
-            "peer w-full pt-5 pb-4 px-4 bg-white border-2 text-black text-md font-semibold focus:border-zinc-700 rounded-md outline-none transition disabled:opacity-70 disabled:cursor-not-allowed pl-4",
+            "peer w-full pt-5 pb-4 px-4 bg-white border-2 text-zinc-900 text-md font-semibold focus:border-zinc-700 rounded-md outline-none transition disabled:opacity-70 disabled:cursor-not-allowed pl-4",
             formatPrice && "pl-9",
             errors[id] && "border-rose-500 focus:border-rose-500 text-rose-500"
           )}
@@ -52,7 +65,8 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
               "absolute text-md duration-150 transform -translate-y-3 top-6 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1 peer-focus:scale-75 peer-focus:-translate-y-5 left-4 ",
               formatPrice && "left-9",
               errors[id] && "text-rose-500",
-              value && "scale-75 -translate-y-5"
+              value && "scale-75 -translate-y-5",
+              disabled && "text-zinc-400"
             )}
           >
             {label}

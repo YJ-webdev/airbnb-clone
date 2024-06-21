@@ -58,7 +58,6 @@
   }
 }
 
-/* styles.css */
 .desktop-logo {
   width: auto;
   height: 2.75rem;
@@ -67,4 +66,9 @@
 .mobile-logo {
   width: 2.75rem;
   height: auto;
+}
+
+.btn-disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }

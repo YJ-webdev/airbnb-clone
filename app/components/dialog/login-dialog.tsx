@@ -7,7 +7,6 @@ import { login } from "@/action/login";
 
 import { useEffect, useState, useTransition } from "react";
 import { FormError } from "../form-error";
-import { FormSuccess } from "../form-success";
 import { Social } from "./social";
 import { Button } from "@/components/ui/button";
 import { Input } from "../Input";
@@ -27,6 +26,7 @@ import {
   DialogDescription,
   DialogHeader,
 } from "@/components/ui/dialog";
+import { useRouter } from "next/navigation";
 
 interface LoginDialogProps {
   isOpen: boolean;
@@ -37,6 +37,8 @@ export const LoginDialog = ({ isOpen, onClose }: LoginDialogProps) => {
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
   const [isPending, startTransition] = useTransition();
+
+  const router = useRouter();
 
   const form = useForm<Login>({
     resolver: zodResolver(LoginSchema),
@@ -52,8 +54,10 @@ export const LoginDialog = ({ isOpen, onClose }: LoginDialogProps) => {
 
     startTransition(() => {
       login(values).then((data) => {
-        setError(data.error);
-        setSuccess(data.success);
+        setError(data?.error);
+        if (!data?.error) {
+          window.location.reload();
+        }
       });
     });
   };
@@ -87,6 +91,7 @@ export const LoginDialog = ({ isOpen, onClose }: LoginDialogProps) => {
                       <FormControl>
                         <Input
                           {...field}
+                          disabled={isPending}
                           id="email"
                           label="Email"
                           errors={form.formState.errors}
@@ -104,6 +109,7 @@ export const LoginDialog = ({ isOpen, onClose }: LoginDialogProps) => {
                       <FormControl>
                         <Input
                           {...field}
+                          disabled={isPending}
                           id="password"
                           type="password"
                           label="Password"
@@ -116,13 +122,12 @@ export const LoginDialog = ({ isOpen, onClose }: LoginDialogProps) => {
                 />
               </div>
               <FormError message={error} />
-              <FormSuccess message={success} />
               <Button
                 disabled={isPending}
                 type="submit"
                 className="rounded-lg w-full font-semibold text-[16px] py-6 bg-gradient-to-r from-[#d31152] to-[#e3326d]"
               >
-                Log in
+                {isPending ? "Please, wait.." : "Log in"}
               </Button>
             </form>
           </Form>

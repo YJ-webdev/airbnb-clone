@@ -16,12 +16,10 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const currentUser = await getCurrentUser();
-
   return (
     <html lang="en">
       <body className={font.className}>
-        <Navbar currentUser={currentUser} />
+        <Navbar />
         {children}
       </body>
     </html>
