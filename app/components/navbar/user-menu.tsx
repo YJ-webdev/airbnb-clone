@@ -2,7 +2,6 @@
 
 import { User } from "next-auth";
 import { signOut } from "next-auth/react";
-import { useState } from "react";
 
 import { LoginDialog } from "../dialog/login-dialog";
 import { RegisterDialog } from "../dialog/register-dialog";
@@ -17,128 +16,102 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import Link from "next/link";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 
 interface UserMenuProps {
   user?: User;
 }
 
 export const UserMenu = ({ user }: UserMenuProps) => {
-  const [isLoginDialogOpen, setIsLoginDialogOpen] = useState(false);
-  const [isRegisterDialogOpen, setIsRegisterDialogOpen] = useState(false);
-
-  const handleLoginClick = () => {
-    setIsLoginDialogOpen(true);
-  };
-
-  const handleCloseLoginDialog = () => {
-    setIsLoginDialogOpen(false);
-  };
-
-  const handleRegisterClick = () => {
-    setIsRegisterDialogOpen(true);
-  };
-
-  const handleCloseRegisterDialog = () => {
-    setIsRegisterDialogOpen(false);
-  };
-
   return (
     <>
-      <div className="relative">
-        <div className="flex items-center gap-auto">
-          <div
-            onClick={() => {}}
-            className="hidden md:block lg:mr-4 text-sm text-center line-clamp-1 text-nowrap font-semibold py-3 md:px-4 rounded-full hover:bg-neutral-100 transition cursor-pointer"
-          >
-            Airbnb your home
+      <DropdownMenu>
+        <DropdownMenuTrigger className="flex cursor-pointer items-center gap-3 rounded-full border-[1px] border-neutral-200 p-4 transition hover:shadow-md focus:outline-none md:px-2 md:py-1">
+          <AiOutlineMenu className="md:ml-1" />
+          <div className="hidden md:block">
+            <UserAvatar user={user} />
           </div>
-          <DropdownMenu>
-            <DropdownMenuTrigger className="focus:outline-none p-4 md:py-1 md:px-2 border-[1px] border-neutral-200 flex items-center gap-3 rounded-full cursor-pointer hover:shadow-md transition">
-              <AiOutlineMenu className="md:ml-1" />
-              <div className="hidden md:block">
-                <UserAvatar user={user} />
-              </div>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent
-              align="end"
-              className="rounded-xl shadow-[0_-1px_20px_3px_rgba(0,0,0,0.05)] w-48 overflow-hidden top-12 border-none py-1 space-y-0"
-            >
-              {user ? (
-                <>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent
+          align="end"
+          className="top-12 w-60 space-y-0 overflow-hidden rounded-xl border-none py-1 shadow-[0_-2px_22px_5px_rgba(0,0,0,0.08)]"
+        >
+          {user ? (
+            <>
+              <DropdownMenuItem
+                className="cursor-pointer px-3 py-3 text-[15px] font-semibold"
+                onClick={() => {}}
+              >
+                Trips
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                className="cursor-pointer px-3 py-3 text-[15px] font-semibold"
+                onClick={() => {}}
+              >
+                Wishlists
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                className="cursor-pointer px-3 py-3 text-[15px] font-light"
+                onClick={() => {}}
+              >
+                Airbnb your home
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                asChild
+                className="cursor-pointer px-3 py-3 text-[15px] font-light"
+              >
+                <Link href="/settings">Account settings</Link>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                className="cursor-pointer px-3 py-3 text-[15px] font-light"
+                onClick={() => signOut()}
+              >
+                Log out
+              </DropdownMenuItem>
+            </>
+          ) : (
+            <>
+              <Dialog>
+                <DialogTrigger asChild>
                   <DropdownMenuItem
-                    className="px-3 py-3 cursor-pointer text-[15px]"
-                    onClick={() => {}}
-                  >
-                    My trips
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    className="px-3 py-3 cursor-pointer text-[15px]"
-                    onClick={() => {}}
-                  >
-                    My favorites
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    className="px-3 py-3 cursor-pointer text-[15px]"
-                    onClick={() => {}}
-                  >
-                    My reservations
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    className="px-3 py-3 cursor-pointer text-[15px]"
-                    onClick={() => {}}
-                  >
-                    My property
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    className="px-3 py-3 cursor-pointer text-[15px]"
-                    onClick={() => {}}
-                  >
-                    Airbnb my home
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-
-                  <DropdownMenuItem
-                    className="px-3 py-3 cursor-pointer text-[15px]"
-                    onClick={() => signOut()}
-                  >
-                    Log out
-                  </DropdownMenuItem>
-                </>
-              ) : (
-                <>
-                  <DropdownMenuItem
-                    className="px-3 py-3 cursor-pointer text-[15px]"
-                    onClick={handleLoginClick}
+                    onSelect={(e) => e.preventDefault()}
+                    className="cursor-pointer px-3 py-3 text-[15px] font-semibold"
                   >
                     Log in
                   </DropdownMenuItem>
+                </DialogTrigger>
+                <DialogContent className="flex max-h-[75%] flex-col overflow-hidden p-0">
+                  <LoginDialog />
+                </DialogContent>
+              </Dialog>
+              <Dialog>
+                <DialogTrigger asChild>
                   <DropdownMenuItem
-                    onClick={handleRegisterClick}
-                    className="px-3 py-3 cursor-pointer text-[15px]"
+                    onSelect={(e) => e.preventDefault()}
+                    className="cursor-pointer px-3 py-3 text-[15px] font-light"
                   >
-                    Sign up
+                    Sign Up
                   </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem
-                    onClick={() => {}}
-                    className="px-3 py-3 cursor-pointer text-[15px]"
-                  >
-                    Airbnb your home
-                  </DropdownMenuItem>
-                </>
-              )}
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
-      </div>
-      <LoginDialog
-        isOpen={isLoginDialogOpen}
-        onClose={handleCloseLoginDialog}
-      />
-      <RegisterDialog
-        isOpen={isRegisterDialogOpen}
-        onClose={handleCloseRegisterDialog}
-      />
+                </DialogTrigger>
+                <DialogContent className="flex max-h-[75%] flex-col overflow-hidden p-0">
+                  <RegisterDialog />
+                </DialogContent>
+              </Dialog>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                onClick={() => {}}
+                className="cursor-pointer px-3 py-3 text-[15px] font-light"
+              >
+                Airbnb your home
+              </DropdownMenuItem>
+            </>
+          )}
+        </DropdownMenuContent>
+      </DropdownMenu>
     </>
   );
 };

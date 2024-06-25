@@ -6,7 +6,7 @@ import { FieldErrors } from "react-hook-form";
 import { BiDollar } from "react-icons/bi";
 
 interface InputProps {
-  id: "password" | "name" | "email";
+  id: string;
   label?: string;
   type?: string;
   formatPrice?: boolean;
@@ -32,14 +32,14 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       onBlur,
       name,
     },
-    ref
+    ref,
   ) => {
     return (
-      <div className="form-item w-full relative">
+      <div className="form-item relative w-full">
         {formatPrice && (
           <BiDollar
             size={24}
-            className="text-neutral-700 absolute top-5 left-2"
+            className="absolute left-2 top-5 text-neutral-700"
           />
         )}
         <input
@@ -53,20 +53,20 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           disabled={disabled}
           autoComplete="on"
           className={cn(
-            "peer w-full pt-5 pb-4 px-4 bg-white border-2 text-zinc-900 text-md font-semibold focus:border-zinc-700 rounded-md outline-none transition disabled:opacity-70 disabled:cursor-not-allowed pl-4",
+            "text-md peer w-full rounded-lg border border-zinc-400 bg-white px-4 pb-2 pl-4 pt-5 font-semibold text-zinc-900 transition focus:border-zinc-700 disabled:cursor-not-allowed disabled:opacity-70",
             formatPrice && "pl-9",
-            errors[id] && "border-rose-500 focus:border-rose-500 text-rose-500"
+            errors[id] && "border-rose-500 text-rose-500 focus:border-rose-500",
           )}
         />
         {label && (
           <label
             htmlFor={id}
             className={cn(
-              "absolute text-md duration-150 transform -translate-y-3 top-6 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1 peer-focus:scale-75 peer-focus:-translate-y-5 left-4 ",
+              "text-md absolute left-4 top-5 origin-[0] -translate-y-3 transform text-muted-foreground duration-150 peer-placeholder-shown:-translate-y-1 peer-placeholder-shown:scale-100 peer-focus:-translate-y-5 peer-focus:scale-75",
               formatPrice && "left-9",
               errors[id] && "text-rose-500",
-              value && "scale-75 -translate-y-5",
-              disabled && "text-zinc-400"
+              value && "-translate-y-5 scale-75",
+              disabled && "text-zinc-400",
             )}
           >
             {label}
@@ -74,7 +74,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         )}
       </div>
     );
-  }
+  },
 );
 
 Input.displayName = "Input";

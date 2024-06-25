@@ -21,11 +21,11 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       setValue(e.target.value);
     };
     return (
-      <div className="w-full relative">
+      <div className="relative w-full">
         {formatPrice && (
           <BiDollar
             size={24}
-            className="text-neutral-700 absolute top-5 left-2"
+            className="absolute left-2 top-5 text-neutral-700"
           />
         )}
         <input
@@ -35,26 +35,26 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           onChange={handleChange}
           type={type}
           className={cn(
-            "peer w-full pt-5 pb-4 px-4 bg-white border-2 text-black text-md font-semibold focus:border-zinc-700 rounded-md outline-none transition disabled:opacity-70 disabled:cursor-not-allowed pl-4",
+            "text-md peer w-full rounded-md border-2 bg-white px-4 pb-4 pl-4 pt-5 font-semibold text-black outline-none transition focus:border-zinc-700 disabled:cursor-not-allowed disabled:opacity-70",
             formatPrice && "pl-9",
-            errors && "border-rose-500 focus:border-rose-500"
+            errors && "border-rose-500 focus:border-rose-500",
           )}
           ref={ref}
           {...props}
         />
         <label
           className={cn(
-            "absolute text-md duration-150 transform -translate-y-3 top-6 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1 peer-focus:scale-75 peer-focus:-translate-y-5 left-4 ",
+            "text-md absolute left-4 top-6 origin-[0] -translate-y-3 transform duration-150 peer-placeholder-shown:-translate-y-1 peer-placeholder-shown:scale-100 peer-focus:-translate-y-5 peer-focus:scale-75",
             formatPrice && "left-9",
             errors && "text-rose-500",
-            value && "scale-75 -translate-y-5"
+            value && "-translate-y-5 scale-75",
           )}
         >
           {label}
         </label>
       </div>
     );
-  }
+  },
 );
 Input.displayName = "Input";
 

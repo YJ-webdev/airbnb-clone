@@ -4,26 +4,30 @@ import DesktopLogo from "@/public/images/desktop-logo.png";
 import MobileLogo from "@/public/images/airbnb-mobile.webp";
 import Image from "next/image";
 import "@/app/globals.css";
+import Link from "next/link";
 
 export const Logo = () => {
   return (
     <>
-      <Image
-        src={DesktopLogo}
-        alt="Desktop Logo"
-        height="100"
-        width="100"
-        priority={true}
-        className="hidden lg:block mr-6 cursor-pointer desktop-logo"
-        style={{ height: "2rem" }}
-      />
-      <Image
-        src={MobileLogo}
-        alt="Mobile Logo"
-        height="100"
-        width="100"
-        className="lg:hidden md:block hidden cursor-pointer mobile-logo"
-      />
+      <Link href="/">
+        <Image
+          src={DesktopLogo}
+          alt="Desktop Logo"
+          height="100"
+          width="100"
+          priority={true}
+          className="desktop-logo mr-6 hidden cursor-pointer lg:block"
+          style={{ height: "2rem" }}
+        />
+
+        <Image
+          src={MobileLogo}
+          alt="Mobile Logo"
+          height="100"
+          width="100"
+          className="mobile-logo hidden cursor-pointer md:block lg:hidden"
+        />
+      </Link>
     </>
   );
 };

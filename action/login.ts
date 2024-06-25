@@ -34,10 +34,3 @@ export const login = async (values: Login) => {
     throw error;
   }
 };
-
-export const socialLogIn = async (provider: "google" | "github") => {
-  await signIn(provider);
-  const session = await auth();
-  if (!session?.user) return null;
-  return session.user;
-};

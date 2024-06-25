@@ -1,9 +1,9 @@
 "use server";
 
 import { Register, RegisterSchema } from "@/schema";
-import { hash } from "bcryptjs";
-import db from "@/app/lib/db";
+import prisma from "@/app/lib/db";
 import { getUserByEmail } from "@/data/user";
+import { hash } from "bcryptjs";
 
 export const register = async (values: Register) => {
   const validatedfields = RegisterSchema.safeParse(values);
@@ -21,7 +21,7 @@ export const register = async (values: Register) => {
     return { error: "Email already in use!" };
   }
 
-  await db.user.create({
+  await prisma.user.create({
     data: {
       name,
       email,

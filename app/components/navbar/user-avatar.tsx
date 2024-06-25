@@ -8,20 +8,20 @@ interface UserAvatarProps {
 
 export const UserAvatar = ({ user }: UserAvatarProps) => {
   return (
-    <Avatar className="w-8 h-8 m-1 flex items-center justify-center bg-gray-200">
+    <Avatar className="m-1 flex h-8 w-8 items-center justify-center bg-gray-200">
       {user ? (
         user.image ? (
-          <AvatarImage src={user.image} className="w-auto h-auto" />
+          <AvatarImage src={user.image} className="h-auto w-auto" />
         ) : (
-          <div className="flex items-center justify-center w-8 h-8 bg-gradient-to-r from-cyan-500 to-teal-400">
-            <span className="text-lg text-center font-medium text-white">
+          <div className="flex h-8 w-8 items-center justify-center bg-black">
+            <span className="text-center text-lg font-medium text-white">
               {user.email?.charAt(0).toUpperCase()}
             </span>
           </div>
         )
       ) : (
         <>
-          <AvatarImage src="images/user.png" className="w-auto h-auto" />
+          <AvatarImage src="images/user.png" className="h-auto w-auto" />
           <AvatarFallback>
             <Skeleton />
           </AvatarFallback>

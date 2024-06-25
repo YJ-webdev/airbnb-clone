@@ -1,3 +1,13 @@
+"use client";
+
+import { Categories } from "./components/categories";
+
 export default function Home() {
-  return <div className="text-rose-500 text-2xl">airbnb clone</div>;
+  const user = false;
+
+  return (
+    <div>
+      <Categories />
+    </div>
+  );
 }

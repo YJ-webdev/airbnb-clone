@@ -1,16 +1,19 @@
-import { auth } from "@/auth";
-import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
+import getSession from "@/app/lib/get-session";
 import { redirect } from "next/navigation";
+import { Metadata } from "next";
+import { PersonnalInfo } from "./personnal-info";
+
+export const metadata: Metadata = { title: "Airbnb | Account settings" };
 
 const SettingsPage = async () => {
-  const session = await auth();
-
+  const session = await getSession();
   const user = session?.user;
+
   if (!user) {
-    redirect("/");
+    redirect("/?callbackUrl=/settings");
   }
 
-  return <div className="translate-y-28">{JSON.stringify(session)}</div>;
+  return <PersonnalInfo user={user} />;
 };
 
 export default SettingsPage;

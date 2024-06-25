@@ -96,6 +96,10 @@ model Listing {
   price         Int
   userId        String
 
+  addedCategory    Boolean @default(false)
+  addedDescription Boolean @default(false)
+  addedLoaction    Boolean @default(false)
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
