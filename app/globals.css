@@ -81,3 +81,7 @@
   opacity: 0.6;
   cursor: not-allowed;
 }
+
+.outline-customized {
+  outline: solid 2.5px;
+}

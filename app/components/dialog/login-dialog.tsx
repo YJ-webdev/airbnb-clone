@@ -24,7 +24,6 @@ import {
   DialogDescription,
   DialogHeader,
 } from "@/components/ui/dialog";
-import { useRouter } from "next/navigation";
 
 export const LoginDialog = () => {
   const [error, setError] = useState<string | undefined>("");

@@ -18,6 +18,9 @@ const config = {
       },
     },
     extend: {
+      outline: {
+        "2.5": ["2.5px solid", "rgba(0, 0, 0, 0.5)"], // Define your custom outline size and color
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

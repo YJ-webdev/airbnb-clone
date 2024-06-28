@@ -55,7 +55,8 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           className={cn(
             "text-md peer w-full rounded-lg border border-zinc-400 bg-white px-4 pb-2 pl-4 pt-5 font-semibold text-zinc-900 transition focus:border-zinc-700 disabled:cursor-not-allowed disabled:opacity-70",
             formatPrice && "pl-9",
-            errors[id] && "border-rose-500 text-rose-500 focus:border-rose-500",
+            errors[id] &&
+              "border-rose-500 text-rose-500 focus:outline-1 focus:outline-rose-500",
           )}
         />
         {label && (

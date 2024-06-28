@@ -14,7 +14,7 @@ export const Navbar = async () => {
         <Logo />
         <Search />
         <div className="flex">
-          <AirbnbYourHomeButton />
+          <AirbnbYourHomeButton user={user} />
           <UserMenu user={user} />
         </div>
       </div>

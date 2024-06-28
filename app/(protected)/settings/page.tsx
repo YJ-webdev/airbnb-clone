@@ -5,7 +5,7 @@ import { PersonnalInfo } from "./personnal-info";
 
 export const metadata: Metadata = { title: "Airbnb | Account settings" };
 
-const SettingsPage = async () => {
+export default async function SettingsPage() {
   const session = await getSession();
   const user = session?.user;
 
@@ -14,6 +14,4 @@ const SettingsPage = async () => {
   }
 
   return <PersonnalInfo user={user} />;
-};
-
-export default SettingsPage;
+}
