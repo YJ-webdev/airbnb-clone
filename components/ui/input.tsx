@@ -35,7 +35,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           onChange={handleChange}
           type={type}
           className={cn(
-            "text-md peer w-full rounded-md border-2 bg-white px-4 pb-4 pl-4 pt-5 font-semibold text-black outline-none transition placeholder:text-muted-foreground focus:border-zinc-700 disabled:cursor-not-allowed disabled:opacity-70",
+            "text-md peer w-full rounded-md border border-zinc-500 bg-white px-4 pb-4 pl-4 pt-5 font-semibold text-black shadow-sm transition placeholder:text-muted-foreground focus:border-zinc-700 disabled:cursor-not-allowed disabled:opacity-70",
             formatPrice && "pl-9",
             errors && "border-rose-500 focus:border-rose-500",
           )}

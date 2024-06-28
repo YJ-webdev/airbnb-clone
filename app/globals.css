@@ -79,9 +79,13 @@
 
 .btn-disabled {
   opacity: 0.6;
-  cursor: not-allowed;
+  cursor: default;
 }
 
 .outline-customized {
   outline: solid 2.5px;
+}
+
+.tooltip-nunito {
+  font-family: "Nunito", sans-serif;
 }

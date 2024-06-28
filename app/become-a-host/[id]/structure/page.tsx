@@ -23,7 +23,7 @@ export default function StructureRoute({ params }: { params: { id: string } }) {
               className="font-bold underline"
               asChild
             >
-              <Link href="/">Back</Link>
+              <Link href="/">Back to home</Link>
             </Button>{" "}
             <CreationSubmit />
           </div>
