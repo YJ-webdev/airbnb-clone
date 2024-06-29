@@ -29,7 +29,7 @@ export default function DescriptionRoute() {
             placeholder="Title —Short titles work best."
             type="text"
             className="text-md font-medium placeholder:text-muted-foreground"
-            maxLength={32}
+            maxLength={100}
           />
 
           <div>

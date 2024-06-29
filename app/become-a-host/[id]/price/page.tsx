@@ -10,11 +10,9 @@ export default function PriceRoute() {
           —You can change it anytime.
         </span>
       </h2>
-      <div className="flex min-h-96 items-center justify-center">
-        <div className="text-center">
-          <PriceInput />
-          <PriceCheck />
-        </div>
+      <div className="flex flex-col items-center justify-center gap-10">
+        <PriceInput />
+        <PriceCheck />
       </div>
     </div>
   );

@@ -1,4 +1,12 @@
 "use client";
+
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { SquarePen } from "lucide-react";
 import React, { useState, useRef, useEffect, ChangeEvent } from "react";
 
 export const PriceInput: React.FC = () => {
@@ -25,21 +33,40 @@ export const PriceInput: React.FC = () => {
     setInputValue(formattedValue);
   };
 
+  const handleIconClick = () => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  };
+
   return (
-    <div className="mx-auto items-center">
-      <div>
-        <span className="text-[48px] font-bold text-zinc-800 outline-none">
+    <div className="mx-auto mt-16">
+      <div className="flex items-center justify-center">
+        <span className="text-[38px] font-bold text-zinc-800 outline-none md:text-[48px]">
           $
         </span>
         <input
           type="text"
           value={inputValue}
           onChange={handleChange}
-          className="border-b-4 border-dashed border-zinc-800 text-center text-[48px] font-bold text-zinc-800 outline-none"
+          className="mx-2 max-w-80 border-b-4 border-dashed border-zinc-800 text-center text-[38px] font-bold text-zinc-800 placeholder-slate-300 outline-none md:text-[48px]"
           ref={inputRef}
           style={{ minWidth: "1ch" }} // Ensure it has some minimum width
           maxLength={8}
+          placeholder="0"
         />
+        <div className="ml-1 flex cursor-pointer flex-col items-center justify-items-start">
+          <TooltipProvider delayDuration={0}>
+            <Tooltip>
+              <TooltipTrigger>
+                <SquarePen size={25} onClick={handleIconClick} />
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Edit</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </div>
       </div>
     </div>
   );
