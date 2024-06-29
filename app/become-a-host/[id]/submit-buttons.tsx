@@ -9,12 +9,16 @@ export function CreationSubmit() {
   return (
     <>
       {pending ? (
-        <Button disabled size="lg">
+        <Button disabled size="lg" className="px-7 py-6 text-[16px] font-bold">
           Saving
           <Loader2 className="ml-2 h-4 w-4 animate-spin" />
         </Button>
       ) : (
-        <Button type="submit" size="lg">
+        <Button
+          type="submit"
+          size="lg"
+          className="px-7 py-6 text-[16px] font-bold"
+        >
           Next
         </Button>
       )}

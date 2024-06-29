@@ -1,7 +1,7 @@
 "use client";
 
 import { Card, CardHeader } from "@/components/ui/card";
-import { categoryData } from "../lib/category-data";
+import { categoryData } from "../../../lib/category-data";
 import Image from "next/image";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
@@ -32,7 +32,7 @@ export const SelectCategory = () => {
                   animate={{
                     scale: selectedCategory === item.name ? [1, 0.75, 1] : 1,
                     translateX:
-                      selectedCategory === item.name ? [0, -17, 0] : 0,
+                      selectedCategory === item.name ? [0, -19, 0] : 0,
                   }}
                   transition={{ duration: 0.4 }}
                 >

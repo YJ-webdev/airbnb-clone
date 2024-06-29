@@ -6,10 +6,10 @@ import { Login, LoginSchema } from "@/schema";
 import { login } from "@/action/login";
 
 import { useState, useTransition } from "react";
-import { FormError } from "../form-error";
+import { FormError } from "./form-error";
 import { Social } from "./social";
 import { Button } from "@/components/ui/button";
-import { Input } from "../Input";
+import { Input } from "./Input";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {

@@ -6,7 +6,7 @@ import { Minus, Plus } from "lucide-react";
 import { useState } from "react";
 
 export const Counter = () => {
-  const [amount, setAmount] = useState(1);
+  const [amount, setAmount] = useState(0);
 
   const increase = () => {
     if (amount < 16) {
@@ -14,7 +14,7 @@ export const Counter = () => {
     }
   };
   const decrease = () => {
-    if (amount > 1) {
+    if (amount > 0) {
       setAmount(amount - 1);
     }
   };
@@ -26,7 +26,7 @@ export const Counter = () => {
         onClick={decrease}
         className={cn(
           "h-9 w-9 rounded-full border-zinc-300 bg-white p-0 text-muted-foreground hover:bg-white",
-          amount === 1
+          amount === 0
             ? "cursor-default opacity-30 hover:border-zinc-300 hover:text-muted-foreground"
             : "hover:border-black hover:text-black",
         )}

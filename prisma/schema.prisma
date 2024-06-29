@@ -97,8 +97,11 @@ model Listing {
   userId        String?
 
   addedCategory    Boolean @default(false)
+  addedLocation    Boolean @default(false)
+  addedFloorPlan   Boolean @default(false)
   addedDescription Boolean @default(false)
-  addedLoaction    Boolean @default(false)
+  addedPhotos      Boolean @default(false)
+  addedPrice       Boolean @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

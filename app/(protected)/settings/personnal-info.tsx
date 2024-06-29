@@ -3,11 +3,12 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { FormElement } from "@/app/components/form-field";
-import { User } from "next-auth";
-import { Braeadcrumb } from "@/app/components/breadcrumb";
 
-import { SecureLeaflet } from "@/app/components/secure-leaflet";
+import { User } from "next-auth";
+
+import { SecureLeaflet } from "@/app/(protected)/settings/secure-leaflet";
+import { Braeadcrumb } from "./breadcrumb";
+import { FormElement } from "./form-element";
 
 interface PersonalInfoProps {
   user: User;

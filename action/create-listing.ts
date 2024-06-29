@@ -24,7 +24,7 @@ export async function createListing({ userId }: { userId: string }) {
   } else if (
     !data.addedCategory &&
     !data.addedDescription &&
-    !data.addedLoaction
+    !data.addedLocation
   ) {
     return redirect(`become-a-host/${data.id}/structure`);
   } else if (data.addedCategory && !data.addedDescription) {
@@ -35,6 +35,7 @@ export async function createListing({ userId }: { userId: string }) {
 export async function createCategoryPage(formData: FormData) {
   const category = formData.get("category") as string;
   const listingId = formData.get("listingId") as string;
+
   const data = await prisma.listing.update({
     where: {
       id: listingId,

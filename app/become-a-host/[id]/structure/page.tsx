@@ -1,13 +1,15 @@
 import { createCategoryPage } from "@/action/create-listing";
-import { SelectCategory } from "@/app/components/select-category";
-import { CreationSubmit } from "@/app/components/submit-buttons";
+
+import { CreationSubmit } from "@/app/become-a-host/[id]/submit-buttons";
 import { Button } from "@/components/ui/button";
+import { Undo2 } from "lucide-react";
 import Link from "next/link";
+import { SelectCategory } from "./select-category";
 
 export default function StructureRoute({ params }: { params: { id: string } }) {
   return (
     <div className="mx-auto">
-      <h2 className="mx-auto p-5 text-center text-2xl font-semibold tracking-tight transition-colors md:text-3xl">
+      <h2 className="mx-auto max-w-2xl p-5 text-2xl font-semibold tracking-tight transition-colors md:text-3xl">
         Which of these best describes your home?
       </h2>
 
@@ -20,11 +22,13 @@ export default function StructureRoute({ params }: { params: { id: string } }) {
             <Button
               variant="secondary"
               size="lg"
-              className="font-bold underline"
+              className="bg-white px-3 py-6 text-[16px] font-bold underline hover:bg-zinc-100"
               asChild
             >
-              <Link href="/">Back to home</Link>
-            </Button>{" "}
+              <Link href="/">
+                <Undo2 size={22} className="mr-2" /> Back to home
+              </Link>
+            </Button>
             <CreationSubmit />
           </div>
         </div>

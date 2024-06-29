@@ -6,11 +6,11 @@ import { Register, RegisterSchema } from "@/schema";
 import { register } from "@/action/register";
 
 import { useState, useTransition } from "react";
-import { FormError } from "../form-error";
-import { FormSuccess } from "../form-success";
+import { FormError } from "./form-error";
+import { FormSuccess } from "./form-success";
 import { Social } from "./social";
 import { Button } from "@/components/ui/button";
-import { Input } from "../Input";
+import { Input } from "./Input";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
