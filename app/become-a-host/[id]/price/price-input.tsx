@@ -1,5 +1,11 @@
-"use client";
-
+import React, {
+  useState,
+  useRef,
+  useEffect,
+  ChangeEvent,
+  Dispatch,
+  SetStateAction,
+} from "react";
 import {
   Tooltip,
   TooltipContent,
@@ -7,16 +13,20 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { SquarePen } from "lucide-react";
-import React, { useState, useRef, useEffect, ChangeEvent } from "react";
 
-export const PriceInput: React.FC = () => {
+interface PriceInputProps {
+  setTypedValue: Dispatch<SetStateAction<number>>;
+}
+
+export const PriceInput = ({ setTypedValue }: PriceInputProps) => {
   const [inputValue, setInputValue] = useState<string>("");
+
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (inputRef.current) {
       const input = inputRef.current;
-      input.style.width = `${input.value.length}ch`; // Set width based on input value length
+      input.style.width = `${input.value.length + 1}ch`;
     }
   }, [inputValue]);
 
@@ -39,6 +49,16 @@ export const PriceInput: React.FC = () => {
     }
   };
 
+  const handleRawInput = (inputValue: string) => {
+    // Clean the input value to remove non-digit characters
+    const cleanedValue = inputValue.replace(/[^\d]/g, "");
+
+    // Convert the cleaned value to a number (if necessary)
+    const numberValue = parseInt(cleanedValue, 10);
+    setTypedValue(numberValue);
+    // Use `numberValue` for your calculations or further processing
+  };
+
   return (
     <div className="mx-auto mt-16">
       <div className="flex items-center justify-center">
@@ -51,9 +71,11 @@ export const PriceInput: React.FC = () => {
           onChange={handleChange}
           className="mx-2 max-w-80 border-b-4 border-dashed border-zinc-800 text-center text-[38px] font-bold text-zinc-800 placeholder-slate-300 outline-none md:text-[48px]"
           ref={inputRef}
-          style={{ minWidth: "1ch" }} // Ensure it has some minimum width
-          maxLength={8}
+          style={{ minWidth: "2ch" }}
+          maxLength={6}
+          minLength={2}
           placeholder="0"
+          onInput={(e) => handleRawInput(e.currentTarget.value)} // Correct usage of onInput in React
         />
         <div className="ml-1 flex cursor-pointer flex-col items-center justify-items-start">
           <TooltipProvider delayDuration={0}>

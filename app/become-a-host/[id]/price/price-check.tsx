@@ -1,12 +1,28 @@
+import { formatNumber } from "@/app/lib/format-money";
+import { GUEST_SERVICE_FEE, HOST_SERVICE_FEE } from "@/app/lib/library";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Separator } from "@/components/ui/separator";
 
-export const PriceCheck = () => {
+interface PriceCheckProps {
+  typedValue: number;
+}
+
+export const PriceCheck = ({ typedValue }: PriceCheckProps) => {
+  const formattedValue = formatNumber(typedValue);
+  const guestServiceFee = formatNumber(typedValue * GUEST_SERVICE_FEE);
+  const guestPrice = formatNumber(typedValue * GUEST_SERVICE_FEE + typedValue);
+  const hostServiceFee =
+    typedValue > 0 && typedValue < 50
+      ? "1"
+      : typedValue > 50 && typedValue < 83
+        ? "2"
+        : formatNumber(typedValue * HOST_SERVICE_FEE);
+  const hostEarn = formatNumber(typedValue - Number(hostServiceFee));
+
   return (
     <div>
       <div className="mx-auto">
@@ -19,16 +35,16 @@ export const PriceCheck = () => {
             <AccordionItem value="item-1">
               <AccordionContent className="mb-0 mt-5 pb-0">
                 <div className="mx-auto flex w-64 justify-between text-base font-normal">
-                  <p>Base price</p> <p>$120,000</p>
+                  <p>Base price</p> <p>${formattedValue}</p>
                 </div>
                 <div className="mx-auto flex w-64 justify-between text-base font-normal">
-                  <p>Guest service fee</p> <p>$16,941</p>
+                  <p>Guest service fee</p> <p>${guestServiceFee}</p>
                 </div>
               </AccordionContent>
               <AccordionTrigger>
                 {" "}
                 <div className="mx-auto mb-2 flex w-64 justify-between text-base font-semibold">
-                  <p>Guest price</p> <p>$136,941</p>
+                  <p>Guest price</p> <p>${guestPrice}</p>
                 </div>
               </AccordionTrigger>
             </AccordionItem>
@@ -36,15 +52,15 @@ export const PriceCheck = () => {
             <AccordionItem value="item-2">
               <AccordionContent className="mb-0 mt-5 border-none pb-0">
                 <div className="mx-auto flex w-64 justify-between text-base font-normal">
-                  <p>Base price</p> <p>$120,000</p>
+                  <p>Base price</p> <p>${formattedValue}</p>
                 </div>
                 <div className="mx-auto flex w-64 justify-between text-base font-normal">
-                  <p>House service fee</p> <p>$3,960</p>
+                  <p>Host service fee</p> <p>-${hostServiceFee}</p>
                 </div>
               </AccordionContent>
               <AccordionTrigger className="border-none">
                 <div className="mx-auto flex w-64 justify-between border-none text-base font-semibold">
-                  <p>You earn</p> <p>$116,040</p>
+                  <p>You earn</p> <p>${hostEarn}</p>
                 </div>
               </AccordionTrigger>
             </AccordionItem>
