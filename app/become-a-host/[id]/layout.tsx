@@ -3,5 +3,5 @@ export default function BecomeAHostLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <div className="mt-3">{children}</div>;
+  return <div className="mx-auto mt-3">{children}</div>;
 }

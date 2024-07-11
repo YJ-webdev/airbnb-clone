@@ -21,8 +21,9 @@ export default function DescriptionRoute() {
           </span>
         </h2>
       </div>
+
       <form>
-        <div className="mx-auto mb-36 flex max-w-2xl flex-col gap-y-5 p-5 md:pb-5 md:pl-0 md:pr-0 md:pt-5">
+        <div className="mx-auto flex max-w-2xl flex-col gap-y-5 p-5 md:pb-5 md:pl-0 md:pr-0 md:pt-5">
           <Input
             name="title"
             required

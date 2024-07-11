@@ -19,7 +19,7 @@ export function CreationSubmit() {
           size="lg"
           className="px-7 py-6 text-[16px] font-bold"
         >
-          Next
+          Save / Next
         </Button>
       )}
     </>

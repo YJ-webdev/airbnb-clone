@@ -27,7 +27,7 @@ export const UserMenu = ({ user }: UserMenuProps) => {
   return (
     <>
       <DropdownMenu>
-        <DropdownMenuTrigger className="flex cursor-pointer items-center gap-3 rounded-full border-[1px] border-neutral-200 p-4 transition hover:shadow-md focus:outline-none md:px-2 md:py-1">
+        <DropdownMenuTrigger className="flex cursor-pointer items-center gap-3 rounded-full border-[1px] border-neutral-200 p-4 transition hover:shadow-md md:px-2 md:py-1">
           <AiOutlineMenu className="md:ml-1" />
           <div className="hidden md:block">
             <UserAvatar user={user} />
@@ -35,7 +35,7 @@ export const UserMenu = ({ user }: UserMenuProps) => {
         </DropdownMenuTrigger>
         <DropdownMenuContent
           align="end"
-          className="top-12 w-60 space-y-0 overflow-hidden rounded-xl border-none py-1 shadow-[0_-2px_22px_5px_rgba(0,0,0,0.08)]"
+          className="top-12 w-60 space-y-0 overflow-hidden rounded-xl border-none py-1 shadow-[0_2px_10px_3px_rgba(0,0,0,0.05)]"
         >
           {user ? (
             <>

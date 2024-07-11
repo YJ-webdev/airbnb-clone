@@ -1,4 +1,4 @@
-import { formatNumber } from "@/app/lib/format-money";
+import { formatCeil, formatFloor } from "@/app/lib/format-money";
 import { GUEST_SERVICE_FEE, HOST_SERVICE_FEE } from "@/app/lib/library";
 import {
   Accordion,
@@ -6,22 +6,19 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface PriceCheckProps {
   typedValue: number;
 }
 
 export const PriceCheck = ({ typedValue }: PriceCheckProps) => {
-  const formattedValue = formatNumber(typedValue);
-  const guestServiceFee = formatNumber(typedValue * GUEST_SERVICE_FEE);
-  const guestPrice = formatNumber(typedValue * GUEST_SERVICE_FEE + typedValue);
-  const hostServiceFee =
-    typedValue > 0 && typedValue < 50
-      ? "1"
-      : typedValue > 50 && typedValue < 83
-        ? "2"
-        : formatNumber(typedValue * HOST_SERVICE_FEE);
-  const hostEarn = formatNumber(typedValue - Number(hostServiceFee));
+  const formattedValue = formatFloor(typedValue);
+  const guestServiceFee = formatFloor(typedValue * GUEST_SERVICE_FEE);
+  const guestPrice = formatFloor(typedValue * GUEST_SERVICE_FEE + typedValue);
+  const hostServiceFeeWild = HOST_SERVICE_FEE(typedValue);
+  const hostServiceFee = formatCeil(hostServiceFeeWild);
+  const hostEarn = formatFloor(typedValue - hostServiceFeeWild);
 
   return (
     <div>
