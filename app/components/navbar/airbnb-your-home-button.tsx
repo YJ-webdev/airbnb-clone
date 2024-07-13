@@ -1,6 +1,6 @@
 "use client";
 
-import { createListing } from "@/action/create-listing";
+import { createListing } from "@/app/action/create-listing";
 import { User } from "next-auth";
 
 interface AirbnbYourHomeButtonProps {

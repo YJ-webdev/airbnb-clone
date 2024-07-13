@@ -3,8 +3,8 @@
 import { User } from "next-auth";
 import { signOut } from "next-auth/react";
 
-import { LoginDialog } from "../dialog/login-dialog";
-import { RegisterDialog } from "../dialog/register-dialog";
+import { LoginDialog } from "../login-dialog/login-dialog";
+import { RegisterDialog } from "../login-dialog/register-dialog";
 import { UserAvatar } from "./user-avatar";
 
 import { AiOutlineMenu } from "react-icons/ai";
@@ -18,12 +18,17 @@ import {
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { createListing } from "@/app/action/create-listing";
 
 interface UserMenuProps {
   user?: User;
 }
 
 export const UserMenu = ({ user }: UserMenuProps) => {
+  const createListingWithId = createListing.bind(null, {
+    userId: user?.id as string,
+  });
+
   return (
     <>
       <DropdownMenu>
@@ -52,11 +57,12 @@ export const UserMenu = ({ user }: UserMenuProps) => {
                 Wishlists
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem
-                className="cursor-pointer px-3 py-3 text-[15px] font-light"
-                onClick={() => {}}
-              >
-                Airbnb your home
+              <DropdownMenuItem className="cursor-pointer px-3 py-3 text-[15px] font-light">
+                <form action={createListingWithId} className="w-full">
+                  <button type="submit" className="w-full text-start">
+                    Airbnb your home
+                  </button>
+                </form>
               </DropdownMenuItem>
               <DropdownMenuItem
                 asChild

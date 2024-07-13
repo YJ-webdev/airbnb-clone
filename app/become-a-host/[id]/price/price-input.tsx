@@ -69,7 +69,7 @@ export const PriceInput = ({ setTypedValue }: PriceInputProps) => {
           type="text"
           value={inputValue}
           onChange={handleChange}
-          className="mx-2 max-w-80 border-b-4 border-dashed border-zinc-800 text-center text-[38px] font-bold text-zinc-800 placeholder-slate-300 outline-none md:text-[48px]"
+          className="mx-2 text-center text-[38px] font-bold text-zinc-800 placeholder-slate-300 outline-none md:text-[48px]"
           ref={inputRef}
           style={{ minWidth: "2ch" }}
           maxLength={6}

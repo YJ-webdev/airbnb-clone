@@ -92,6 +92,7 @@ model Listing {
   roomCount     Int?
   bathroomCount Int?
   guestCount    Int?
+  bedCount      Int?
   locationValue String?
   price         Int?
   userId        String?
@@ -99,8 +100,8 @@ model Listing {
   addedCategory    Boolean @default(false)
   addedLocation    Boolean @default(false)
   addedFloorPlan   Boolean @default(false)
-  addedDescription Boolean @default(false)
   addedPhotos      Boolean @default(false)
+  addedDescription Boolean @default(false)
   addedPrice       Boolean @default(false)
 
   createdAt DateTime @default(now())

@@ -13,6 +13,8 @@
     "@auth/prisma-adapter": "^2.2.0",
     "@googlemaps/extended-component-library": "^0.6.11",
     "@googlemaps/js-api-loader": "^1.16.6",
+    "@headlessui/react": "^2.1.2",
+    "@heroicons/react": "^2.1.5",
     "@hookform/resolvers": "^3.6.0",
     "@neondatabase/serverless": "^0.9.3",
     "@prisma/adapter-neon": "^5.15.1",

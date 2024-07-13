@@ -12,10 +12,11 @@ import {
 import { Info } from "lucide-react";
 
 interface AddressFormProps {
-  onSubmit: (address: string) => void;
+  location: (address: string) => void;
+  setDataLogged: (data: boolean) => void;
 }
 
-const AddressForm = ({ onSubmit }: AddressFormProps) => {
+const AddressForm = ({ location, setDataLogged }: AddressFormProps) => {
   const countryData = Country.getAllCountries();
 
   const [address, setAddress] = useState("");
@@ -47,11 +48,16 @@ const AddressForm = ({ onSubmit }: AddressFormProps) => {
   }, [state, country]);
 
   const formedAddress = `${address} ${locality} ${state?.name || ""} ${postalCode} ${country?.name}`;
-  console.log(formedAddress);
+
+  if (address && postalCode && country) {
+    setDataLogged(true);
+  } else {
+    setDataLogged(false);
+  }
 
   useEffect(() => {
-    onSubmit(formedAddress);
-  }, [onSubmit, formedAddress]);
+    location(formedAddress);
+  }, [location, formedAddress]);
 
   return (
     <div className="flex h-[55vh] w-2/5 flex-col bg-white">

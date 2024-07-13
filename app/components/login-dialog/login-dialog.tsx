@@ -3,7 +3,6 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Login, LoginSchema } from "@/schema";
-import { login } from "@/action/login";
 
 import { useState, useTransition } from "react";
 import { FormError } from "./form-error";
@@ -24,6 +23,7 @@ import {
   DialogDescription,
   DialogHeader,
 } from "@/components/ui/dialog";
+import { login } from "@/app/action/login";
 
 export const LoginDialog = () => {
   const [error, setError] = useState<string | undefined>("");

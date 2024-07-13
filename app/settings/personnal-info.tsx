@@ -6,9 +6,9 @@ import { z } from "zod";
 
 import { User } from "next-auth";
 
-import { SecureLeaflet } from "@/app/(protected)/settings/secure-leaflet";
 import { Braeadcrumb } from "./breadcrumb";
 import { FormElement } from "./form-element";
+import { SecureLeaflet } from "./secure-leaflet";
 
 interface PersonalInfoProps {
   user: User;

@@ -1,3 +1,6 @@
+"use client";
+
+import { ActionBar } from "@/app/components/become-a-host/action-bar";
 import {
   Tooltip,
   TooltipContent,
@@ -5,10 +8,13 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Info } from "lucide-react";
+import { useState } from "react";
 
 export default function PhotosRoute() {
+  const [dataLogged, setDataLogged] = useState(false);
+
   return (
-    <div className="mx-auto">
+    <>
       <h2 className="mx-auto max-w-2xl pb-2 pl-6 pr-6 pt-5 text-2xl font-semibold tracking-tight transition-colors md:pl-0 md:pr-0 md:text-3xl">
         Add some photos of your place{" "}
         <TooltipProvider>
@@ -25,6 +31,7 @@ export default function PhotosRoute() {
           </Tooltip>
         </TooltipProvider>
       </h2>
-    </div>
+      <ActionBar dataLogged={dataLogged} />
+    </>
   );
 }

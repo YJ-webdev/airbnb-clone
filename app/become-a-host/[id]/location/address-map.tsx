@@ -7,7 +7,10 @@ import {
   AdvancedMarker,
   Pin,
   MapCameraChangedEvent,
+  useAdvancedMarkerRef,
+  InfoWindow,
 } from "@vis.gl/react-google-maps";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface AddressMapProps {
   location: { lat: number; lng: number } | null;
@@ -15,12 +18,15 @@ interface AddressMapProps {
 
 const AddressMap = ({ location }: AddressMapProps) => {
   const [mapCenter, setMapCenter] = useState(location || { lat: 0, lng: 0 });
+  const [markerRef, marker] = useAdvancedMarkerRef();
+  const [infoWindowShown, setInfoWindowShown] = useState(true);
+  const [markerLocation, setMarkerLocation] = useState(location);
+  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    if (location) {
-      setMapCenter(location);
-    }
-  }, [location]);
+  const handleMarkerClick = useCallback(
+    () => setInfoWindowShown((isShown) => !isShown),
+    [],
+  );
 
   const handleCameraChange = useCallback((event: MapCameraChangedEvent) => {
     const center = event.detail.center;
@@ -32,28 +38,49 @@ const AddressMap = ({ location }: AddressMapProps) => {
     if (newPosition) {
       const lat = newPosition.lat();
       const lng = newPosition.lng();
-      const locationOnMap = { lat, lng };
-      console.log(locationOnMap);
+      const newMarkerLocation = { lat, lng };
+      setMarkerLocation(newMarkerLocation);
+      console.log("Marker dragged to:", newMarkerLocation); // Log new position
     }
   };
 
+  useEffect(() => {
+    if (location) {
+      setMapCenter(location);
+      setMarkerLocation(location);
+    }
+  }, [location]);
+
+  const handleMapLoad = useCallback(() => {
+    setLoading(false);
+  }, []);
+
   return (
     <div className="h-[55vh] flex-1 overflow-hidden rounded-[25px]">
-      <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!}>
+      {loading && (
+        <Skeleton className="h-[55vh] flex-1 overflow-hidden rounded-[25px]" />
+      )}
+      <APIProvider
+        onLoad={handleMapLoad}
+        apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!}
+      >
         <Map
-          style={{ height: "100%", width: "100%", borderRadius: "15px" }}
+          style={{ height: "100%", width: "100%" }}
           center={mapCenter}
           defaultZoom={13}
           mapId="2532e45032c3ce52"
           disableDefaultUI={true}
           fullscreenControl={true}
+          zoomControl={true}
           onCameraChanged={handleCameraChange}
         >
-          {location && (
+          {markerLocation && (
             <AdvancedMarker
+              ref={markerRef}
               draggable={true}
-              position={location}
+              position={markerLocation}
               onDragEnd={handleMarkerDragEnd}
+              onClick={handleMarkerClick}
             >
               <Pin
                 background={"#f4495d"}
@@ -62,6 +89,17 @@ const AddressMap = ({ location }: AddressMapProps) => {
                 scale={1.4}
               />
             </AdvancedMarker>
+          )}
+
+          {infoWindowShown && (
+            <InfoWindow
+              anchor={marker}
+              headerContent={
+                <h3 className="text-sm font-normal">
+                  Make it clear to guests where your place is located.
+                </h3>
+              }
+            />
           )}
         </Map>
       </APIProvider>

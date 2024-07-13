@@ -15,7 +15,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "../../components/dialog/Input";
+import { Input } from "../components/login-dialog/Input";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Separator } from "@/components/ui/separator";

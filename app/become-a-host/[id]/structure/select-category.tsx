@@ -7,13 +7,17 @@ import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 
-export const SelectCategory = () => {
+interface SelectCategoryProps {
+  setDataLogged: (value: boolean) => void;
+}
+
+export const SelectCategory = ({ setDataLogged }: SelectCategoryProps) => {
   const [selectedCategory, setSelectedCategory] = useState<string | undefined>(
     undefined,
   );
 
   return (
-    <div className="mx-auto mb-14 grid max-w-2xl grid-cols-2 gap-4 pl-5 pr-5 md:grid-cols-3">
+    <div className="mx-auto mb-20 grid max-w-2xl grid-cols-2 gap-4 pl-5 pr-5 md:grid-cols-3">
       <input type="hidden" name="category" value={selectedCategory as string} />
       {categoryData.map((item) => (
         <div key={item.id} className="cursor-pointer">
@@ -25,7 +29,10 @@ export const SelectCategory = () => {
                   ? "bg-stone-50 outline outline-2"
                   : "",
               )}
-              onClick={() => setSelectedCategory(item.name)}
+              onClick={() => {
+                setSelectedCategory(item.name);
+                setDataLogged(true);
+              }}
             >
               <CardHeader className="felx mt-3 flex-col p-3 pl-4">
                 <motion.div

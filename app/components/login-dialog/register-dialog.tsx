@@ -3,7 +3,6 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Register, RegisterSchema } from "@/schema";
-import { register } from "@/action/register";
 
 import { useState, useTransition } from "react";
 import { FormError } from "./form-error";
@@ -25,6 +24,7 @@ import {
   DialogDescription,
   DialogHeader,
 } from "@/components/ui/dialog";
+import { register } from "@/app/action/register";
 
 export const RegisterDialog = () => {
   const [error, setError] = useState<string | undefined>("");
