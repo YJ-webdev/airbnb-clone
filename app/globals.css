@@ -117,3 +117,41 @@ input[type="number"] {
   width: 100%;
   height: 100%;
 }
+
+/* In your CSS file */
+img {
+  pointer-events: none; /* Disable click events on the image */
+  user-select: none; /* Disable selection of the image */
+}
+
+/* Optionally, disable right-click context menu */
+img {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
+}
+
+.image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* Allow clicking through the overlay */
+}
+
+.image-container {
+  position: relative;
+}
+
+.watermark {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  color: rgba(255, 255, 255, 0.5); /* Semi-transparent white */
+  font-size: 12px;
+  pointer-events: none; /* Allow clicking through the watermark */
+}

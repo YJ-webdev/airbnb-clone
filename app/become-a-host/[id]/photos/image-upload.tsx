@@ -3,7 +3,6 @@ import Image from "next/image";
 import { useDropzone } from "react-dropzone";
 import ImageModal from "./image-modal";
 import { Edit, Ellipsis, ImageIcon, Plus, Scan, Trash } from "lucide-react";
-
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,7 +18,7 @@ export interface FileWithPreview extends File {
 
 const ImageUpload: React.FC = () => {
   const [files, setFiles] = useState<FileWithPreview[]>([]);
-  const [modalFile, setModalFile] = useState<FileWithPreview | null>(null);
+  const [modalIndex, setModalIndex] = useState<number | null>(null);
 
   const { getRootProps, getInputProps } = useDropzone({
     accept: { "image/*": [] },
@@ -41,9 +40,9 @@ const ImageUpload: React.FC = () => {
       const updatedFiles = prevFiles.filter(
         (file) => file.preview !== fileToRemove.preview,
       );
-      URL.revokeObjectURL(fileToRemove.preview);
       return updatedFiles;
     });
+    URL.revokeObjectURL(fileToRemove.preview);
   };
 
   const makeCoverPhoto = (
@@ -60,20 +59,25 @@ const ImageUpload: React.FC = () => {
     });
   };
 
-  const openModal = (file: FileWithPreview) => {
-    setModalFile(file);
+  const openModal = (index: number) => {
+    setModalIndex(index);
   };
 
   const closeModal = () => {
-    setModalFile(null);
+    setModalIndex(null);
   };
 
-  useEffect(() => {
-    // Clean up blob URLs when component unmounts
-    return () => {
-      files.forEach((file) => URL.revokeObjectURL(file.preview));
-    };
-  }, [files]);
+  const showPrev = () => {
+    if (modalIndex !== null && modalIndex > 0) {
+      setModalIndex(modalIndex - 1);
+    }
+  };
+
+  const showNext = () => {
+    if (modalIndex !== null && modalIndex < files.length - 1) {
+      setModalIndex(modalIndex + 1);
+    }
+  };
 
   const thumbs = files.map((file, index) => (
     <div
@@ -81,7 +85,7 @@ const ImageUpload: React.FC = () => {
       className={`relative ${index === 0 ? "col-span-2 h-[400px]" : "col-span-1 h-[200px]"}`}
       onClick={(event) => {
         event.stopPropagation();
-        openModal(file);
+        openModal(index);
       }}
     >
       <div className="thumb-inner overflow-hidden rounded-xl">
@@ -127,6 +131,13 @@ const ImageUpload: React.FC = () => {
     </div>
   ));
 
+  useEffect(() => {
+    // Clean up blob URLs when component unmounts
+    return () => {
+      files.forEach((file) => URL.revokeObjectURL(file.preview));
+    };
+  }, [files]);
+
   return (
     <section className="mx-auto max-w-2xl pl-5 pr-5 pt-5 md:pl-0 md:pr-0">
       <div
@@ -164,7 +175,15 @@ const ImageUpload: React.FC = () => {
         </aside>
       )}
 
-      {modalFile && <ImageModal file={modalFile} onClose={closeModal} />}
+      {modalIndex !== null && (
+        <ImageModal
+          files={files}
+          currentIndex={modalIndex}
+          onClose={closeModal}
+          onPrev={showPrev}
+          onNext={showNext}
+        />
+      )}
     </section>
   );
 };
