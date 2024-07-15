@@ -136,7 +136,7 @@ const ImageUpload: React.FC = () => {
     return () => {
       files.forEach((file) => URL.revokeObjectURL(file.preview));
     };
-  }, [files]);
+  }, []);
 
   return (
     <section className="mx-auto max-w-2xl pl-5 pr-5 pt-5 md:pl-0 md:pr-0">
