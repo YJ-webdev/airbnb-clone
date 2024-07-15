@@ -33,22 +33,14 @@ const ImageUpload: React.FC = () => {
     },
   });
 
-  const removeFile = (
-    fileToRemove: FileWithPreview,
-    event: React.MouseEvent,
-  ) => {
-    event.stopPropagation();
+  const removeFile = (fileToRemove: FileWithPreview) => {
     setFiles((currentFiles) =>
       currentFiles.filter((file) => file !== fileToRemove),
     );
     URL.revokeObjectURL(fileToRemove.preview);
   };
 
-  const makeCoverPhoto = (
-    fileToCover: FileWithPreview,
-    event: React.MouseEvent,
-  ) => {
-    event.stopPropagation();
+  const makeCoverPhoto = (fileToCover: FileWithPreview) => {
     setFiles((currentFiles) => {
       const newFiles = currentFiles.filter((file) => file !== fileToCover);
       newFiles.unshift(fileToCover);
@@ -70,6 +62,7 @@ const ImageUpload: React.FC = () => {
           width={500}
           height={500}
           alt="home image"
+          // Revoke data uri after image is loaded
           onLoad={() => {
             URL.revokeObjectURL(file.preview);
           }}
@@ -83,22 +76,19 @@ const ImageUpload: React.FC = () => {
             {index !== 0 && (
               <DropdownMenuItem
                 className="cursor-pointer py-3 font-semibold"
-                onClick={(event) => makeCoverPhoto(file, event)}
+                onClick={() => makeCoverPhoto(file)}
               >
                 <Scan size={13} className="mr-2" />
                 Make cover photo
               </DropdownMenuItem>
             )}
-            <DropdownMenuItem
-              className="cursor-pointer py-3 font-semibold"
-              onClick={(event) => event.stopPropagation()}
-            >
+            <DropdownMenuItem className="cursor-pointer py-3 font-semibold">
               <Edit size={13} className="mr-2" />
               Edit
             </DropdownMenuItem>
             <DropdownMenuItem
               className="cursor-pointer py-3 font-semibold"
-              onClick={(event) => removeFile(file, event)}
+              onClick={() => removeFile(file)}
             >
               <Trash size={13} className="mr-2" />
               Delete
@@ -110,6 +100,7 @@ const ImageUpload: React.FC = () => {
   ));
 
   useEffect(() => {
+    // Make sure to revoke the data uris to avoid memory leaks, will run on unmount
     return () => {
       files.forEach((file) => URL.revokeObjectURL(file.preview));
     };
@@ -119,27 +110,13 @@ const ImageUpload: React.FC = () => {
     <section className="mx-auto max-w-2xl pl-5 pr-5 pt-5 md:pl-0 md:pr-0">
       <div
         {...getRootProps({
-          className:
-            "mx-auto max-w-2xl h-[400px] flex items-center justify-center",
+          className: "mx-auto max-w-2xl flex items-center justify-center",
         })}
       >
         <input {...getInputProps()} />
 
-        {files.length > 0 ? (
-          <aside className="grid h-full w-full grid-cols-2 gap-4">
-            {thumbs}
-            <div className="col-span-1 h-[200px]">
-              <div className="thumb-inner flex h-[250px] w-full cursor-pointer flex-col items-center justify-center rounded-xl outline-dashed outline-1 outline-zinc-500 hover:outline hover:outline-2">
-                <Plus size={38} strokeWidth={1} color="#5e606c" />
-                <p className="text-sm font-semibold text-[#5e606c] md:text-base">
-                  Add more
-                </p>
-              </div>
-            </div>
-            <div className="h-24"></div>
-          </aside>
-        ) : (
-          <div className="flex h-full w-full cursor-pointer flex-col items-center justify-center space-y-2 rounded-xl bg-zinc-50 outline-dashed outline-1 outline-zinc-500">
+        {files.length === 0 && (
+          <div className="mb-28 flex h-[400px] w-full cursor-pointer flex-col items-center justify-center space-y-2 rounded-xl bg-zinc-50 outline-dashed outline-1 outline-zinc-500">
             <ImageIcon size={30} strokeWidth={1.5} color="#5e606c" />
             <p className="font-semibold text-[#5e606c]">
               Upload max. 20 photos!
@@ -147,6 +124,23 @@ const ImageUpload: React.FC = () => {
           </div>
         )}
       </div>
+      {files.length > 0 && (
+        <aside className="grid h-full w-full grid-cols-2 gap-4">
+          {thumbs}
+          <div
+            {...getRootProps({
+              className: "col-span-1 h-[200px] mb-28",
+            })}
+          >
+            <div className="thumb-inner flex h-[250px] w-full cursor-pointer flex-col items-center justify-center rounded-xl outline-dashed outline-1 outline-zinc-500 hover:outline hover:outline-2">
+              <Plus size={38} strokeWidth={1} color="#5e606c" />
+              <p className="text-sm font-semibold text-[#5e606c] md:text-base">
+                Add more
+              </p>
+            </div>
+          </div>
+        </aside>
+      )}
     </section>
   );
 };
