@@ -14,7 +14,7 @@ interface FileWithPreview extends File {
   preview: string;
 }
 
-const Previews: React.FC = () => {
+const ImageUpload: React.FC = () => {
   const [files, setFiles] = useState<FileWithPreview[]>([]);
 
   const { getRootProps, getInputProps } = useDropzone({
@@ -22,13 +22,14 @@ const Previews: React.FC = () => {
       "image/*": [],
     },
     onDrop: (acceptedFiles: File[]) => {
-      setFiles(
-        acceptedFiles.map((file) =>
+      setFiles((currentFiles) => [
+        ...currentFiles,
+        ...acceptedFiles.map((file) =>
           Object.assign(file, {
             preview: URL.createObjectURL(file),
           }),
         ),
-      );
+      ]);
     },
   });
 
@@ -112,7 +113,7 @@ const Previews: React.FC = () => {
   }, [files]);
 
   return (
-    <section className="mx-auto max-w-2xl pb-2 pl-6 pr-6 pt-5 md:pl-0 md:pr-0">
+    <section className="mx-auto max-w-2xl pl-5 pr-5 pt-5 md:pl-0 md:pr-0">
       <div
         {...getRootProps({
           className:
@@ -122,18 +123,24 @@ const Previews: React.FC = () => {
         <input {...getInputProps()} />
 
         {files.length > 0 ? (
-          <aside className="grid h-full w-full grid-cols-2 gap-3">
+          <aside className="grid h-full w-full grid-cols-2 gap-4">
             {thumbs}
-            <div className="col-span-1 h-[250px]">
+            <div className="col-span-1 h-[200px]">
               <div className="thumb-inner flex h-[250px] w-full cursor-pointer flex-col items-center justify-center rounded-xl outline-dashed outline-1 outline-zinc-500 hover:outline hover:outline-2">
-                <Plus size={40} strokeWidth={1} color="#5e606c" />
-                <p className="font-semibold text-[#5e606c]">Add more</p>
+                <Plus size={38} strokeWidth={1} color="#5e606c" />
+                <p className="text-sm font-semibold text-[#5e606c] md:text-base">
+                  Add more
+                </p>
               </div>
             </div>
+            <div className="h-24"></div>
           </aside>
         ) : (
-          <div className="flex h-full w-full cursor-pointer items-center justify-center rounded-xl outline-dashed outline-1 outline-zinc-500">
+          <div className="flex h-full w-full cursor-pointer flex-col items-center justify-center space-y-2 rounded-xl bg-zinc-50 outline-dashed outline-1 outline-zinc-500">
             <ImageIcon size={30} strokeWidth={1.5} color="#5e606c" />
+            <p className="font-semibold text-[#5e606c]">
+              Upload max. 20 photos!
+            </p>
           </div>
         )}
       </div>
@@ -141,4 +148,4 @@ const Previews: React.FC = () => {
   );
 };
 
-export default Previews;
+export default ImageUpload;

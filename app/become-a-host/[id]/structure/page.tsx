@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Undo2 } from "lucide-react";
 import Link from "next/link";
 import { SelectCategory } from "./select-category";
 import { CreationSubmit } from "@/app/components/become-a-host/submit-buttons";
@@ -13,7 +12,7 @@ export default function StructureRoute({ params }: { params: { id: string } }) {
 
   return (
     <>
-      <h2 className="mx-auto max-w-2xl p-5 text-2xl font-semibold tracking-tight transition-colors md:text-3xl">
+      <h2 className="mx-auto mb-5 max-w-2xl p-5 text-2xl font-semibold tracking-tight transition-colors md:text-3xl">
         Which of these best describes your home?
       </h2>
 
@@ -29,9 +28,7 @@ export default function StructureRoute({ params }: { params: { id: string } }) {
               className="bg-white px-3 py-6 text-[16px] font-bold underline hover:bg-zinc-100"
               asChild
             >
-              <Link href="/">
-                <Undo2 size={22} className="mr-2" /> Back to home
-              </Link>
+              <Link href="/">Back to home</Link>
             </Button>
             <CreationSubmit dataLogged={dataLogged} />
           </div>

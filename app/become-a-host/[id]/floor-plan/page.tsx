@@ -27,10 +27,6 @@ export default function FloorPlanRoute({ params }: { params: { id: string } }) {
     <>
       <h2 className="mx-auto max-w-2xl pl-6 pr-6 pt-6 text-2xl font-semibold transition-colors md:pl-0 md:pr-0 md:pt-5 md:text-3xl">
         Let&apos;s start with the basics!
-        <span className="text-[20px] font-medium text-muted-foreground">
-          {" "}
-          —You&apos;ll add more details later,
-        </span>
       </h2>
       <form action={createFloorPlan}>
         <input type="hidden" name="listingId" value={params.id} />

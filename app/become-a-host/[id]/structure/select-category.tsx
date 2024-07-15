@@ -17,7 +17,7 @@ export const SelectCategory = ({ setDataLogged }: SelectCategoryProps) => {
   );
 
   return (
-    <div className="mx-auto mb-20 grid max-w-2xl grid-cols-2 gap-4 pl-5 pr-5 md:grid-cols-3">
+    <div className="mx-auto mb-28 grid max-w-2xl grid-cols-2 gap-4 pl-5 pr-5 md:grid-cols-3">
       <input type="hidden" name="category" value={selectedCategory as string} />
       {categoryData.map((item) => (
         <div key={item.id} className="cursor-pointer">

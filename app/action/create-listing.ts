@@ -22,14 +22,14 @@ export async function createListing({ userId }: { userId: string }) {
     return redirect(`become-a-host/${data.id}/structure`);
   } else if (!data.addedCategory) {
     return redirect(`become-a-host/${data.id}/structure`);
-  } else if (data.addedCategory && !data.addedLocation) {
-    return redirect(`/become-a-host/${data.id}/location`);
-  } else if (data.addedCategory && data.addedLocation && !data.addedFloorPlan) {
+  } else if (data.addedCategory && !data.addedFloorPlan) {
     return redirect(`/become-a-host/${data.id}/floor-plan`);
+  } else if (data.addedCategory && data.addedFloorPlan && !data.addedLocation) {
+    return redirect(`/become-a-host/${data.id}/location`);
   } else if (
     data.addedCategory &&
-    data.addedLocation &&
     data.addedFloorPlan &&
+    data.addedLocation &&
     !data.addedPhotos
   ) {
     return redirect(`/become-a-host/${data.id}/photos`);
@@ -50,6 +50,15 @@ export async function createListing({ userId }: { userId: string }) {
     !data.addedPrice
   ) {
     return redirect(`/become-a-host/${data.id}/price`);
+  } else if (
+    data.addedCategory &&
+    data.addedLocation &&
+    data.addedPhotos &&
+    data.addedFloorPlan &&
+    data.addedDescription &&
+    data.addedPrice
+  ) {
+    return redirect(`/become-a-host/${data.id}/review`);
   } else {
     redirect(`/become-a-host/${data.id}/structure`);
   }
@@ -66,22 +75,6 @@ export async function createCategoryPage(formData: FormData) {
     data: {
       category: category,
       addedCategory: true,
-    },
-  });
-
-  return redirect(`/become-a-host/${listingId}/location`);
-}
-
-export async function createLocation(formData: FormData) {
-  const listingId = formData.get("listingId") as string;
-  const locationValue = formData.get("locationValue") as string;
-  const data = await prisma.listing.update({
-    where: {
-      id: listingId,
-    },
-    data: {
-      locationValue: locationValue,
-      addedLocation: true,
     },
   });
 
@@ -107,6 +100,22 @@ export async function createFloorPlan(formData: FormData) {
       bathroomCount: Number(bathroomCount),
 
       addedFloorPlan: true,
+    },
+  });
+
+  return redirect(`/become-a-host/${listingId}/location`);
+}
+
+export async function createLocation(formData: FormData) {
+  const listingId = formData.get("listingId") as string;
+  const locationValue = formData.get("locationValue") as string;
+  const data = await prisma.listing.update({
+    where: {
+      id: listingId,
+    },
+    data: {
+      locationValue: locationValue,
+      addedLocation: true,
     },
   });
 
