@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/tooltip";
 import { Info } from "lucide-react";
 import { useState } from "react";
+import Previews from "./image-upload";
 
 export default function PhotosRoute() {
   const [dataLogged, setDataLogged] = useState(false);
@@ -31,6 +32,8 @@ export default function PhotosRoute() {
           </Tooltip>
         </TooltipProvider>
       </h2>
+      <Previews />
+      <div h-26></div>
       <ActionBar dataLogged={dataLogged} />
     </>
   );
