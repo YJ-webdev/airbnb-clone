@@ -49,11 +49,13 @@ const AddressForm = ({ location, setDataLogged }: AddressFormProps) => {
 
   const formedAddress = `${address} ${locality} ${state?.name || ""} ${postalCode} ${country?.name}`;
 
-  if (address && postalCode && country) {
-    setDataLogged(true);
-  } else {
-    setDataLogged(false);
-  }
+  useEffect(() => {
+    if (address && postalCode && country) {
+      setDataLogged(true);
+    } else {
+      setDataLogged(false);
+    }
+  }, [address, locality, state, postalCode, country, setDataLogged]);
 
   useEffect(() => {
     location(formedAddress);
@@ -71,6 +73,8 @@ const AddressForm = ({ location, setDataLogged }: AddressFormProps) => {
 
       <div>
         <select
+          id="country"
+          name="country"
           onChange={(e) =>
             setCountry(
               countryData.find((c) => c.isoCode === e.target.value) || null,
@@ -89,22 +93,27 @@ const AddressForm = ({ location, setDataLogged }: AddressFormProps) => {
         </select>
         <div className="mt-5 flex flex-col space-y-4">
           <input
+            id="location-input"
+            name="address"
             type="text"
             value={address}
             onChange={(e) => setAddress(e.target.value)}
             placeholder="Address"
             required
-            id="location-input"
             className="w-full border-b border-gray-300 p-2 outline-none"
           />
 
           <input
+            id="apt"
+            name="apt"
             type="text"
             placeholder="Apt, Suite, etc (optional)"
             className="w-full border-b border-gray-300 p-2 outline-none"
           />
 
           <select
+            id="city"
+            name="city"
             onChange={(e) => setLocality(e.target.value)}
             value={locality}
             className="w-full border-b border-gray-300 p-2 outline-none"
@@ -118,6 +127,8 @@ const AddressForm = ({ location, setDataLogged }: AddressFormProps) => {
           </select>
           <div className="flex justify-between">
             <select
+              id="state"
+              name="state"
               onChange={(e) =>
                 setState(
                   states.find((s) => s.isoCode === e.target.value) || null,
@@ -134,12 +145,13 @@ const AddressForm = ({ location, setDataLogged }: AddressFormProps) => {
               ))}
             </select>
             <input
+              id="postal_code-input"
+              name="postalCode"
               type="number"
               value={postalCode}
               onChange={(e) => setPostalCode(e.target.value)}
               placeholder="Zip/Postal code"
               required
-              id="postal_code-input"
               className="ml-2 w-1/2 border-b border-gray-300 p-2 outline-none"
             />
           </div>
