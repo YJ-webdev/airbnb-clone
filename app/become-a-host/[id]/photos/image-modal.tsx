@@ -39,8 +39,11 @@ const ImageModal: React.FC<ImageModalProps> = ({
             className="h-[80vh] w-auto rounded-xl"
           />{" "}
         </div>
-        <button className="absolute right-4 top-4" onClick={onClose}>
-          <X size={40} className="rounded-full p-2 hover:bg-zinc-100" />
+        <button
+          className="absolute right-4 top-4 hover:scale-105"
+          onClick={onClose}
+        >
+          <X size={38} className="rounded-full p-2 hover:bg-zinc-100" />
         </button>
         {currentIndex > 0 && (
           <button
@@ -49,7 +52,7 @@ const ImageModal: React.FC<ImageModalProps> = ({
             onClick={onPrev}
             disabled={currentIndex === 0}
           >
-            <ChevronLeft size={40} />
+            <ChevronLeft strokeWidth={1.5} size={40} />
           </button>
         )}
         {currentIndex < files.length - 1 && (
@@ -59,7 +62,7 @@ const ImageModal: React.FC<ImageModalProps> = ({
             onClick={onNext}
             disabled={currentIndex === files.length - 1}
           >
-            <ChevronRight size={40} />
+            <ChevronRight strokeWidth={1.5} size={40} />
           </button>
         )}
         <p className="absolute bottom-14 left-1/2 -translate-x-1/2 transform rounded-xl px-3 py-2 font-semibold backdrop-blur-md">
