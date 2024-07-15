@@ -1,7 +1,8 @@
-import { Edit, Ellipsis, ImageIcon, Plus, Scan, Trash } from "lucide-react";
-import Image from "next/image";
 import React, { useEffect, useState } from "react";
+import Image from "next/image";
 import { useDropzone } from "react-dropzone";
+import ImageModal from "./image-modal";
+import { Edit, Ellipsis, ImageIcon, Plus, Scan, Trash } from "lucide-react";
 
 import {
   DropdownMenu,
@@ -10,50 +11,78 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-interface FileWithPreview extends File {
+export interface FileWithPreview extends File {
   preview: string;
+  width?: number;
+  height?: number;
 }
 
 const ImageUpload: React.FC = () => {
   const [files, setFiles] = useState<FileWithPreview[]>([]);
+  const [modalFile, setModalFile] = useState<FileWithPreview | null>(null);
 
   const { getRootProps, getInputProps } = useDropzone({
-    accept: {
-      "image/*": [],
-    },
+    accept: { "image/*": [] },
     onDrop: (acceptedFiles: File[]) => {
-      setFiles((currentFiles) => [
-        ...currentFiles,
-        ...acceptedFiles.map((file) =>
-          Object.assign(file, {
-            preview: URL.createObjectURL(file),
-          }),
-        ),
-      ]);
+      const newFiles = acceptedFiles.map((file) => ({
+        preview: URL.createObjectURL(file),
+        ...file,
+      }));
+      setFiles((prevFiles) => [...prevFiles, ...newFiles]);
     },
   });
 
-  const removeFile = (fileToRemove: FileWithPreview) => {
-    setFiles((currentFiles) =>
-      currentFiles.filter((file) => file !== fileToRemove),
-    );
-    URL.revokeObjectURL(fileToRemove.preview);
-  };
-
-  const makeCoverPhoto = (fileToCover: FileWithPreview) => {
-    setFiles((currentFiles) => {
-      const newFiles = currentFiles.filter((file) => file !== fileToCover);
-      newFiles.unshift(fileToCover);
-      return newFiles;
+  const removeFile = (
+    fileToRemove: FileWithPreview,
+    event: React.MouseEvent,
+  ) => {
+    event.stopPropagation();
+    setFiles((prevFiles) => {
+      const updatedFiles = prevFiles.filter(
+        (file) => file.preview !== fileToRemove.preview,
+      );
+      URL.revokeObjectURL(fileToRemove.preview);
+      return updatedFiles;
     });
   };
 
+  const makeCoverPhoto = (
+    fileToCover: FileWithPreview,
+    event: React.MouseEvent,
+  ) => {
+    event.stopPropagation();
+    setFiles((prevFiles) => {
+      const updatedFiles = prevFiles.filter(
+        (file) => file.preview !== fileToCover.preview,
+      );
+      updatedFiles.unshift(fileToCover);
+      return updatedFiles;
+    });
+  };
+
+  const openModal = (file: FileWithPreview) => {
+    setModalFile(file);
+  };
+
+  const closeModal = () => {
+    setModalFile(null);
+  };
+
+  useEffect(() => {
+    // Clean up blob URLs when component unmounts
+    return () => {
+      files.forEach((file) => URL.revokeObjectURL(file.preview));
+    };
+  }, [files]);
+
   const thumbs = files.map((file, index) => (
     <div
-      className={`relative ${
-        index === 0 ? "col-span-2 h-[400px]" : "col-span-1 h-[200px]"
-      }`}
-      key={file.name}
+      key={file.preview}
+      className={`relative ${index === 0 ? "col-span-2 h-[400px]" : "col-span-1 h-[200px]"}`}
+      onClick={(event) => {
+        event.stopPropagation();
+        openModal(file);
+      }}
     >
       <div className="thumb-inner overflow-hidden rounded-xl">
         <Image
@@ -61,11 +90,7 @@ const ImageUpload: React.FC = () => {
           className="h-full w-full object-cover"
           width={500}
           height={500}
-          alt="home image"
-          // Revoke data uri after image is loaded
-          onLoad={() => {
-            URL.revokeObjectURL(file.preview);
-          }}
+          alt="Preview"
         />
 
         <DropdownMenu>
@@ -76,19 +101,22 @@ const ImageUpload: React.FC = () => {
             {index !== 0 && (
               <DropdownMenuItem
                 className="cursor-pointer py-3 font-semibold"
-                onClick={() => makeCoverPhoto(file)}
+                onClick={(event) => makeCoverPhoto(file, event)}
               >
                 <Scan size={13} className="mr-2" />
                 Make cover photo
               </DropdownMenuItem>
             )}
-            <DropdownMenuItem className="cursor-pointer py-3 font-semibold">
+            <DropdownMenuItem
+              className="cursor-pointer py-3 font-semibold"
+              onClick={(event) => event.stopPropagation()}
+            >
               <Edit size={13} className="mr-2" />
               Edit
             </DropdownMenuItem>
             <DropdownMenuItem
               className="cursor-pointer py-3 font-semibold"
-              onClick={() => removeFile(file)}
+              onClick={(event) => removeFile(file, event)}
             >
               <Trash size={13} className="mr-2" />
               Delete
@@ -98,13 +126,6 @@ const ImageUpload: React.FC = () => {
       </div>
     </div>
   ));
-
-  useEffect(() => {
-    // Make sure to revoke the data uris to avoid memory leaks, will run on unmount
-    return () => {
-      files.forEach((file) => URL.revokeObjectURL(file.preview));
-    };
-  }, [files]);
 
   return (
     <section className="mx-auto max-w-2xl pl-5 pr-5 pt-5 md:pl-0 md:pr-0">
@@ -124,6 +145,7 @@ const ImageUpload: React.FC = () => {
           </div>
         )}
       </div>
+
       {files.length > 0 && (
         <aside className="grid h-full w-full grid-cols-2 gap-4">
           {thumbs}
@@ -141,6 +163,8 @@ const ImageUpload: React.FC = () => {
           </div>
         </aside>
       )}
+
+      {modalFile && <ImageModal file={modalFile} onClose={closeModal} />}
     </section>
   );
 };
