@@ -13,7 +13,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Eraser, Pointer } from "lucide-react";
+import { Pointer } from "lucide-react";
 
 interface PriceInputProps {
   setTypedValue: Dispatch<SetStateAction<number>>;
@@ -69,7 +69,7 @@ export const PriceInput = ({ setTypedValue }: PriceInputProps) => {
     <div className="mx-auto mt-16">
       <div className="flex items-center">
         <span
-          className={`${montserrat.className} text-[38px] font-bold text-zinc-800 outline-none md:text-[48px]`}
+          className={`${montserrat.className} text-[60px] font-bold text-zinc-800 outline-none md:text-[70px]`}
         >
           $
         </span>
@@ -77,7 +77,7 @@ export const PriceInput = ({ setTypedValue }: PriceInputProps) => {
           type="text"
           value={inputValue}
           onChange={handleChange}
-          className={`${montserrat.className} w-12 text-center text-[38px] font-bold text-zinc-800 placeholder-slate-300 outline-none md:text-[48px]`}
+          className={`${montserrat.className} w-12 text-center text-[60px] font-bold text-zinc-800 placeholder-slate-300 outline-none md:text-[70px]`}
           ref={inputRef}
           style={{ minWidth: "3ch" }}
           maxLength={6}
@@ -85,15 +85,11 @@ export const PriceInput = ({ setTypedValue }: PriceInputProps) => {
           placeholder={`123`}
           onInput={(e) => handleRawInput(e.currentTarget.value)} // Correct usage of onInput in React
         />
-        <div className="ml-1 flex cursor-pointer flex-col">
+        <div className="flex cursor-pointer flex-col">
           <TooltipProvider delayDuration={0}>
             <Tooltip>
               <TooltipTrigger>
-                <Pointer
-                  size={25}
-                  strokeWidth={2.5}
-                  onClick={handleIconClick}
-                />
+                <Pointer size={25} strokeWidth={2} onClick={handleIconClick} />
               </TooltipTrigger>
               <TooltipContent>
                 <p>Edit</p>
