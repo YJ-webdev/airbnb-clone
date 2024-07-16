@@ -40,36 +40,36 @@ const ImageModal: React.FC<ImageModalProps> = ({
       onClick={onClose}
     >
       <div
-        className="relative max-h-[680px] w-[90vw] rounded-xl bg-white"
+        className="relative h-full w-full bg-white md:h-[680px] md:w-[90vw] md:rounded-xl"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex items-baseline justify-center">
-          <button
-            className="absolute right-4 top-4 hover:scale-105"
-            onClick={onClose}
-          >
-            <X
-              size={38}
-              strokeWidth={1.5}
-              className="rounded-full bg-white p-2"
-            />
-          </button>
+        <div className="flex h-full w-full items-center justify-center">
           <Image
             src={file.preview}
-            width={500}
-            height={500}
+            width={1000}
+            height={1000}
             alt="Full size"
-            className="mx-auto max-h-[90vh] w-auto px-0 py-7"
-          />{" "}
+            className="z-0 mx-auto max-h-[80%] max-w-full object-contain"
+          />
           <p className="absolute bottom-7 right-[5%] line-clamp-1 rounded-full bg-white px-2 py-1 text-sm font-semibold md:text-base">
             {currentIndex + 1} / {files.length}
           </p>
         </div>
+        <button
+          className="absolute right-4 top-4 z-10 hover:scale-105"
+          onClick={onClose}
+        >
+          <X
+            size={38}
+            strokeWidth={1.5}
+            className="rounded-full bg-white p-2"
+          />
+        </button>
 
         {currentIndex > 0 && (
           <button
             type="button"
-            className="absolute left-4 top-1/2 -translate-y-1/2 transform md:left-6"
+            className="absolute left-4 top-1/2 z-10 -translate-y-1/2 transform rounded-full hover:bg-white md:left-6"
             onClick={onPrev}
             disabled={currentIndex === 0}
           >
@@ -79,7 +79,7 @@ const ImageModal: React.FC<ImageModalProps> = ({
         {currentIndex < files.length - 1 && (
           <button
             type="button"
-            className="absolute right-4 top-1/2 -translate-y-1/2 transform md:right-6"
+            className="absolute right-4 top-1/2 z-10 -translate-y-1/2 transform rounded-full hover:bg-white md:right-6"
             onClick={onNext}
             disabled={currentIndex === files.length - 1}
           >
