@@ -1,3 +1,4 @@
+import { Montserrat } from "next/font/google";
 import React, {
   useState,
   useRef,
@@ -12,11 +13,16 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { SquarePen } from "lucide-react";
+import { Eraser, Pointer } from "lucide-react";
 
 interface PriceInputProps {
   setTypedValue: Dispatch<SetStateAction<number>>;
 }
+
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
+});
 
 export const PriceInput = ({ setTypedValue }: PriceInputProps) => {
   const [inputValue, setInputValue] = useState<string>("");
@@ -61,27 +67,33 @@ export const PriceInput = ({ setTypedValue }: PriceInputProps) => {
 
   return (
     <div className="mx-auto mt-16">
-      <div className="flex items-center justify-center">
-        <span className="text-[38px] font-bold text-zinc-800 outline-none md:text-[48px]">
+      <div className="flex items-center">
+        <span
+          className={`${montserrat.className} text-[38px] font-bold text-zinc-800 outline-none md:text-[48px]`}
+        >
           $
         </span>
         <input
           type="text"
           value={inputValue}
           onChange={handleChange}
-          className="mx-2 text-center text-[38px] font-bold text-zinc-800 placeholder-slate-300 outline-none md:text-[48px]"
+          className={`${montserrat.className} w-12 text-center text-[38px] font-bold text-zinc-800 placeholder-slate-300 outline-none md:text-[48px]`}
           ref={inputRef}
-          style={{ minWidth: "2ch" }}
+          style={{ minWidth: "3ch" }}
           maxLength={6}
           minLength={2}
-          placeholder="0"
+          placeholder={`123`}
           onInput={(e) => handleRawInput(e.currentTarget.value)} // Correct usage of onInput in React
         />
-        <div className="ml-1 flex cursor-pointer flex-col items-center justify-items-start">
+        <div className="ml-1 flex cursor-pointer flex-col">
           <TooltipProvider delayDuration={0}>
             <Tooltip>
               <TooltipTrigger>
-                <SquarePen size={25} onClick={handleIconClick} />
+                <Pointer
+                  size={25}
+                  strokeWidth={2.5}
+                  onClick={handleIconClick}
+                />
               </TooltipTrigger>
               <TooltipContent>
                 <p>Edit</p>
