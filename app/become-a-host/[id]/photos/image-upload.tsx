@@ -62,7 +62,6 @@ const ImageUpload: React.FC = () => {
   const openModal = (index: number) => {
     setModalIndex(index);
   };
-
   const closeModal = () => {
     setModalIndex(null);
   };
@@ -72,7 +71,6 @@ const ImageUpload: React.FC = () => {
       setModalIndex(modalIndex - 1);
     }
   };
-
   const showNext = () => {
     if (modalIndex !== null && modalIndex < files.length - 1) {
       setModalIndex(modalIndex + 1);
@@ -136,6 +134,7 @@ const ImageUpload: React.FC = () => {
     return () => {
       files.forEach((file) => URL.revokeObjectURL(file.preview));
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

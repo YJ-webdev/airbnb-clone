@@ -143,10 +143,6 @@ img {
   pointer-events: none; /* Allow clicking through the overlay */
 }
 
-.image-container {
-  position: relative;
-}
-
 .watermark {
   position: absolute;
   bottom: 10px;
