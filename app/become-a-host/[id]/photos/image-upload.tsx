@@ -2,7 +2,15 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useDropzone } from "react-dropzone";
 import ImageModal from "./image-modal";
-import { Edit, Ellipsis, ImageIcon, Plus, Scan, Trash } from "lucide-react";
+import {
+  Edit,
+  Ellipsis,
+  Image as ImageIcon,
+  Plus,
+  Scan,
+  Trash,
+} from "lucide-react";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,18 +24,34 @@ export interface FileWithPreview extends File {
   height?: number;
 }
 
-const ImageUpload: React.FC = () => {
+interface ImageUploadProps {
+  setDataLogged: (data: boolean) => void;
+  setImageSrc: (data: string) => void;
+}
+
+const ImageUpload = ({ setDataLogged, setImageSrc }: ImageUploadProps) => {
   const [files, setFiles] = useState<FileWithPreview[]>([]);
   const [modalIndex, setModalIndex] = useState<number | null>(null);
 
+  const maxFiles = 20;
+
   const { getRootProps, getInputProps } = useDropzone({
     accept: { "image/*": [] },
+
     onDrop: (acceptedFiles: File[]) => {
       const newFiles = acceptedFiles.map((file) => ({
         preview: URL.createObjectURL(file),
         ...file,
       }));
-      setFiles((prevFiles) => [...prevFiles, ...newFiles]);
+
+      setFiles((prevFiles) => {
+        const allFiles = [...prevFiles, ...newFiles];
+
+        if (allFiles.length > maxFiles) {
+          return allFiles.slice(0, maxFiles);
+        }
+        return allFiles;
+      });
     },
   });
 
@@ -129,6 +153,24 @@ const ImageUpload: React.FC = () => {
     </div>
   ));
 
+  const totalThumbs = thumbs.length;
+
+  useEffect(() => {
+    if (files.length > 0) {
+      setImageSrc(files[0].preview);
+    } else {
+      setImageSrc("");
+    }
+  }, [files, setImageSrc]);
+
+  useEffect(() => {
+    if (totalThumbs >= 5) {
+      setDataLogged(true);
+    } else {
+      setDataLogged(false);
+    }
+  }, [totalThumbs, setDataLogged]);
+
   useEffect(() => {
     // Clean up blob URLs when component unmounts
     return () => {
@@ -157,20 +199,31 @@ const ImageUpload: React.FC = () => {
       </div>
 
       {files.length > 0 && (
-        <aside className="grid h-full w-full grid-cols-2 gap-4">
+        <aside className="mb-28 grid h-full w-full grid-cols-2 gap-4">
           {thumbs}
-          <div
-            {...getRootProps({
-              className: "col-span-1 h-[200px] mb-28",
-            })}
-          >
-            <div className="thumb-inner flex h-[250px] w-full cursor-pointer flex-col items-center justify-center rounded-xl outline-dashed outline-1 outline-zinc-500 hover:outline hover:outline-2">
-              <Plus size={38} strokeWidth={1} color="#5e606c" />
+
+          {totalThumbs !== maxFiles ? (
+            <div
+              {...getRootProps({
+                className: "col-span-1 h-[200px]",
+              })}
+            >
+              <div className="thumb-inner flex h-[250px] w-full cursor-pointer flex-col items-center justify-center space-y-2 rounded-xl outline-dashed outline-1 outline-zinc-500 hover:outline hover:outline-2">
+                <div className="flex flex-col items-center justify-center">
+                  <Plus size={38} strokeWidth={1} color="#5e606c" />
+                  <p className="text-sm font-semibold text-[#5e606c] md:text-base">
+                    Add more
+                  </p>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="thumb-inner flex h-[250px] w-full flex-col items-center justify-center rounded-xl bg-zinc-100">
               <p className="text-sm font-semibold text-[#5e606c] md:text-base">
-                Add more
+                You reached Max.
               </p>
             </div>
-          </div>
+          )}
         </aside>
       )}
 

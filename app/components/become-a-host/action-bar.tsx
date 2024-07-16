@@ -11,9 +11,9 @@ export function ActionBar({ dataLogged }: ActionBarProps) {
     <div className="fixed bottom-0 z-10 h-24 w-full border-t bg-white">
       <div className="mx-auto flex h-full items-center justify-between px-5 lg:px-10">
         <Button
-          className="font-bold hover:underline"
           variant="secondary"
           size="lg"
+          className="bg-white px-3 py-6 text-[16px] font-bold underline hover:bg-zinc-100"
           asChild
         >
           <Link href="/">Previous</Link>

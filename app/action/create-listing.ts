@@ -121,3 +121,38 @@ export async function createLocation(formData: FormData) {
 
   return redirect(`/become-a-host/${listingId}/photos`);
 }
+
+export async function createImages(formData: FormData) {
+  const listingId = formData.get("listingId") as string;
+  const imageSrc = formData.get("imageSrc") as string;
+  const data = await prisma.listing.update({
+    where: {
+      id: listingId,
+    },
+    data: {
+      imageSrc: imageSrc,
+      addedPhotos: true,
+    },
+  });
+
+  return redirect(`/become-a-host/${listingId}/description`);
+}
+
+export async function createDescription(formData: FormData) {
+  const listingId = formData.get("listingId") as string;
+  const title = formData.get("title") as string;
+  const description = formData.get("description") as string;
+
+  const data = await prisma.listing.update({
+    where: {
+      id: listingId,
+    },
+    data: {
+      title: title,
+      description: description,
+      addedDescription: true,
+    },
+  });
+
+  return redirect(`/become-a-host/${listingId}/price`);
+}
