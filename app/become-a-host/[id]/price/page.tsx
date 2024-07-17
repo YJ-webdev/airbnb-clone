@@ -1,19 +1,30 @@
 "use client";
 
-import { cn } from "@/lib/utils";
 import DotPattern from "@/components/magicui/dot-pattern";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PriceCheck } from "./price-check";
 import { PriceInput } from "./price-input";
 import { ActionBar } from "@/app/components/become-a-host/action-bar";
 import { Info } from "lucide-react";
+import { createPrice } from "@/app/action/create-listing";
 
-export default function PriceRoute() {
+export default function PriceRoute({ params }: { params: { id: string } }) {
   const [dataLogged, setDataLogged] = useState(false);
   const [typedValue, setTypedValue] = useState<number>(0);
+
+  useEffect(() => {
+    if (typedValue > 10 && typedValue < 10000) {
+      setDataLogged(true);
+    } else {
+      setDataLogged(false);
+    }
+  }, [typedValue]);
+
   return (
-    <>
+    <form action={createPrice}>
+      <input type="hidden" name="listingId" value={params.id} />
+      <input type="hidden" name="price" value={typedValue} />
       <div className="relative h-full overflow-hidden">
         <DotPattern
           width={20}
@@ -47,6 +58,6 @@ export default function PriceRoute() {
         </div>
       </div>
       <ActionBar dataLogged={dataLogged} />
-    </>
+    </form>
   );
 }

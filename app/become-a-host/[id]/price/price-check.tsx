@@ -7,9 +7,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Skeleton } from "@/components/ui/skeleton";
-import { useState } from "react";
-import { ChevronDown, ChevronUp } from "lucide-react";
 
 interface PriceCheckProps {
   typedValue: number;

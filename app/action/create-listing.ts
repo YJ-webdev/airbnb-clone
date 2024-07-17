@@ -158,17 +158,17 @@ export async function createDescription(formData: FormData) {
   return redirect(`/become-a-host/${listingId}/price`);
 }
 
-// export async function createPrice(formData: FormData) {
-//   const listingId = formData.get("listingId") as string;
-//   const price = formData.get("price") as number;
+export async function createPrice(formData: FormData) {
+  const listingId = formData.get("listingId") as string;
+  const price = formData.get("price") as unknown as number;
 
-//   const data = await prisma.listing.update({
-//     where: {
-//       id: listingId,
-//     },
-//     data: {
-//       price: price,
-//       addedPrice: true,
-//     },
-//   });
-// }
+  const data = await prisma.listing.update({
+    where: {
+      id: listingId,
+    },
+    data: {
+      price: price,
+      addedPrice: true,
+    },
+  });
+}
