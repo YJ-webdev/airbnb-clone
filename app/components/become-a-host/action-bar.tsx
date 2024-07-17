@@ -4,9 +4,17 @@ import { CreationSubmit } from "./submit-buttons";
 
 interface ActionBarProps {
   dataLogged: boolean;
+  prevHref?: string;
+  nextText?: string;
+  prevText?: string;
 }
 
-export function ActionBar({ dataLogged }: ActionBarProps) {
+export function ActionBar({
+  dataLogged,
+  prevHref,
+  nextText,
+  prevText,
+}: ActionBarProps) {
   return (
     <div className="fixed bottom-0 z-10 h-24 w-full border-t bg-white">
       <div className="container mx-auto flex h-full items-center justify-between px-5 lg:px-10">
@@ -16,9 +24,9 @@ export function ActionBar({ dataLogged }: ActionBarProps) {
           className="bg-white px-3 py-6 text-[16px] font-bold underline hover:bg-zinc-100"
           asChild
         >
-          <Link href="/">Previous</Link>
+          <Link href={prevHref ?? "/"}>{prevText ?? "Previous"}</Link>
         </Button>
-        <CreationSubmit dataLogged={dataLogged} />
+        <CreationSubmit dataLogged={dataLogged} nextText={nextText} />
       </div>
     </div>
   );

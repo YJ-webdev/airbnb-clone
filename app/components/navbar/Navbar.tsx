@@ -3,7 +3,6 @@ import { Logo } from "./logo";
 import { Search } from "./search";
 import { UserMenu } from "./user-menu";
 import { AirbnbYourHomeButton } from "./airbnb-your-home-button";
-import { createListing } from "@/app/action/create-listing";
 
 export const Navbar = async () => {
   const session = await getSession();

@@ -66,7 +66,10 @@ export default function LocationRoute({ params }: { params: { id: string } }) {
           <AddressMap location={mapLocation} />
         </div>
 
-        <ActionBar dataLogged={dataLogged} />
+        <ActionBar
+          dataLogged={dataLogged}
+          prevHref={`/become-a-host/${params.id}/floor-plan`}
+        />
       </form>
     </>
   );

@@ -15,11 +15,10 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Pointer } from "lucide-react";
-import { ActionBar } from "@/app/components/become-a-host/action-bar";
 
 interface PriceInputProps {
   setTypedValue: Dispatch<SetStateAction<number>>;
-  params: { id: string };
+  setDataLogged: (value: boolean) => void;
 }
 
 const montserrat = Montserrat({
@@ -27,8 +26,10 @@ const montserrat = Montserrat({
   weight: ["400", "500", "700"],
 });
 
-export const PriceInput = ({ setTypedValue, params }: PriceInputProps) => {
-  const [dataLogged, setDataLogged] = useState(false);
+export const PriceInput = ({
+  setTypedValue,
+  setDataLogged,
+}: PriceInputProps) => {
   const [inputValue, setInputValue] = useState<string>("");
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -97,7 +98,6 @@ export const PriceInput = ({ setTypedValue, params }: PriceInputProps) => {
             placeholder="123"
             onInput={(e) => handleRawInput(e.currentTarget.value)}
           />
-          <ActionBar dataLogged={dataLogged} />
         </div>
         <div className="flex cursor-pointer flex-col">
           <TooltipProvider delayDuration={0}>

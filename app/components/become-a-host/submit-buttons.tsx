@@ -6,9 +6,11 @@ import { useFormStatus } from "react-dom";
 
 interface CreationSubmitProps {
   dataLogged: boolean;
+  nextText?: string;
+  nextPage?: string;
 }
 
-export function CreationSubmit({ dataLogged }: CreationSubmitProps) {
+export function CreationSubmit({ dataLogged, nextText }: CreationSubmitProps) {
   const { pending } = useFormStatus();
   return (
     <>
@@ -28,12 +30,12 @@ export function CreationSubmit({ dataLogged }: CreationSubmitProps) {
             size="lg"
             className="px-7 py-6 text-[16px] font-bold"
           >
-            Save / Next
+            {nextText ?? "Save / Next"}
           </Button>
         )
       ) : (
         <Button disabled size="lg" className="px-7 py-6 text-[16px] font-bold">
-          Save / Next
+          {nextText ?? "Save / Next"}
         </Button>
       )}
     </>

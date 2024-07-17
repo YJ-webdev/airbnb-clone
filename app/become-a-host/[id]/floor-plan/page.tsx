@@ -72,7 +72,10 @@ export default function FloorPlanRoute({ params }: { params: { id: string } }) {
             </div>
           </div>
         </div>
-        <ActionBar dataLogged={dataLogged} />
+        <ActionBar
+          dataLogged={dataLogged}
+          prevHref={`/become-a-host/${params.id}/structure`}
+        />
       </form>
     </>
   );

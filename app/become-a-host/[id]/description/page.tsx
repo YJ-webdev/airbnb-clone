@@ -66,7 +66,10 @@ export default function DescriptionRoute({
             {description.length}/{descriptionMaxLength}
           </p>
         </div>
-        <ActionBar dataLogged={dataLogged} />
+        <ActionBar
+          dataLogged={dataLogged}
+          prevHref={`/become-a-host/${params.id}/photos`}
+        />
       </form>
     </div>
   );
