@@ -9,7 +9,7 @@ interface ActionBarProps {
 export function ActionBar({ dataLogged }: ActionBarProps) {
   return (
     <div className="fixed bottom-0 z-10 h-24 w-full border-t bg-white">
-      <div className="mx-auto flex h-full items-center justify-between px-5 lg:px-10">
+      <div className="container mx-auto flex h-full items-center justify-between px-5 lg:px-10">
         <Button
           variant="secondary"
           size="lg"

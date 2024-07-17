@@ -14,7 +14,7 @@ interface PriceCheckProps {
 
 const montserrat = Montserrat({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
+  weight: ["400", "500", "700"],
 });
 
 export const PriceCheck = ({ typedValue }: PriceCheckProps) => {

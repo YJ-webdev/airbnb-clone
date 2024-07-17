@@ -167,8 +167,10 @@ export async function createPrice(formData: FormData) {
       id: listingId,
     },
     data: {
-      price: price,
+      price: Number(price),
       addedPrice: true,
     },
   });
+
+  return redirect(`/become-a-host/${listingId}/review`);
 }

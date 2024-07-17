@@ -6,6 +6,7 @@ import React, {
   ChangeEvent,
   Dispatch,
   SetStateAction,
+  useCallback,
 } from "react";
 import {
   Tooltip,
@@ -14,9 +15,11 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Pointer } from "lucide-react";
+import { ActionBar } from "@/app/components/become-a-host/action-bar";
 
 interface PriceInputProps {
   setTypedValue: Dispatch<SetStateAction<number>>;
+  params: { id: string };
 }
 
 const montserrat = Montserrat({
@@ -24,7 +27,8 @@ const montserrat = Montserrat({
   weight: ["400", "500", "700"],
 });
 
-export const PriceInput = ({ setTypedValue }: PriceInputProps) => {
+export const PriceInput = ({ setTypedValue, params }: PriceInputProps) => {
+  const [dataLogged, setDataLogged] = useState(false);
   const [inputValue, setInputValue] = useState<string>("");
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -36,17 +40,25 @@ export const PriceInput = ({ setTypedValue }: PriceInputProps) => {
     }
   }, [inputValue]);
 
-  const formatNumber = (value: string): string => {
+  const formatNumber = useCallback((value: string): string => {
     const cleanedValue = value.replace(/[^\d]/g, "");
     if (cleanedValue === "") return "";
     const numberValue = parseInt(cleanedValue, 10);
     return new Intl.NumberFormat("en-US").format(numberValue);
-  };
+  }, []);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
+
     const formattedValue = formatNumber(value);
     setInputValue(formattedValue);
+
+    // Data log available check
+    if (Number(formattedValue) >= 10 && Number(formattedValue) < 10000) {
+      setDataLogged(true);
+    } else {
+      setDataLogged(false);
+    }
   };
 
   const handleIconClick = () => {
@@ -58,11 +70,8 @@ export const PriceInput = ({ setTypedValue }: PriceInputProps) => {
   const handleRawInput = (inputValue: string) => {
     // Clean the input value to remove non-digit characters
     const cleanedValue = inputValue.replace(/[^\d]/g, "");
-
-    // Convert the cleaned value to a number (if necessary)
     const numberValue = parseInt(cleanedValue, 10);
     setTypedValue(numberValue);
-    // Use `numberValue` for your calculations or further processing
   };
 
   return (
@@ -74,6 +83,8 @@ export const PriceInput = ({ setTypedValue }: PriceInputProps) => {
           >
             $
           </span>
+
+          {/* Ensure to handle null or undefined value for initial state */}
           <input
             type="text"
             value={inputValue}
@@ -84,8 +95,9 @@ export const PriceInput = ({ setTypedValue }: PriceInputProps) => {
             maxLength={6}
             minLength={2}
             placeholder="123"
-            onInput={(e) => handleRawInput(e.currentTarget.value)} // Correct usage of onInput in React
+            onInput={(e) => handleRawInput(e.currentTarget.value)}
           />
+          <ActionBar dataLogged={dataLogged} />
         </div>
         <div className="flex cursor-pointer flex-col">
           <TooltipProvider delayDuration={0}>
