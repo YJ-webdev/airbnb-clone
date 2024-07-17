@@ -58,7 +58,7 @@ export default function DescriptionRoute({
             name="description"
             required
             placeholder="Share what makes your place special."
-            className="text-md h-60 font-medium"
+            className="text-md max-w-1xl h-60 border border-zinc-500 font-medium focus:outline focus:outline-1 focus:outline-black"
             maxLength={500}
             onChange={(e) => setDescription(e.target.value)}
           />

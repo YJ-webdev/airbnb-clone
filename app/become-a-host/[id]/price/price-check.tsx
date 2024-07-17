@@ -30,7 +30,7 @@ export const PriceCheck = ({ typedValue }: PriceCheckProps) => {
 
   return (
     <div>
-      <div className="mx-auto">
+      <div className="z-10 mx-auto">
         <div>
           <Accordion
             type="single"
@@ -52,7 +52,7 @@ export const PriceCheck = ({ typedValue }: PriceCheckProps) => {
                   </p>
                 </div>
               </AccordionContent>
-              <AccordionTrigger>
+              <AccordionTrigger className="z-10">
                 {" "}
                 <div className="mx-auto mb-2 flex w-64 justify-between text-base font-semibold">
                   <p className={`${montserrat.className} font-[500]`}>
@@ -82,7 +82,7 @@ export const PriceCheck = ({ typedValue }: PriceCheckProps) => {
                   </p>
                 </div>
               </AccordionContent>
-              <AccordionTrigger className="border-none">
+              <AccordionTrigger className="z-10 border-none">
                 <div className="mx-auto flex w-64 justify-between border-none text-base font-semibold">
                   <p className={`${montserrat.className} font-[500]`}>
                     You earn
