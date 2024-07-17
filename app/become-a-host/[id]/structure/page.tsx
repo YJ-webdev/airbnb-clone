@@ -4,11 +4,12 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { SelectCategory } from "./select-category";
 import { CreationSubmit } from "@/app/components/become-a-host/submit-buttons";
-import { createCategoryPage } from "@/app/action/create-listing";
+import { createStructure } from "@/app/action/create-listing";
 import { useState } from "react";
 
 export default function StructureRoute({ params }: { params: { id: string } }) {
   const [dataLogged, setDataLogged] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
 
   return (
     <>
@@ -16,9 +17,15 @@ export default function StructureRoute({ params }: { params: { id: string } }) {
         Which of these best describes your home?
       </h2>
 
-      <form action={createCategoryPage}>
+      <form action={createStructure}>
         <input type="hidden" name="listingId" value={params.id} />
-        <SelectCategory setDataLogged={setDataLogged} />
+        <input type="hidden" name="category" value={selectedCategory} />
+
+        <SelectCategory
+          setDataLogged={setDataLogged}
+          setSelectedCategory={setSelectedCategory}
+          selectedCategory={selectedCategory}
+        />
 
         <div className="fixed bottom-0 z-10 h-24 w-full border-t bg-white">
           <div className="mx-auto flex h-full items-center justify-between px-5 lg:px-10">

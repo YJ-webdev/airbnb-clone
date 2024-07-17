@@ -20,7 +20,6 @@ export default function FloorPlanRoute({ params }: { params: { id: string } }) {
     } else {
       setDataLogged(false);
     }
-    console.log(guestCount);
   }, [guestCount, bathroomCount]);
 
   return (

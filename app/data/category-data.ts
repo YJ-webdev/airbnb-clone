@@ -1,4 +1,4 @@
-interface categoryDataProps {
+export interface ICategoryData {
   name: string;
   title: string;
   imageUrl: string;
@@ -6,7 +6,7 @@ interface categoryDataProps {
   id: number;
 }
 
-export const categoryData: categoryDataProps[] = [
+export const categoryData: ICategoryData[] = [
   {
     id: 0,
     name: "beach",

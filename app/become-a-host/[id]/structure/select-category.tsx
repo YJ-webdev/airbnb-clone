@@ -1,24 +1,34 @@
 "use client";
 
-import { Card, CardHeader } from "@/components/ui/card";
-import { categoryData } from "../../../lib/category-data";
 import Image from "next/image";
-import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { categoryData, ICategoryData } from "@/app/data/category-data";
 import { motion } from "framer-motion";
+import { Card, CardHeader } from "@/components/ui/card";
 
 interface SelectCategoryProps {
   setDataLogged: (value: boolean) => void;
+  setSelectedCategory: (value: string) => void;
+  selectedCategory: string;
 }
 
-export const SelectCategory = ({ setDataLogged }: SelectCategoryProps) => {
-  const [selectedCategory, setSelectedCategory] = useState<string | undefined>(
-    undefined,
-  );
+export const SelectCategory = ({
+  setDataLogged,
+  setSelectedCategory,
+  selectedCategory,
+}: SelectCategoryProps) => {
+  const handleSelectCategory = (item: ICategoryData) => {
+    if (item) {
+      setSelectedCategory(item.name);
+      setDataLogged(true);
+    } else {
+      setSelectedCategory("");
+      setDataLogged(false);
+    }
+  };
 
   return (
     <div className="mx-auto mb-28 grid max-w-2xl grid-cols-2 gap-4 pl-5 pr-5 md:grid-cols-3">
-      <input type="hidden" name="category" value={selectedCategory as string} />
       {categoryData.map((item) => (
         <div key={item.id} className="cursor-pointer">
           <motion.div whileTap={{ scale: 0.95 }}>
@@ -30,8 +40,7 @@ export const SelectCategory = ({ setDataLogged }: SelectCategoryProps) => {
                   : "",
               )}
               onClick={() => {
-                setSelectedCategory(item.name);
-                setDataLogged(true);
+                handleSelectCategory(item);
               }}
             >
               <CardHeader className="felx mt-3 flex-col p-3 pl-4">

@@ -8,6 +8,8 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useState } from "react";
+import { ChevronDown, ChevronUp } from "lucide-react";
 
 interface PriceCheckProps {
   typedValue: number;
@@ -33,14 +35,12 @@ export const PriceCheck = ({ typedValue }: PriceCheckProps) => {
           <Accordion
             type="single"
             collapsible
-            className="rounded-xl bg-white px-5 py-2 shadow-[0_2px_10px_3px_rgba(0,0,0,0.05)]"
+            className="border bg-white px-5 py-2 shadow-sm"
           >
             <AccordionItem value="item-1">
               <AccordionContent className="mb-0 mt-5 pb-0">
                 <div className="mx-auto flex w-64 justify-between text-base font-normal">
-                  <p className={`${montserrat.className} font-[400]`}>
-                    Base price
-                  </p>{" "}
+                  <p className={`${montserrat.className}`}>Base price</p>{" "}
                   <p className={`${montserrat.className}`}>${formattedValue}</p>
                 </div>
                 <div className="mx-auto flex w-64 justify-between text-base font-normal">
@@ -55,10 +55,10 @@ export const PriceCheck = ({ typedValue }: PriceCheckProps) => {
               <AccordionTrigger>
                 {" "}
                 <div className="mx-auto mb-2 flex w-64 justify-between text-base font-semibold">
-                  <p className={`${montserrat.className} font-[600]`}>
+                  <p className={`${montserrat.className} font-[500]`}>
                     Guest price
                   </p>{" "}
-                  <p className={`${montserrat.className} font-[600]`}>
+                  <p className={`${montserrat.className} font-[500]`}>
                     ${guestPrice}
                   </p>
                 </div>
@@ -84,10 +84,10 @@ export const PriceCheck = ({ typedValue }: PriceCheckProps) => {
               </AccordionContent>
               <AccordionTrigger className="border-none">
                 <div className="mx-auto flex w-64 justify-between border-none text-base font-semibold">
-                  <p className={`${montserrat.className} font-[600]`}>
+                  <p className={`${montserrat.className} font-[500]`}>
                     You earn
                   </p>{" "}
-                  <p className={`${montserrat.className} font-[600]`}>
+                  <p className={`${montserrat.className} font-[500]`}>
                     ${hostEarn}
                   </p>
                 </div>

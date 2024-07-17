@@ -64,7 +64,7 @@ export async function createListing({ userId }: { userId: string }) {
   }
 }
 
-export async function createCategoryPage(formData: FormData) {
+export async function createStructure(formData: FormData) {
   const listingId = formData.get("listingId") as string;
   const category = formData.get("category") as string;
 
@@ -83,7 +83,6 @@ export async function createCategoryPage(formData: FormData) {
 
 export async function createFloorPlan(formData: FormData) {
   const listingId = formData.get("listingId") as string;
-
   const guestCount = formData.get("guestCount") as string;
   const roomCount = formData.get("roomCount") as string;
   const bedCount = formData.get("bedCount") as string;
@@ -109,6 +108,7 @@ export async function createFloorPlan(formData: FormData) {
 export async function createLocation(formData: FormData) {
   const listingId = formData.get("listingId") as string;
   const locationValue = formData.get("locationValue") as string;
+
   const data = await prisma.listing.update({
     where: {
       id: listingId,
@@ -125,6 +125,7 @@ export async function createLocation(formData: FormData) {
 export async function createImages(formData: FormData) {
   const listingId = formData.get("listingId") as string;
   const imageSrc = formData.get("imageSrc") as string;
+
   const data = await prisma.listing.update({
     where: {
       id: listingId,
@@ -156,3 +157,18 @@ export async function createDescription(formData: FormData) {
 
   return redirect(`/become-a-host/${listingId}/price`);
 }
+
+// export async function createPrice(formData: FormData) {
+//   const listingId = formData.get("listingId") as string;
+//   const price = formData.get("price") as number;
+
+//   const data = await prisma.listing.update({
+//     where: {
+//       id: listingId,
+//     },
+//     data: {
+//       price: price,
+//       addedPrice: true,
+//     },
+//   });
+// }

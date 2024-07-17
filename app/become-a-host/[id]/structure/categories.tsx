@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
-import { categoryData } from "../../../lib/category-data";
+import { categoryData } from "../../../data/category-data";
 import { cn } from "@/lib/utils";
 
 export const Categories = () => {

@@ -67,24 +67,26 @@ export const PriceInput = ({ setTypedValue }: PriceInputProps) => {
 
   return (
     <div className="mx-auto mt-16">
-      <div className="flex items-center">
-        <span
-          className={`${montserrat.className} text-[60px] font-bold text-zinc-800 outline-none md:text-[70px]`}
-        >
-          $
-        </span>
-        <input
-          type="text"
-          value={inputValue}
-          onChange={handleChange}
-          className={`${montserrat.className} w-12 text-center text-[60px] font-bold text-zinc-800 placeholder-slate-300 outline-none md:text-[70px]`}
-          ref={inputRef}
-          style={{ minWidth: "3ch" }}
-          maxLength={6}
-          minLength={2}
-          placeholder={`123`}
-          onInput={(e) => handleRawInput(e.currentTarget.value)} // Correct usage of onInput in React
-        />
+      <div className="flex items-baseline">
+        <div className="flex items-center justify-center">
+          <span
+            className={`${montserrat.className} text-[60px] font-bold text-zinc-800 outline-none md:text-[70px]`}
+          >
+            $
+          </span>
+          <input
+            type="text"
+            value={inputValue}
+            onChange={handleChange}
+            className={`${montserrat.className} w-12 text-center text-[60px] font-bold text-zinc-800 placeholder-slate-300 outline-none md:text-[70px]`}
+            ref={inputRef}
+            style={{ minWidth: "3ch" }}
+            maxLength={6}
+            minLength={2}
+            placeholder="123"
+            onInput={(e) => handleRawInput(e.currentTarget.value)} // Correct usage of onInput in React
+          />
+        </div>
         <div className="flex cursor-pointer flex-col">
           <TooltipProvider delayDuration={0}>
             <Tooltip>
