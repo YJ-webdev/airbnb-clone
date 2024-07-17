@@ -14,7 +14,7 @@ export default function PriceRoute({ params }: { params: { id: string } }) {
   const [typedValue, setTypedValue] = useState<number>(0);
 
   useEffect(() => {
-    if (typedValue > 10 && typedValue < 10000) {
+    if (typedValue >= 10 && typedValue < 10000) {
       setDataLogged(true);
     } else {
       setDataLogged(false);

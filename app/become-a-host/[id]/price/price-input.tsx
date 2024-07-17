@@ -90,7 +90,7 @@ export const PriceInput = ({ setTypedValue }: PriceInputProps) => {
         <div className="flex cursor-pointer flex-col">
           <TooltipProvider delayDuration={0}>
             <Tooltip>
-              <TooltipTrigger>
+              <TooltipTrigger type="button">
                 <Pointer size={25} strokeWidth={2} onClick={handleIconClick} />
               </TooltipTrigger>
               <TooltipContent>
