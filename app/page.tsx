@@ -20,6 +20,8 @@ export default async function Home() {
       price: true,
       description: true,
       title: true,
+      country: true,
+      city: true,
       locationValue: true,
       guestCount: true,
       roomCount: true,
@@ -29,7 +31,7 @@ export default async function Home() {
   });
 
   return (
-    <div>
+    <div className="container mx-auto px-5 lg:px-10">
       <Categories />
       <div>
         {data.map((item) => (
@@ -38,6 +40,8 @@ export default async function Home() {
             imageSrc={item.imageSrc!}
             location={item.locationValue!}
             price={item.price!}
+            country={item.country!}
+            city={item.city!}
           />
         ))}
       </div>

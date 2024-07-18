@@ -108,6 +108,8 @@ export async function createFloorPlan(formData: FormData) {
 export async function createLocation(formData: FormData) {
   const listingId = formData.get("listingId") as string;
   const locationValue = formData.get("locationValue") as string;
+  const country = formData.get("country") as string;
+  const city = formData.get("city") as string;
 
   const data = await prisma.listing.update({
     where: {
@@ -115,6 +117,8 @@ export async function createLocation(formData: FormData) {
     },
     data: {
       locationValue: locationValue,
+      country: country,
+      city: city,
       addedLocation: true,
     },
   });

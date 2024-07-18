@@ -12,54 +12,71 @@ import {
 import { Info } from "lucide-react";
 
 interface AddressFormProps {
-  location: (address: string) => void;
-  setDataLogged: (data: boolean) => void;
+  location: (value: string) => void;
+  setDataLogged: (value: boolean) => void;
+  setCountry?: (value: string) => void;
+  setCity?: (value: string) => void;
 }
 
-const AddressForm = ({ location, setDataLogged }: AddressFormProps) => {
+const AddressForm = ({
+  location,
+  setDataLogged,
+  setCountry,
+  setCity,
+}: AddressFormProps) => {
   const countryData = Country.getAllCountries();
 
   const [address, setAddress] = useState("");
   const [locality, setLocality] = useState("");
   const [state, setState] = useState<IState | null>(null);
   const [postalCode, setPostalCode] = useState("");
-  const [country, setCountry] = useState<ICountry | null>(null);
+  const [nation, setNation] = useState<ICountry | null>(null);
   const [states, setStates] = useState<IState[]>([]);
   const [cities, setCities] = useState<ICity[]>([]);
 
   useEffect(() => {
-    if (country) {
-      const statesData = State.getStatesOfCountry(country.isoCode);
+    if (nation) {
+      const statesData = State.getStatesOfCountry(nation.isoCode);
       setStates(statesData);
-      setState(null); // reset state selection when country changes
-      setLocality(""); // reset city selection when country changes
+      setState(null); // reset state selection when nation changes
+      setLocality(""); // reset city selection when nation changes
     }
-  }, [country]);
+  }, [nation]);
 
   useEffect(() => {
     if (state) {
       const citiesData = City.getCitiesOfState(
-        country?.isoCode || "",
+        nation?.isoCode || "",
         state.isoCode,
       );
       setCities(citiesData);
       setLocality(""); // reset city selection when state changes
     }
-  }, [state, country]);
-
-  const formedAddress = `${address} ${locality} ${state?.name || ""} ${postalCode} ${country?.name}`;
+  }, [state, nation]);
 
   useEffect(() => {
-    if (address && postalCode && country) {
+    if (address && postalCode && nation) {
+      if (setCountry && nation) setCountry(nation.name);
+      if (setCity && locality) setCity(locality);
       setDataLogged(true);
     } else {
       setDataLogged(false);
     }
-  }, [address, locality, state, postalCode, country, setDataLogged]);
+  }, [
+    address,
+    locality,
+    state,
+    postalCode,
+    nation,
+    setDataLogged,
+    setCountry,
+    setCity,
+  ]);
 
   useEffect(() => {
+    const formedAddress = `${address} ${locality} ${state?.name} ${postalCode} ${nation?.name}`;
     location(formedAddress);
-  }, [location, formedAddress]);
+  }, [location, address, locality, state, postalCode, nation]);
 
   return (
     <div className="flex h-[55vh] w-2/5 flex-col bg-white">
@@ -76,7 +93,7 @@ const AddressForm = ({ location, setDataLogged }: AddressFormProps) => {
           id="country"
           name="country"
           onChange={(e) =>
-            setCountry(
+            setNation(
               countryData.find((c) => c.isoCode === e.target.value) || null,
             )
           }
@@ -147,7 +164,8 @@ const AddressForm = ({ location, setDataLogged }: AddressFormProps) => {
             <input
               id="postal_code-input"
               name="postalCode"
-              type="number"
+              type="text"
+              maxLength={6}
               value={postalCode}
               onChange={(e) => setPostalCode(e.target.value)}
               placeholder="Zip/Postal code"

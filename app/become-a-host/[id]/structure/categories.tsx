@@ -24,7 +24,7 @@ export const Categories = () => {
   );
 
   return (
-    <div className="no-scrollbar container mt-5 flex w-full justify-between gap-x-10 overflow-x-scroll">
+    <div className="no-scrollbar my-5 flex w-full justify-between gap-x-10 overflow-x-scroll">
       {categoryData.map((item) => (
         <Link
           key={item.id}
