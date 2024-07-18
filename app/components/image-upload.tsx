@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useDropzone } from "react-dropzone";
 import Image from "next/image";
+import { useDropzone } from "react-dropzone";
 import ImageModal from "./image-modal";
 import {
   Edit,
@@ -26,10 +26,15 @@ export interface FileWithPreview extends File {
 
 interface ImageUploadProps {
   setDataLogged: (data: boolean) => void;
-  setImageSrc: (data: string[]) => void;
+  setImageSrc: (data: File[]) => void;
+  imageSrc: File[];
 }
 
-const ImageUpload = ({ setDataLogged, setImageSrc }: ImageUploadProps) => {
+const ImageUpload = ({
+  setDataLogged,
+  setImageSrc,
+  imageSrc,
+}: ImageUploadProps) => {
   const [files, setFiles] = useState<FileWithPreview[]>([]);
   const [modalIndex, setModalIndex] = useState<number | null>(null);
 
@@ -107,7 +112,6 @@ const ImageUpload = ({ setDataLogged, setImageSrc }: ImageUploadProps) => {
       className={`relative ${index === 0 ? "col-span-2 h-[400px]" : "col-span-1 h-[200px]"}`}
       onClick={(event) => {
         event.stopPropagation();
-        console.log(file);
         openModal(index);
       }}
     >
@@ -158,7 +162,8 @@ const ImageUpload = ({ setDataLogged, setImageSrc }: ImageUploadProps) => {
 
   useEffect(() => {
     if (files.length > 0) {
-      setImageSrc(files.map((file) => file.preview));
+      const newImageSrc = files.map((file) => file);
+      setImageSrc(newImageSrc);
     } else {
       setImageSrc([]);
     }

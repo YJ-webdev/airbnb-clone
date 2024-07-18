@@ -131,7 +131,7 @@ export async function createImages(formData: FormData) {
       id: listingId,
     },
     data: {
-      imageSrc: imageSrc,
+      imageSrc: imageSrc.split(","),
       addedPhotos: true,
     },
   });
