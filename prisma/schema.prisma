@@ -85,15 +85,17 @@ model VerificationToken {
 
 model Listing {
   id            String   @id @default(cuid())
-  title         String?
-  description   String?
   imageSrc      String[]
   category      String?
+  title         String?
+  description   String?
+  country       String?
+  city          String?
+  locationValue String?
   roomCount     Int?
   bathroomCount Int?
   guestCount    Int?
   bedCount      Int?
-  locationValue String?
   price         Int?
   userId        String?
 
@@ -103,6 +105,7 @@ model Listing {
   addedPhotos      Boolean @default(false)
   addedDescription Boolean @default(false)
   addedPrice       Boolean @default(false)
+  approved         Boolean @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

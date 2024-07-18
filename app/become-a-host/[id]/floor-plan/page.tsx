@@ -3,7 +3,13 @@
 import { createFloorPlan } from "@/app/action/create-listing";
 import { Counter } from "@/app/become-a-host/[id]/floor-plan/counter";
 import { ActionBar } from "@/app/components/become-a-host/action-bar";
-import { PersonStanding } from "lucide-react";
+import {
+  Bath,
+  BedSingle,
+  DoorOpen,
+  PersonStanding,
+  UserCheck,
+} from "lucide-react";
 import { useEffect, useState } from "react";
 
 export default function FloorPlanRoute({ params }: { params: { id: string } }) {
@@ -33,12 +39,9 @@ export default function FloorPlanRoute({ params }: { params: { id: string } }) {
           <div className="mt-8 flex flex-col gap-y-5 border-b pb-5">
             <div className="flex items-center justify-between">
               <div className="flex-flex-col">
-                <h3 className="flex gap-2 text-lg font-semibold">
+                <h3 className="flex items-center gap-2 text-lg font-semibold">
+                  <UserCheck size={20} />
                   Guests
-                  <div className="flex">
-                    <PersonStanding />
-                    <PersonStanding />
-                  </div>
                 </h3>
                 <p className="text-[16px] text-muted-foreground">
                   How many guests fit comfortably in your place?
@@ -50,7 +53,10 @@ export default function FloorPlanRoute({ params }: { params: { id: string } }) {
           <div className="mt-8 flex flex-col gap-y-5 border-b pb-8">
             <div className="flex items-center justify-between">
               <div className="flex-flex-col">
-                <h3 className="text-lg font-semibold">Bedrooms</h3>
+                <h3 className="flex items-center gap-2 text-lg font-semibold">
+                  <DoorOpen size={20} />
+                  Bedrooms
+                </h3>
               </div>
               <Counter name="roomCount" setCount={setRoomCount} />
             </div>
@@ -58,7 +64,10 @@ export default function FloorPlanRoute({ params }: { params: { id: string } }) {
           <div className="mt-8 flex flex-col gap-y-5 border-b pb-8">
             <div className="flex items-center justify-between">
               <div className="flex-flex-col">
-                <h3 className="text-lg font-semibold">Beds</h3>
+                <h3 className="flex items-center gap-2 text-lg font-semibold">
+                  <BedSingle size={20} />
+                  Beds
+                </h3>
               </div>
               <Counter name="bedCount" setCount={setBedCount} />
             </div>
@@ -66,7 +75,10 @@ export default function FloorPlanRoute({ params }: { params: { id: string } }) {
           <div className="mt-8 flex flex-col gap-y-5 border-b pb-8">
             <div className="flex items-center justify-between">
               <div className="flex-flex-col">
-                <h3 className="text-lg font-semibold">Bathrooms</h3>
+                <h3 className="flex items-center gap-2 text-lg font-semibold">
+                  <Bath size={20} />
+                  Bathrooms
+                </h3>
               </div>
               <Counter name="bathroomCount" setCount={setBathroomCount} />
             </div>

@@ -174,3 +174,18 @@ export async function createPrice(formData: FormData) {
 
   return redirect(`/become-a-host/${listingId}/review`);
 }
+
+export async function createApproval(formData: FormData) {
+  const listingId = formData.get("listingId") as string;
+
+  const data = await prisma.listing.update({
+    where: {
+      id: listingId,
+    },
+    data: {
+      approved: true,
+    },
+  });
+
+  return redirect("/");
+}
