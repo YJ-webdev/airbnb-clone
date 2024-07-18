@@ -48,6 +48,9 @@ export default function PriceRoute({ params }: { params: { id: string } }) {
             setTypedValue={setTypedValue}
           />
           <PriceCheck typedValue={typedValue} />
+          <p className="text-sm font-bold text-rose-500 md:text-base">
+            {typedValue > 1000 ? `Price is too high` : ``}
+          </p>
         </div>
         <ActionBar
           dataLogged={dataLogged}

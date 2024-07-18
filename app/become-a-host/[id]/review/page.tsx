@@ -1,8 +1,15 @@
 "use client";
 
 import { createApproval } from "@/app/action/create-listing";
+import { TbConfetti } from "react-icons/tb";
 import { ActionBar } from "@/app/components/become-a-host/action-bar";
-import { Info } from "lucide-react";
+import {
+  BellElectric,
+  ConciergeBell,
+  DiamondPlus,
+  Info,
+  PartyPopper,
+} from "lucide-react";
 import { useState } from "react";
 
 export default function ReviewRoute({ params }: { params: { id: string } }) {
@@ -29,8 +36,11 @@ export default function ReviewRoute({ params }: { params: { id: string } }) {
 
       <ActionBar
         dataLogged={dataLogged}
-        nextText="List Home!"
+        nextText="Send Listing"
         prevHref={`/become-a-host/${params.id}/price`}
+        className={
+          "bg-gradient-to-r from-[#d31152] to-[#e3326d] transition-colors hover:from-[#fd56aa] hover:to-[#f86596]"
+        }
       />
     </form>
   );

@@ -7,6 +7,7 @@ interface ActionBarProps {
   prevHref?: string;
   nextText?: string;
   prevText?: string;
+  className?: string;
 }
 
 export function ActionBar({
@@ -14,6 +15,7 @@ export function ActionBar({
   prevHref,
   nextText,
   prevText,
+  className,
 }: ActionBarProps) {
   return (
     <div className="fixed bottom-0 z-10 h-24 w-full border-t bg-white">
@@ -26,7 +28,11 @@ export function ActionBar({
         >
           <Link href={prevHref ?? "/"}>{prevText ?? "Previous"}</Link>
         </Button>
-        <CreationSubmit dataLogged={dataLogged} nextText={nextText} />
+        <CreationSubmit
+          dataLogged={dataLogged}
+          nextText={nextText}
+          className={className}
+        />
       </div>
     </div>
   );
