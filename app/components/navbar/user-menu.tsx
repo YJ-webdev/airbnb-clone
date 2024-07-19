@@ -46,7 +46,9 @@ export const UserMenu = ({ user }: UserMenuProps) => {
             <>
               <DropdownMenuItem
                 className="cursor-pointer px-3 py-3 text-[15px] font-semibold"
-                onClick={() => {}}
+                onClick={() => {
+                  console.log(user);
+                }}
               >
                 Trips
               </DropdownMenuItem>

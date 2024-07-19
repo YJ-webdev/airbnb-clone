@@ -1,6 +1,7 @@
 import { Montserrat } from "next/font/google";
 import { formatCeil, formatFloor } from "@/app/lib/format-money";
-import { GUEST_SERVICE_FEE, HOST_SERVICE_FEE } from "@/app/lib/library";
+import { GUEST_SERVICE_FEE, HOST_SERVICE_FEE } from "@/app/lib/rates";
+
 import {
   Accordion,
   AccordionContent,

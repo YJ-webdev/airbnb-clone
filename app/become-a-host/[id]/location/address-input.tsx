@@ -18,7 +18,7 @@ interface AddressFormProps {
   setCity?: (value: string) => void;
 }
 
-const AddressForm = ({
+const AddressInput = ({
   location,
   setDataLogged,
   setCountry,
@@ -179,4 +179,4 @@ const AddressForm = ({
   );
 };
 
-export default AddressForm;
+export default AddressInput;

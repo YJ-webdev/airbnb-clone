@@ -24,9 +24,17 @@ import {
   DialogHeader,
 } from "@/components/ui/dialog";
 import { login } from "@/app/action/login";
+import { cn } from "@/lib/utils";
+import { FormSuccess } from "./form-success";
 
-export const LoginDialog = () => {
+interface LoginDialogProps {
+  urlError?: string;
+  title?: string;
+}
+
+export const LoginDialog = ({ urlError, title }: LoginDialogProps) => {
   const [error, setError] = useState<string | undefined>("");
+  const [success, setSuccess] = useState<string | undefined>("");
   const [isPending, startTransition] = useTransition();
 
   const form = useForm<Login>({
@@ -39,23 +47,33 @@ export const LoginDialog = () => {
 
   const onSubmit = (values: Login) => {
     setError("");
+    setSuccess("");
 
     startTransition(() => {
       login(values).then((data) => {
         setError(data?.error);
-        if (!data?.error) {
-          window.location.reload();
-        }
+        setSuccess(data?.success);
+
+        // if (!data?.error) {
+        //   window.location.reload();
+        // }
       });
     });
   };
 
   return (
     <>
-      <DialogHeader className="sticky top-0 -mb-4 border-b-[1px] px-6 pb-6 pt-6 text-center">
-        <DialogTitle className="text-center">Welcome back!</DialogTitle>
+      <DialogHeader
+        className={cn(
+          "sticky top-0 -mb-4 border-b-[1px] px-6 pb-6 pt-6 text-center",
+          title && "mt-5 border-none",
+        )}
+      >
+        <DialogTitle className="text-center">
+          {title ?? "Welcome back!"}
+        </DialogTitle>
         <DialogDescription className="text-center">
-          Log in with your account
+          {title ? "please try again" : "Log in with your account"}
         </DialogDescription>
       </DialogHeader>
       <ScrollArea className="flex-1 overflow-auto p-6">
@@ -100,7 +118,8 @@ export const LoginDialog = () => {
                 )}
               />
             </div>
-            <FormError message={error} />
+            <FormError message={error || urlError} />
+            <FormSuccess message={success} />
             <Button
               disabled={isPending}
               type="submit"
@@ -108,6 +127,9 @@ export const LoginDialog = () => {
             >
               {isPending ? "Please, wait.." : "Log in"}
             </Button>
+            <p className="text-center text-sm hover:underline">
+              You don&apos;t have an account?
+            </p>
           </form>
         </Form>
         <Social disabled={isPending} />

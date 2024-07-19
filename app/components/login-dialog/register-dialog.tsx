@@ -129,6 +129,9 @@ export const RegisterDialog = () => {
             >
               Sign up
             </Button>
+            <p className="text-center text-sm hover:underline">
+              Already have an account?
+            </p>
           </form>
         </Form>
         <Social />

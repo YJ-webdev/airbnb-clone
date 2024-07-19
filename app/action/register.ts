@@ -1,9 +1,11 @@
 "use server";
 
-import { Register, RegisterSchema } from "@/schema";
-import prisma from "@/app/lib/db";
-import { getUserByEmail } from "@/data/user";
 import { hash } from "bcryptjs";
+
+import prisma from "@/app/lib/db";
+import { Register, RegisterSchema } from "@/schema";
+import { getUserByEmail } from "@/data/user";
+import { generateVerificationToken } from "@/lib/tokens";
 
 export const register = async (values: Register) => {
   const validatedfields = RegisterSchema.safeParse(values);
@@ -29,7 +31,7 @@ export const register = async (values: Register) => {
     },
   });
 
-  //TODO: send verification email.
+  const verificationToken = await generateVerificationToken(email);
 
-  return { success: "User created!" };
+  return { success: "Confirmation email sent!" };
 };

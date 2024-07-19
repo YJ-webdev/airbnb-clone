@@ -1,8 +1,11 @@
 "use server";
 
-import { signIn, auth } from "@/auth";
+import { signIn } from "@/auth";
 import { Login, LoginSchema } from "@/schema";
 import { AuthError } from "next-auth";
+import { getUserByEmail } from "@/data/user";
+import { generateVerificationToken } from "@/lib/tokens";
+import { isRedirectError } from "next/dist/client/components/redirect";
 
 export const login = async (values: Login) => {
   const validatedfields = LoginSchema.safeParse(values);
@@ -10,15 +13,32 @@ export const login = async (values: Login) => {
   if (!validatedfields.success) {
     return { error: "Invalid fields" };
   }
-
   const { email, password } = validatedfields.data;
+  const existingUser = await getUserByEmail(email);
+
+  if (!existingUser || !existingUser.email || !existingUser.hashedPassword) {
+    return {
+      error: "Invalid email or password",
+    };
+  }
+
+  if (!existingUser.emailVerified) {
+    const verificationToken = await generateVerificationToken(
+      existingUser.email,
+    );
+    return { success: "Confirmation email sent!" };
+  }
 
   try {
     await signIn("credentials", {
       email,
       password,
+      redirectTo: "/settings",
     });
   } catch (error) {
+    if (isRedirectError(error)) {
+      throw error;
+    }
     if (error instanceof AuthError) {
       switch (error.type) {
         case "CredentialsSignin":
@@ -27,7 +47,7 @@ export const login = async (values: Login) => {
           return { error: "Incorrect email or password." };
         default:
           return {
-            error: "Sorry, something went wrong. please try later again.",
+            error: "Sorry, something went wrong. please try again.",
           };
       }
     }

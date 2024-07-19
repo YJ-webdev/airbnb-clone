@@ -3,7 +3,6 @@ import { ListingCard } from "./components/listing-card";
 import prisma from "./lib/db";
 
 export default async function Home() {
-  const user = false;
   const data = await prisma.listing.findMany({
     where: {
       addedCategory: true,

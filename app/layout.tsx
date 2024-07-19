@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Nunito } from "next/font/google";
 import "./globals.css";
 
+import getSession from "./lib/get-session";
 import { Navbar } from "./components/navbar/Navbar";
 
 const font = Nunito({ subsets: ["latin"] });
@@ -16,6 +17,9 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await getSession();
+  const user = session?.user;
+
   return (
     <html lang="en">
       <body className={`${font.className} flex min-h-screen flex-col`}>
