@@ -31,9 +31,9 @@ export const Categories = () => {
           href={pathname + "?" + createQueryString("filter", item.name)}
           className={cn(
             search === item.name
-              ? "flex-shrink-0 border-b-2 border-black pb-2"
-              : "flex-shrink-0 opacity-70",
-            "flex flex-col items-center gap-y-3 hover:opacity-100",
+              ? "flex-shrink-0 border-black"
+              : "flex-shrink-0 border-white opacity-70",
+            "mb-5 flex flex-col items-center gap-y-3 border-b-2 pb-2 hover:opacity-100",
           )}
         >
           <div className="relative h-6 w-6">

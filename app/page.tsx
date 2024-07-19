@@ -1,4 +1,4 @@
-import { Categories } from "./become-a-host/[id]/structure/categories";
+import { Categories } from "./components/categories";
 import { ListingCard } from "./components/listing-card";
 import prisma from "./lib/db";
 

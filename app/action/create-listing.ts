@@ -3,7 +3,7 @@
 import prisma from "@/app/lib/db";
 import { redirect } from "next/navigation";
 
-export async function createListing({ userId }: { userId: string }) {
+export async function createNewListing({ userId }: { userId: string }) {
   const data = await prisma.listing.findFirst({
     where: {
       userId: userId,
@@ -56,11 +56,66 @@ export async function createListing({ userId }: { userId: string }) {
     data.addedPhotos &&
     data.addedFloorPlan &&
     data.addedDescription &&
-    data.addedPrice
+    data.addedPrice &&
+    !data.approved
   ) {
     return redirect(`/become-a-host/${data.id}/review`);
   } else {
-    redirect(`/become-a-host/${data.id}/structure`);
+    // All conditions are met, create a new listing
+    const newListing = await prisma.listing.create({
+      data: { userId },
+    });
+    return redirect(`/become-a-host/${newListing.id}/structure`);
+  }
+}
+
+export async function createListing({ userId }: { userId: string }) {
+  const userWithListings = await prisma.user.findUnique({
+    where: { id: userId },
+    include: { listings: true },
+  });
+
+  if (!userWithListings) {
+    return redirect("/");
+  }
+
+  const latestListing = await prisma.listing.findFirst({
+    where: {
+      userId: userId,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
+  if (userWithListings.listings.length > 1) {
+    return redirect("/host");
+  } else if (latestListing === null) {
+    const newListing = await prisma.listing.create({
+      data: {
+        userId: userId,
+      },
+    });
+    return redirect(`/become-a-host/${newListing.id}/structure`);
+  } else {
+    // Further redirection based on the latest listing's state
+    if (!latestListing.addedCategory) {
+      return redirect(`/become-a-host/${latestListing.id}/structure`);
+    } else if (!latestListing.addedFloorPlan) {
+      return redirect(`/become-a-host/${latestListing.id}/floor-plan`);
+    } else if (!latestListing.addedLocation) {
+      return redirect(`/become-a-host/${latestListing.id}/location`);
+    } else if (!latestListing.addedPhotos) {
+      return redirect(`/become-a-host/${latestListing.id}/photos`);
+    } else if (!latestListing.addedDescription) {
+      return redirect(`/become-a-host/${latestListing.id}/description`);
+    } else if (!latestListing.addedPrice) {
+      return redirect(`/become-a-host/${latestListing.id}/price`);
+    } else if (!latestListing.approved) {
+      return redirect(`/become-a-host/${latestListing.id}/review`);
+    } else {
+      return redirect("/host");
+    }
   }
 }
 
