@@ -26,21 +26,23 @@ export default async function Home() {
       roomCount: true,
       bedCount: true,
       bathroomCount: true,
+      category: true,
     },
   });
 
   return (
     <div className="container mx-auto px-5 lg:px-10">
       <Categories />
-      <div>
+      <div className="mb-28 grid grid-cols-1 justify-between gap-5 sm:grid-cols-2 md:grid-cols-3 md:gap-6 lg:grid-cols-4">
         {data.map((item) => (
           <ListingCard
             key={item.id!}
-            imageSrc={item.imageSrc!}
+            // imageSrc={item.imageSrc!}
             location={item.locationValue!}
             price={item.price!}
             country={item.country!}
             city={item.city!}
+            category={item.category!}
           />
         ))}
       </div>

@@ -7,6 +7,11 @@ const nextConfig = {
         protocol: "https",
         port: "",
       },
+      {
+        hostname: "media.cntraveler.com",
+        protocol: "https",
+        port: "",
+      },
     ],
   },
 };
