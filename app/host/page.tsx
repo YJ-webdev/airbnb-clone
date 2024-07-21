@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { createNewListing } from "../action/create-listing";
 import prisma from "../lib/db";
 import { ListingCard } from "../components/listing-card";
+import { Listing } from "@prisma/client";
 
 export default async function HostPage() {
   const session = await getSession();
@@ -17,22 +18,43 @@ export default async function HostPage() {
     userId: userId as string,
   });
 
-  const userListings = await prisma.user.findUnique({
-    where: { id: userId },
-    include: { listings: true },
+  // show only approved listings on the page
+  const approvedListingsForUser: Listing[] = await prisma.listing.findMany({
+    where: {
+      userId: userId,
+      approved: true,
+    },
+    orderBy: {
+      updatedAt: "desc",
+    },
   });
 
-  if (!userListings) {
-    console.log("no listings");
+  if (!approvedListingsForUser) {
     return null;
   }
+  const data = approvedListingsForUser;
 
-  const data = userListings.listings;
+  // check if there is uncompleted listing
+  const latestListing = await prisma.listing.findFirst({
+    where: {
+      userId: userId,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
+  if (!latestListing) {
+    return null;
+  }
 
   return (
     <div className="container relative mx-auto mt-10 px-5 lg:px-10">
       <header className="mb-8 flex flex-col items-baseline justify-center">
-        <h1 className="text-2xl font-semibold">Your listings</h1>
+        <h1 className="text-2xl font-semibold">
+          Your listings
+          <span>({approvedListingsForUser.length})</span>
+        </h1>
         <p>
           This will be how customers will see your homes. make sure it looks
           good! You can edit anytime.
@@ -40,16 +62,7 @@ export default async function HostPage() {
       </header>
       <div className="mb-28 grid grid-cols-1 justify-center gap-5 sm:grid-cols-2 md:grid-cols-2 md:gap-6 lg:grid-cols-3">
         {data.map((item) => (
-          <ListingCard
-            key={item.id!}
-            // imageSrc={item.imageSrc!}
-            location={item.locationValue!}
-            price={item.price!}
-            country={item.country!}
-            city={item.city!}
-            category={item.category!}
-            isHost={true}
-          />
+          <ListingCard key={item.id!} data={item} isHost={true} />
         ))}
       </div>
       <form
@@ -58,9 +71,11 @@ export default async function HostPage() {
       >
         <button
           type="submit"
-          className="rounded-full bg-white p-5 text-base font-bold shadow-sm transition-all hover:scale-95"
+          className="rounded-full bg-rose-500 p-5 text-base font-bold text-white shadow-sm transition-all hover:scale-95"
         >
-          Create a new listing
+          {latestListing && !latestListing.approved
+            ? "Continue your unfinished listing?"
+            : "Create a new listing"}
         </button>
       </form>
     </div>
