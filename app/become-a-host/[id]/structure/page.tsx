@@ -2,7 +2,7 @@ import getSession from "@/app/lib/get-session";
 import { redirect } from "next/navigation";
 import { CategoryForm } from "./category-form";
 
-export default async function StructureRoute({
+export default async function StructurePage({
   params,
 }: {
   params: { id: string };

@@ -1,24 +1,30 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
-import { FileWithPreview } from "./image-upload"; // Assuming FileWithPreview type is exported
+
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
+import { FileWithPreview } from "../become-a-host/[id]/photos/image-upload";
+import { dummyImages } from "../data/dummy-images";
 
 interface ImageModalProps {
-  files: FileWithPreview[];
+  files?: FileWithPreview[];
   currentIndex: number;
   onClose: () => void;
   onPrev: () => void;
   onNext: () => void;
 }
 
-const ImageModal: React.FC<ImageModalProps> = ({
+const ImageModal = ({
   files,
   currentIndex,
   onClose,
   onPrev,
   onNext,
-}) => {
-  const file = files[currentIndex];
+}: ImageModalProps) => {
+  const images = files?.length ? files : dummyImages;
+  const imageSrc = files?.length
+    ? files[currentIndex].preview
+    : dummyImages[currentIndex];
+
   const [startX, setStartX] = useState(0);
 
   useEffect(() => {
@@ -71,14 +77,14 @@ const ImageModal: React.FC<ImageModalProps> = ({
       >
         <div className="flex h-full w-full items-center justify-center px-7">
           <Image
-            src={file.preview}
+            src={imageSrc}
             width={1000}
             height={1000}
             alt="Full size"
             className="z-0 mx-auto max-h-[80%] max-w-full rounded-xl object-contain lg:rounded-none"
           />
           <p className="absolute bottom-7 right-[5%] line-clamp-1 rounded-full bg-white px-2 py-1 text-sm font-semibold md:text-base">
-            {currentIndex + 1} / {files.length}
+            {currentIndex + 1} / {images.length}
           </p>
         </div>
         <button
@@ -102,12 +108,12 @@ const ImageModal: React.FC<ImageModalProps> = ({
             <ChevronLeft strokeWidth={1} className="h-10 w-10" />
           </button>
         )}
-        {currentIndex < files.length - 1 && (
+        {currentIndex < images.length - 1 && (
           <button
             type="button"
             className="absolute right-4 top-1/2 z-10 -translate-y-1/2 transform rounded-full transition-colors hover:bg-white md:right-6"
             onClick={onNext}
-            disabled={currentIndex === files.length - 1}
+            disabled={currentIndex === images.length - 1}
           >
             <ChevronRight strokeWidth={1} className="h-10 w-10" />
           </button>

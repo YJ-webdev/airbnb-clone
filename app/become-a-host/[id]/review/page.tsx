@@ -3,7 +3,7 @@ import getSession from "@/app/lib/get-session";
 import { ReviewForm } from "./review-form";
 import prisma from "@/app/lib/db";
 
-export default async function ReviewRoute({
+export default async function ReviewPage({
   params,
 }: {
   params: { id: string };

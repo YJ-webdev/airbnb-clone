@@ -2,7 +2,7 @@
 
 import prisma from "../lib/db";
 
-export async function toggleFavorite(userId: string, listingId: string) {
+export async function updateFavorite(userId: string, listingId: string) {
   const user = await prisma.user.findUnique({
     where: { id: userId },
     select: { favoriteIds: true },

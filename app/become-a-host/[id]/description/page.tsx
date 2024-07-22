@@ -2,7 +2,7 @@ import getSession from "@/app/lib/get-session";
 import { redirect } from "next/navigation";
 import { DescriptionForm } from "./description-form";
 
-export default async function DescriptionRoute({
+export default async function DescriptionPage({
   params,
 }: {
   params: { id: string };

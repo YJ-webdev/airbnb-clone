@@ -2,7 +2,7 @@ import getSession from "@/app/lib/get-session";
 import { redirect } from "next/navigation";
 import { FloorFrom } from "./floor-form";
 
-export default async function FloorPlanRoute({
+export default async function FloorPlanPage({
   params,
 }: {
   params: { id: string };

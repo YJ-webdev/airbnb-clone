@@ -1,10 +1,8 @@
 "use client";
 
-import { dummyImages } from "@/app/data/dummy-images";
+import { PreviewImages } from "@/app/components/preview-images";
 import { cn } from "@/lib/utils";
 import { Listing, User } from "@prisma/client";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import Image from "next/image";
 import React, { useState } from "react";
 
 interface ReviewListingProps {
@@ -12,22 +10,8 @@ interface ReviewListingProps {
 }
 
 export const ReviewListing = ({ data }: ReviewListingProps) => {
-  const [index, setIndex] = useState(0);
   const [readMore, setReadMore] = useState(false);
-
   const description = data.description;
-
-  const handlePrev = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setIndex((index) => (index === 0 ? dummyImages.length - 1 : index - 1));
-  };
-
-  const handleNext = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setIndex((index) => (index === dummyImages.length - 1 ? 0 : index + 1));
-  };
 
   const handleReadMore = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -37,46 +21,7 @@ export const ReviewListing = ({ data }: ReviewListingProps) => {
 
   return (
     <div className="flex h-full w-full flex-col gap-5 md:flex-row">
-      <div className="group relative h-[55Dvh] w-full overflow-hidden rounded-lg border transition-all md:flex-1">
-        <div
-          className="flex h-full w-full transition-all duration-500 ease-in-out"
-          style={{ transform: `translateX(-${index * 100}%)` }}
-        >
-          {dummyImages.map((url, i) => (
-            <div key={i} className="relative h-full w-full flex-shrink-0">
-              <Image
-                src={url}
-                alt="Image of home"
-                layout="fill"
-                objectFit="cover"
-              />
-            </div>
-          ))}
-        </div>
-
-        <button
-          type="button"
-          onClick={handlePrev}
-          className="absolute left-3 top-1/2 z-20 hidden h-8 w-8 -translate-y-1/2 rounded-full bg-white transition-opacity duration-1000 ease-in-out hover:scale-105 group-hover:block"
-        >
-          <ChevronLeft
-            size={20}
-            className="ml-1 transition-all hover:-translate-x-[1px] hover:scale-105"
-            strokeWidth={1.5}
-          />
-        </button>
-        <button
-          type="button"
-          onClick={handleNext}
-          className="absolute right-3 top-1/2 z-20 hidden h-8 w-8 -translate-y-1/2 rounded-full bg-white transition-opacity duration-1000 ease-in-out hover:scale-105 group-hover:block"
-        >
-          <ChevronRight
-            size={20}
-            className="ml-2 transition-all hover:translate-x-[1px] hover:scale-105"
-            strokeWidth={1.5}
-          />
-        </button>
-      </div>
+      <PreviewImages data={data} />
 
       <div className="flex min-h-[50Dvh] flex-col space-y-4 md:flex-1">
         <div className="flex h-[100px] flex-col gap-3">
@@ -108,7 +53,7 @@ export const ReviewListing = ({ data }: ReviewListingProps) => {
             </p>
             <p>·</p>
             <p>
-              <span className="font-bold">{data.bathroomCount}</span> bathrooms
+              <span className="font-bold">{data.guestCount}</span> bathrooms
             </p>
           </div>
         </div>
@@ -117,11 +62,14 @@ export const ReviewListing = ({ data }: ReviewListingProps) => {
           <p
             className={cn(
               "overflow-hidden transition-all",
-              readMore ? "md:pb-11" : "md:line-clamp-[7]",
+              readMore
+                ? "md:pb-11"
+                : window.innerHeight >= 740
+                  ? "md:line-clamp-[12]"
+                  : "md:line-clamp-[8]",
             )}
           >
             {description}
-            {readMore ? "" : "..."}
           </p>
           <button
             type="button"

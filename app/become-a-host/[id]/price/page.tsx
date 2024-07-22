@@ -2,7 +2,7 @@ import getSession from "@/app/lib/get-session";
 import { redirect } from "next/navigation";
 import { PriceForm } from "./price-form";
 
-export default async function PriceRoute({
+export default async function PricePage({
   params,
 }: {
   params: { id: string };

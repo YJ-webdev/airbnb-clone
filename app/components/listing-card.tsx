@@ -6,8 +6,10 @@ import { useEffect, useState } from "react";
 import { dummyImages } from "../data/dummy-images";
 import { Listing, UserRole } from "@prisma/client";
 import { Skeleton } from "@/components/ui/skeleton";
-import { toggleFavorite } from "../action/toggle-favorite";
+
 import { DefaultSession } from "next-auth";
+import { updateFavorite } from "../action/update-favorite";
+import Link from "next/link";
 
 type LisitngCardProps = {
   data: Listing;
@@ -34,7 +36,7 @@ export const ListingCard = ({ data, isHost, user }: LisitngCardProps) => {
 
     setIsFavorite((prev) => !prev);
     try {
-      await toggleFavorite(user?.id!, data.id);
+      await updateFavorite(user?.id!, data.id);
     } catch (error) {
       setIsFavorite((prev) => !prev);
       console.error("Failed to toggle favorite status:", error);
@@ -73,8 +75,8 @@ export const ListingCard = ({ data, isHost, user }: LisitngCardProps) => {
           </div>
         </div>
       ) : (
-        <div className="flex h-full w-auto flex-col space-y-2">
-          <div className="group relative h-[300px] w-full cursor-pointer overflow-hidden rounded-lg transition-all">
+        <Link href={`/listing/${data.id}`}>
+          <div className="group relative h-[300px] w-full overflow-hidden rounded-lg transition-all">
             <div
               className="flex h-full w-full transition-all duration-500 ease-in-out"
               style={{ transform: `translateX(-${index * 100}%)` }}
@@ -155,7 +157,7 @@ export const ListingCard = ({ data, isHost, user }: LisitngCardProps) => {
             <h3>{data.category}</h3>
             <p>${data.price} / night</p>
           </div>
-        </div>
+        </Link>
       )}
     </>
   );

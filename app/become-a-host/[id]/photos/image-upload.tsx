@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import Image from "next/image";
-import ImageModal from "./image-modal";
+
 import {
   Edit,
   Ellipsis,
@@ -17,6 +17,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import ImageModal from "@/app/components/image-modal";
 
 export interface FileWithPreview extends File {
   preview: string;

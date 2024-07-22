@@ -2,7 +2,7 @@ import getSession from "@/app/lib/get-session";
 import { redirect } from "next/navigation";
 import { LocationForm } from "./location-form";
 
-export default async function LocationRoute({
+export default async function LocationPage({
   params,
 }: {
   params: { id: string };

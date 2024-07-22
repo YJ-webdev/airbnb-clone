@@ -2,7 +2,7 @@ import getSession from "@/app/lib/get-session";
 import { redirect } from "next/navigation";
 import { ImageForm } from "./image-form";
 
-export default async function PhotosRoute({
+export default async function PhotosPage({
   params,
 }: {
   params: { id: string };
