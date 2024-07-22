@@ -43,7 +43,7 @@ export const DescriptionForm = ({ params }: { params: { id: string } }) => {
         <Input
           name="title"
           required
-          placeholder="Short titles work best."
+          placeholder="Short but Significant"
           type="text"
           className="text-md max-w-1xl h-12 border border-zinc-500 px-4 font-medium placeholder:text-muted-foreground focus:outline focus:outline-1 focus:outline-black"
           onChange={(e) => setTitle(e.target.value)}

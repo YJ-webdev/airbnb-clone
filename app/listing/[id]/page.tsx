@@ -3,6 +3,7 @@ import prisma from "@/app/lib/db";
 import { ReservePanel } from "./reserve-panel";
 import { ListingMap } from "./listing-map";
 import { PreviewImages } from "@/app/components/preview-images";
+import getSession from "@/app/lib/get-session";
 
 async function getListing(id: string) {
   const data = await prisma.listing.findUnique({ where: { id } });
@@ -20,6 +21,9 @@ export default async function ListingPage({
     return null;
   }
 
+  const session = await getSession();
+  const user = session?.user;
+
   return (
     <div className="relative mx-auto mt-6 max-w-7xl flex-col space-y-4 pb-28 md:pb-0">
       <h1 className="container text-xl font-semibold tracking-tight md:text-2xl md:tracking-normal">
@@ -29,7 +33,7 @@ export default async function ListingPage({
         <div className="container -mr-2 flex flex-1 flex-col gap-6">
           <PreviewImages data={data} />
 
-          <div className="space-y-1">
+          <div className="space-y-2">
             <h2 className="text-[19px] md:text-[20px]">
               <span className="capitalize">{data.category} place</span> in{" "}
               <span className="underline">
@@ -37,7 +41,7 @@ export default async function ListingPage({
                 {data.country}
               </span>
             </h2>
-            <div className="flex min-w-[350px] items-center gap-2 text-sm md:text-base">
+            <div className="flex min-w-[350px] items-center gap-2 text-sm text-foreground md:text-base">
               <p>{data.guestCount} Guests</p>
               <p>·</p>
               <p>{data.roomCount} bedrooms</p>
@@ -56,7 +60,7 @@ export default async function ListingPage({
           </div>
         </div>
 
-        <ReservePanel data={data} />
+        <ReservePanel data={data} isHost={data.userId === user?.id} />
       </div>
     </div>
   );

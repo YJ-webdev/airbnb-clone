@@ -42,7 +42,7 @@ export const ReviewForm = ({ params, data }: ReveiwFormProps) => {
         nextText="Send Listing"
         prevHref={`/become-a-host/${params.id}/price`}
         className={
-          "bg-gradient-to-r from-[#d31152] to-[#e3326d] transition-colors hover:from-[#fd56aa] hover:to-[#f86596]"
+          "bg-gradient-to-r from-rose-500 to-[#e3326d] transition-colors hover:from-[#fd56aa] hover:to-[#f86596]"
         }
       />
     </form>

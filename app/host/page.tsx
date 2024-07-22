@@ -71,7 +71,7 @@ export default async function HostPage() {
       >
         <button
           type="submit"
-          className="rounded-full bg-rose-500 p-5 text-base font-bold text-white shadow-sm transition-all hover:scale-95"
+          className="rounded-full bg-gradient-to-r from-rose-500 to-[#e3326d] p-5 text-base font-bold text-white shadow-sm transition-all hover:scale-95"
         >
           {latestListing && !latestListing.approved
             ? "Continue your unfinished listing?"
