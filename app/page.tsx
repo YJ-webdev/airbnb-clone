@@ -1,7 +1,9 @@
 import { Filter } from "./components/navbar/filter";
 import { ListingCard } from "./components/listing-card";
 import prisma from "./lib/db";
-import { Listing } from "@prisma/client";
+import { Listing, UserRole } from "@prisma/client";
+import { FolderSearch } from "lucide-react";
+import getSession from "./lib/get-session";
 
 export default async function Home({
   searchParams,
@@ -19,20 +21,39 @@ export default async function Home({
     return null;
   }
 
+  const session = await getSession();
+  const user = session?.user;
+
   return (
     <div className="container mx-auto px-5 lg:px-10">
       <Filter />
-      <div className="mb-28 grid grid-cols-1 justify-between gap-5 sm:grid-cols-2 md:grid-cols-3 md:gap-6 lg:grid-cols-4">
-        {listings.length === 0
-          ? "No results found"
-          : listings.map((item) => (
-              <ListingCard
-                key={item.id!}
-                data={item}
-                searchParams={searchParams}
-              />
-            ))}
-      </div>
+
+      {listings.length === 0 ? (
+        <div className="flex h-full w-full flex-col items-center justify-center">
+          <div className="absolute top-1/2 flex -translate-y-1/2 flex-col space-y-4">
+            <FolderSearch strokeWidth={1.5} size={40} className="mx-auto" />
+            <div className="flex flex-col space-y-2 text-center">
+              <h1 className="text-2xl font-semibold">
+                No results for this category...
+              </h1>
+              <p className="text-foreground/50">
+                Please try searching for a city or other category.
+              </p>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className="mb-28 grid grid-cols-1 justify-between gap-5 sm:grid-cols-2 md:grid-cols-3 md:gap-6 lg:grid-cols-4">
+          {listings.map((item) => (
+            <ListingCard
+              key={item.id!}
+              user={user}
+              data={item}
+              searchParams={searchParams}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

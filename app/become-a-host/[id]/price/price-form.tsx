@@ -7,10 +7,14 @@ import { PriceInput } from "./price-input";
 import { Info } from "lucide-react";
 import { createPrice } from "@/app/action/create-listing";
 import { ActionBar } from "@/app/components/become-a-host/action-bar";
+import { formatFloor } from "@/app/lib/format-money";
+import { GUEST_SERVICE_FEE } from "@/app/lib/rates";
 
 export const PriceForm = ({ params }: { params: { id: string } }) => {
   const [dataLogged, setDataLogged] = useState(false);
   const [typedValue, setTypedValue] = useState<number>(0);
+
+  const guestPrice = formatFloor(typedValue * GUEST_SERVICE_FEE + typedValue);
 
   return (
     <form action={createPrice}>
@@ -41,7 +45,7 @@ export const PriceForm = ({ params }: { params: { id: string } }) => {
           </div>
         </div>
         <input type="hidden" name="listingId" value={params.id} />
-        <input type="hidden" name="price" value={typedValue} />
+        <input type="hidden" name="price" value={guestPrice} />
         <div className="mb-32 flex flex-col items-center justify-center gap-6">
           <PriceInput
             setDataLogged={setDataLogged}

@@ -4,35 +4,41 @@ import { ChevronLeft, ChevronRight, Edit, Heart } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { dummyImages } from "../data/dummy-images";
-import { Listing } from "@prisma/client";
+import { Listing, UserRole } from "@prisma/client";
 import { Skeleton } from "@/components/ui/skeleton";
+import { toggleFavorite } from "../action/toggle-favorite";
+import { DefaultSession } from "next-auth";
 
-interface LisitngCardProps {
+type LisitngCardProps = {
   data: Listing;
   isHost?: boolean;
   searchParams?: { filter: string };
-}
+  user?: {
+    role: UserRole;
+    favoriteIds: string[];
+  } & DefaultSession["user"];
+};
 
-export const ListingCard = ({
-  data,
-  isHost,
-  searchParams,
-}: LisitngCardProps) => {
+export const ListingCard = ({ data, isHost, user }: LisitngCardProps) => {
   const [isLoading, setIsLoading] = useState(true);
-  const [heart, setHeart] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(
+    user ? user.favoriteIds.includes(data.id) : false,
+  );
   const [index, setIndex] = useState(0);
 
-  useEffect(() => {
-    // Simulating data fetching
-    if (data) {
-      setIsLoading(false);
-    }
-  }, [data]);
-
-  const handleHeart = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleFavoriteToggle = async (
+    e: React.MouseEvent<HTMLButtonElement>,
+  ) => {
     e.preventDefault();
     e.stopPropagation();
-    setHeart((prev) => !prev);
+
+    setIsFavorite((prev) => !prev);
+    try {
+      await toggleFavorite(user?.id!, data.id);
+    } catch (error) {
+      setIsFavorite((prev) => !prev);
+      console.error("Failed to toggle favorite status:", error);
+    }
   };
 
   const handlePrev = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -46,6 +52,12 @@ export const ListingCard = ({
     e.stopPropagation();
     setIndex((index) => (index === dummyImages.length - 1 ? 0 : index + 1));
   };
+
+  useEffect(() => {
+    if (data) {
+      setIsLoading(false);
+    }
+  }, [data]);
 
   return (
     <>
@@ -72,7 +84,7 @@ export const ListingCard = ({
                   <Image
                     src={url}
                     alt="Image of home"
-                    layout="fill"
+                    fill
                     objectFit="cover"
                     className="rounded-lg"
                   />
@@ -89,12 +101,12 @@ export const ListingCard = ({
               </button>
             ) : (
               <button
-                onClick={handleHeart}
+                onClick={handleFavoriteToggle}
                 className="absolute right-5 top-5 z-10 h-7 w-7 cursor-pointer border-none bg-transparent p-0 transition-all active:scale-90"
                 aria-label="Add to favorites" // Optional but recommended for accessibility
               >
                 <Heart
-                  className={`h-full w-full text-white transition-all hover:fill-rose-500 ${heart === true ? "fill-rose-500" : "fill-white/50"}`}
+                  className={`h-full w-full text-white transition-all hover:fill-rose-500 ${isFavorite ? "fill-rose-500" : "fill-white/50"}`}
                   strokeWidth={1.5}
                 />
               </button>

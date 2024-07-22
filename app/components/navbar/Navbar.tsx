@@ -5,7 +5,6 @@ import { UserMenu } from "./user-menu";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { LoginDialog } from "../login-dialog/login-dialog";
 import { createListing } from "@/app/action/create-listing";
-import prisma from "@/app/lib/db";
 
 export const Navbar = async () => {
   const session = await getSession();

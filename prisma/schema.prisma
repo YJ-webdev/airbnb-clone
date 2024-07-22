@@ -90,6 +90,7 @@ model Listing {
   title         String?
   description   String?
   country       String?
+  state         String?
   city          String?
   locationValue String?
   roomCount     Int?

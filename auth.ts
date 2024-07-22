@@ -8,8 +8,9 @@ import { UserRole } from "@prisma/client";
 
 declare module "next-auth" {
   interface Session {
-    user: {
+    user?: {
       role: UserRole;
+      favoriteIds: string[];
     } & DefaultSession["user"];
   }
 }
@@ -37,10 +38,8 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
 
   callbacks: {
     async signIn({ user, account }) {
-      //allow OAuth without email verification
       if (account?.provider !== "credentials") return true;
       const existingUser = await getUserById(user.id!);
-      //prevent sign in without email verification
       if (!existingUser?.emailVerified) return false;
       return true;
     },
@@ -52,6 +51,9 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       if (token.role && session.user) {
         session.user.role = token.role;
       }
+      if (token.favoriteIds && session.user) {
+        session.user.favoriteIds = token.favoriteIds;
+      }
       return session;
     },
 
@@ -60,6 +62,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       const existingUser = await getUserById(token.sub);
       if (!existingUser) return token;
       token.role = existingUser.role;
+      token.favoriteIds = existingUser.favoriteIds;
       return token;
     },
   },
