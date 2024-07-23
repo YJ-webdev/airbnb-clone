@@ -1,4 +1,6 @@
 export const dummyImages = [
+  "https://media.cntraveler.com/photos/610ab1235a049ee94c83dc70/master/w_1280,c_limit/Crosby-Street-Hotel,-New-York_Crosby-Suite-1.jpg",
+  "https://media.cntraveler.com/photos/5f5f9fc9987090832029b0fe/master/w_1280,c_limit/high-line-hotel-1.jpg",
   "https://media.cntraveler.com/photos/6492299b4c5fe8af9fb0e973/master/w_1280,c_limit/Penny%20(venue%20card)_3.%20Penny%20Williamsburg_Suite_Credit%20Alice%20Gao.jpg",
   "https://media.cntraveler.com/photos/5f611c87978ff785b250154f/master/w_1280,c_limit/the-lowell-specialty-suite.jpg",
   "https://media.cntraveler.com/photos/611ec95849fb6deee66196ed/master/w_1920%2Cc_limit/Airbnb_28365194.jpg",

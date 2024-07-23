@@ -67,7 +67,7 @@ export default async function HostPage() {
       </div>
       <form
         action={createNewListingWithId}
-        className="fixed right-16 top-28 z-30"
+        className="fixed right-[4%] top-28 z-30"
       >
         <button
           type="submit"

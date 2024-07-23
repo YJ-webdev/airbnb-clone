@@ -23,10 +23,11 @@ type LisitngCardProps = {
 
 export const ListingCard = ({ data, isHost, user }: LisitngCardProps) => {
   const [isLoading, setIsLoading] = useState(true);
+  const [index, setIndex] = useState(0);
+
   const [isFavorite, setIsFavorite] = useState(
     user ? user.favoriteIds.includes(data.id) : false,
   );
-  const [index, setIndex] = useState(0);
 
   const handleFavoriteToggle = async (
     e: React.MouseEvent<HTMLButtonElement>,
