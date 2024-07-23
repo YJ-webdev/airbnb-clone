@@ -1,7 +1,7 @@
 import { Filter } from "./components/navbar/filter";
 import { ListingCard } from "./components/listing-card";
 import prisma from "./lib/db";
-import { Listing, UserRole } from "@prisma/client";
+import { Listing } from "@prisma/client";
 import { FolderSearch } from "lucide-react";
 import getSession from "./lib/get-session";
 
@@ -30,8 +30,8 @@ export default async function Home({
 
       {listings.length === 0 ? (
         <div className="flex h-full w-full flex-col items-center justify-center">
-          <div className="absolute top-1/2 flex -translate-y-1/2 flex-col space-y-4">
-            <FolderSearch strokeWidth={1.5} size={40} className="mx-auto" />
+          <div className="absolute top-1/2 flex -translate-y-1/2 flex-col space-y-8">
+            <FolderSearch strokeWidth={1.5} size={36} className="mx-auto" />
             <div className="flex flex-col space-y-2 text-center">
               <h1 className="text-2xl font-semibold">
                 No results for this category...

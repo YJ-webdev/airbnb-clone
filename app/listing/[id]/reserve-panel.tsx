@@ -27,6 +27,7 @@ export const ReservePanel = ({ isHost, data, user }: ReservePanelProps) => {
   const isFavorite = favoriteIds.includes(data.id);
 
   const [favorite, setFavorite] = useState(isFavorite);
+  const fillColor = "fill-zinc-500/50";
 
   useEffect(() => {
     setFavorite(isFavorite);
@@ -47,6 +48,7 @@ export const ReservePanel = ({ isHost, data, user }: ReservePanelProps) => {
               setFavorite={setFavorite}
               optimisticFavorite={optimisticFavorite}
               setOptimisticFavorite={setOptimisticFavorite}
+              fillColor={fillColor}
             />
 
             <h3 className={`${montserrat.className} text-[22px] font-semibold`}>
@@ -66,8 +68,11 @@ export const ReservePanel = ({ isHost, data, user }: ReservePanelProps) => {
               />
             </div>
             <Input
-              className="h-14 w-full rounded-full text-sm uppercase"
+              className="h-14 w-full rounded-full text-center text-base uppercase"
               name="Guests"
+              type="number"
+              min={1}
+              max={16}
               placeholder="Guests"
             />
           </div>
@@ -90,7 +95,7 @@ export const ReservePanel = ({ isHost, data, user }: ReservePanelProps) => {
         </div>
       </div>
 
-      <div className="fixed bottom-0 flex h-[80px] w-full items-center justify-between border-t bg-gradient-to-b from-zinc-200 via-slate-50 to-white p-6 md:hidden">
+      <div className="fixed bottom-0 flex h-[80px] w-full items-center justify-between border-t bg-white p-6 md:hidden">
         <div className="flex items-center gap-2">
           <h3>
             <span
@@ -109,6 +114,7 @@ export const ReservePanel = ({ isHost, data, user }: ReservePanelProps) => {
             setFavorite={setFavorite}
             optimisticFavorite={optimisticFavorite}
             setOptimisticFavorite={setOptimisticFavorite}
+            fillColor={fillColor}
           />
         </div>
 

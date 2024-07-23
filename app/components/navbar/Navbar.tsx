@@ -16,7 +16,7 @@ export const Navbar = async () => {
 
   return (
     <nav className="z-10 border-b bg-white py-4 shadow-sm">
-      <div className="container flex items-center justify-between gap-3 md:gap-0">
+      <div className="container mx-auto flex items-center justify-between gap-3 px-5 md:gap-0 lg:px-10">
         <Logo />
         <Search />
         <div className="flex">

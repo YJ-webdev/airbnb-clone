@@ -11,6 +11,7 @@ interface FavoriteButtonProps {
     role: UserRole;
   } & DefaultSession["user"];
   isFavorite: boolean;
+  fillColor?: string;
   favorite: boolean;
   setFavorite: React.Dispatch<React.SetStateAction<boolean>>;
   optimisticFavorite: boolean;
@@ -24,6 +25,7 @@ export const FavoriteButton = ({
   favorite,
   optimisticFavorite,
   setOptimisticFavorite,
+  fillColor,
 }: FavoriteButtonProps) => {
   const { toggleFavorite } = useFavorites();
 
@@ -53,7 +55,7 @@ export const FavoriteButton = ({
       )}
     >
       <Heart
-        className={`h-full w-full text-white transition-all hover:fill-rose-500 ${optimisticFavorite ? "fill-rose-500" : "fill-white/50"}`}
+        className={`h-full w-full text-white transition-all hover:fill-rose-500 ${optimisticFavorite ? "fill-rose-500" : fillColor ?? "fill-white/50"}`}
         strokeWidth={1.5}
       />
     </button>

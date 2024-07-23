@@ -16,13 +16,13 @@ export default async function ListingPage({
 }: {
   params: { id: string };
 }) {
+  const session = await getSession();
+  const user = session?.user;
+
   const data = await getListing(params.id);
   if (!data) {
     return null;
   }
-
-  const session = await getSession();
-  const user = session?.user;
 
   return (
     <div className="mx-auto mt-6 flex max-w-7xl pb-28 md:pb-0">
@@ -31,7 +31,7 @@ export default async function ListingPage({
           {data.title}
         </h1>
         <div className="relative flex">
-          <div className="flex flex-1 flex-col gap-6">
+          <div className="mb-32 flex flex-1 flex-col gap-6">
             <PreviewImages data={data} />
 
             <div className="space-y-2">
@@ -55,9 +55,20 @@ export default async function ListingPage({
 
             <div>{data.description}</div>
 
-            <div className="mb-16 flex flex-col space-y-3">
+            <div className="flex flex-col space-y-3">
               <h2 className="text-[19px] md:text-[20px]">Where it located</h2>
               <ListingMap data={data} />
+            </div>
+
+            <div className="flex flex-col space-y-3">
+              <h2 className="text-[19px] md:text-[20px]">
+                Pick Your Stay Dates
+              </h2>
+              {/* <Calender
+                value={dateRange}
+                disabledDates={disabledDates}
+                onChange={() => {}}
+              /> */}
             </div>
           </div>
         </div>
