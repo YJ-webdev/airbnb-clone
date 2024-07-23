@@ -1,12 +1,12 @@
 "use client";
 
-import { updateFavorite } from "@/app/action/update-favorite";
+import { FavoriteButton } from "@/app/components/favorite-button";
+import { useFavorites } from "@/app/context/favorite-context";
 import { Input } from "@/components/ui/input";
 import { Listing, UserRole } from "@prisma/client";
-import { Heart } from "lucide-react";
 import { DefaultSession } from "next-auth";
 import { Montserrat } from "next/font/google";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface ReservePanelProps {
   isHost: boolean;
@@ -23,40 +23,31 @@ const montserrat = Montserrat({
 });
 
 export const ReservePanel = ({ isHost, data, user }: ReservePanelProps) => {
-  const [isFavorite, setIsFavorite] = useState(
-    user ? user.favoriteIds.includes(data.id) : false,
-  );
+  const { favoriteIds } = useFavorites();
+  const isFavorite = favoriteIds.includes(data.id);
 
-  const handleFavoriteToggle = async (
-    e: React.MouseEvent<HTMLButtonElement>,
-  ) => {
-    e.preventDefault();
-    e.stopPropagation();
+  const [favorite, setFavorite] = useState(isFavorite);
 
-    setIsFavorite((prev) => !prev);
-    try {
-      await updateFavorite(user?.id!, data.id);
-    } catch (error) {
-      setIsFavorite((prev) => !prev);
-      console.error("Failed to toggle favorite status:", error);
-    }
-  };
+  useEffect(() => {
+    setFavorite(isFavorite);
+  }, [isFavorite]);
+
+  const [optimisticFavorite, setOptimisticFavorite] = useState(favorite);
 
   return (
     <>
-      <div className="sticky top-[151px] mr-5 hidden h-full w-[30%] min-w-[300px] rounded-lg border bg-gradient-to-b from-zinc-200 via-slate-50 to-white p-6 shadow-[0px_1px_3px_1px_rgba(0,0,0,0.1)] md:flex md:flex-col">
+      <div className="sticky top-[151px] mr-5 hidden h-full w-[30%] min-w-[300px] rounded-lg border bg-white p-6 shadow-[0px_1px_3px_1px_rgba(0,0,0,0.1)] md:flex md:flex-col">
         <div className="flex flex-col gap-4">
           <div className="flex-1 space-y-4">
-            <button
-              onClick={handleFavoriteToggle}
-              className="absolute right-5 top-5 z-10 h-7 w-7 cursor-pointer border-none bg-transparent p-0 transition-all active:scale-90"
-              aria-label="Add to favorites" // Optional but recommended for accessibility
-            >
-              <Heart
-                className={`h-full w-full text-white transition-all hover:fill-rose-500 ${isFavorite ? "fill-rose-500" : "fill-white/50"}`}
-                strokeWidth={1.5}
-              />
-            </button>
+            <FavoriteButton
+              data={data}
+              user={user}
+              isFavorite={isFavorite}
+              favorite={favorite}
+              setFavorite={setFavorite}
+              optimisticFavorite={optimisticFavorite}
+              setOptimisticFavorite={setOptimisticFavorite}
+            />
 
             <h3 className={`${montserrat.className} text-[22px] font-semibold`}>
               ${data.price}{" "}
@@ -109,16 +100,16 @@ export const ReservePanel = ({ isHost, data, user }: ReservePanelProps) => {
             </span>{" "}
             / night
           </h3>
-          <button
-            onClick={handleFavoriteToggle}
-            className="absolute right-5 top-5 z-10 h-7 w-7 cursor-pointer border-none bg-transparent p-0 transition-all active:scale-90"
-            aria-label="Add to favorites" // Optional but recommended for accessibility
-          >
-            <Heart
-              className={`h-full w-full text-white transition-all hover:fill-rose-500 ${isFavorite ? "fill-rose-500" : "fill-white/50"}`}
-              strokeWidth={1.5}
-            />
-          </button>
+          <FavoriteButton
+            data={data}
+            user={user}
+            position=""
+            isFavorite={isFavorite}
+            favorite={favorite}
+            setFavorite={setFavorite}
+            optimisticFavorite={optimisticFavorite}
+            setOptimisticFavorite={setOptimisticFavorite}
+          />
         </div>
 
         <button className="rounded-full bg-gradient-to-r from-rose-500 to-[#e3326d] px-5 py-3 font-semibold text-white">

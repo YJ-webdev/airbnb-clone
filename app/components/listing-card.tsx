@@ -1,15 +1,15 @@
 "use client";
 
-import { ChevronLeft, ChevronRight, Edit, Heart } from "lucide-react";
+import { ChevronLeft, ChevronRight, Edit } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { dummyImages } from "../data/dummy-images";
 import { Listing, UserRole } from "@prisma/client";
 import { Skeleton } from "@/components/ui/skeleton";
-
 import { DefaultSession } from "next-auth";
-import { updateFavorite } from "../action/update-favorite";
 import Link from "next/link";
+import { FavoriteButton } from "./favorite-button";
+import { useFavorites } from "../context/favorite-context";
 
 type LisitngCardProps = {
   data: Listing;
@@ -25,24 +25,15 @@ export const ListingCard = ({ data, isHost, user }: LisitngCardProps) => {
   const [isLoading, setIsLoading] = useState(true);
   const [index, setIndex] = useState(0);
 
-  const [isFavorite, setIsFavorite] = useState(
-    user ? user.favoriteIds.includes(data.id) : false,
-  );
+  const { favoriteIds } = useFavorites();
+  const isFavorite = favoriteIds.includes(data.id);
+  const [favorite, setFavorite] = useState(isFavorite);
 
-  const handleFavoriteToggle = async (
-    e: React.MouseEvent<HTMLButtonElement>,
-  ) => {
-    e.preventDefault();
-    e.stopPropagation();
+  useEffect(() => {
+    setFavorite(isFavorite);
+  }, [isFavorite]);
 
-    setIsFavorite((prev) => !prev);
-    try {
-      await updateFavorite(user?.id!, data.id);
-    } catch (error) {
-      setIsFavorite((prev) => !prev);
-      console.error("Failed to toggle favorite status:", error);
-    }
-  };
+  const [optimisticFavorite, setOptimisticFavorite] = useState(favorite);
 
   const handlePrev = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -107,16 +98,15 @@ export const ListingCard = ({ data, isHost, user }: LisitngCardProps) => {
                 <p className="group text-sm font-semibold text-white">Edit</p>
               </button>
             ) : (
-              <button
-                onClick={handleFavoriteToggle}
-                className="absolute right-5 top-5 z-10 h-7 w-7 cursor-pointer border-none bg-transparent p-0 transition-all active:scale-90"
-                aria-label="Add to favorites" // Optional but recommended for accessibility
-              >
-                <Heart
-                  className={`h-full w-full text-white transition-all hover:fill-rose-500 ${isFavorite ? "fill-rose-500" : "fill-white/50"}`}
-                  strokeWidth={1.5}
-                />
-              </button>
+              <FavoriteButton
+                data={data}
+                user={user}
+                isFavorite={isFavorite}
+                favorite={favorite}
+                setFavorite={setFavorite}
+                optimisticFavorite={optimisticFavorite}
+                setOptimisticFavorite={setOptimisticFavorite}
+              />
             )}
 
             <button
