@@ -2,6 +2,7 @@
 
 import { createDescription } from "@/app/action/create-listing";
 import { ActionBar } from "@/app/components/become-a-host/action-bar";
+import { useProgress } from "@/app/context/progress-context";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Info } from "lucide-react";
@@ -11,8 +12,13 @@ export const DescriptionForm = ({ params }: { params: { id: string } }) => {
   const [dataLogged, setDataLogged] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const { progress, setProgress } = useProgress();
 
   const descriptionMaxLength = 500;
+
+  useEffect(() => {
+    setProgress(71);
+  }, []);
 
   useEffect(() => {
     if (title && description) {
@@ -65,6 +71,7 @@ export const DescriptionForm = ({ params }: { params: { id: string } }) => {
       <ActionBar
         dataLogged={dataLogged}
         prevHref={`/become-a-host/${params.id}/photos`}
+        currentStep={progress}
       />
     </form>
   );

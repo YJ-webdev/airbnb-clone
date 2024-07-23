@@ -1,16 +1,22 @@
 "use client";
 
 import ImageUpload from "./image-upload";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ActionBar } from "@/app/components/become-a-host/action-bar";
 import { Info } from "lucide-react";
 import { createImages } from "@/app/action/create-listing";
+import { useProgress } from "@/app/context/progress-context";
 
 import React from "react";
 
 export const ImageForm = ({ params }: { params: { id: string } }) => {
   const [dataLogged, setDataLogged] = useState(false);
   const [imageSrc, setImageSrc] = useState<string[]>([]);
+  const { progress, setProgress } = useProgress();
+
+  useEffect(() => {
+    setProgress(57);
+  }, []);
 
   return (
     <form action={createImages}>
@@ -33,6 +39,7 @@ export const ImageForm = ({ params }: { params: { id: string } }) => {
       <ActionBar
         dataLogged={dataLogged}
         prevHref={`/become-a-host/${params.id}/location`}
+        currentStep={progress}
       />
     </form>
   );

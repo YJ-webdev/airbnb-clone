@@ -1,6 +1,12 @@
+"use client";
+
+import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { CreationSubmit } from "./submit-buttons";
+
+import { useProgress } from "@/app/context/progress-context";
+import { ProgressBar } from "./progress-bar";
 
 interface ActionBarProps {
   dataLogged: boolean;
@@ -8,6 +14,7 @@ interface ActionBarProps {
   nextText?: string;
   prevText?: string;
   className?: string;
+  currentStep?: number;
 }
 
 export function ActionBar({
@@ -16,9 +23,18 @@ export function ActionBar({
   nextText,
   prevText,
   className,
+  currentStep,
 }: ActionBarProps) {
+  const { progress, setProgress } = useProgress();
+
+  useEffect(() => {
+    if (currentStep !== undefined) {
+      setProgress(currentStep);
+    }
+  }, [currentStep, setProgress]);
+
   return (
-    <div className="fixed bottom-0 z-10 h-24 w-full border-t bg-white">
+    <div className="fixed bottom-0 z-10 flex h-24 w-full flex-col border-t bg-white">
       <div className="container mx-auto flex h-full items-center justify-between px-5 lg:px-10">
         <Button
           variant="secondary"
@@ -34,6 +50,8 @@ export function ActionBar({
           className={className}
         />
       </div>
+      <div className="mt-2 w-full px-5 lg:px-10"></div>
+      <ProgressBar value={progress} />
     </div>
   );
 }

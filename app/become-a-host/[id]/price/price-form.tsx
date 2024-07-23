@@ -1,7 +1,7 @@
 "use client";
 
 import DotPattern from "@/components/magicui/dot-pattern";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PriceCheck } from "./price-check";
 import { PriceInput } from "./price-input";
 import { Info } from "lucide-react";
@@ -9,12 +9,18 @@ import { createPrice } from "@/app/action/create-listing";
 import { ActionBar } from "@/app/components/become-a-host/action-bar";
 import { formatFloor } from "@/app/lib/format-money";
 import { GUEST_SERVICE_FEE } from "@/app/lib/rates";
+import { useProgress } from "@/app/context/progress-context";
 
 export const PriceForm = ({ params }: { params: { id: string } }) => {
   const [dataLogged, setDataLogged] = useState(false);
   const [typedValue, setTypedValue] = useState<number>(0);
+  const { progress, setProgress } = useProgress();
 
   const guestPrice = formatFloor(typedValue * GUEST_SERVICE_FEE + typedValue);
+
+  useEffect(() => {
+    setProgress(85);
+  }, []);
 
   return (
     <form action={createPrice}>
@@ -59,6 +65,7 @@ export const PriceForm = ({ params }: { params: { id: string } }) => {
         <ActionBar
           dataLogged={dataLogged}
           prevHref={`/become-a-host/${params.id}/description`}
+          currentStep={progress}
         />
       </div>
     </form>

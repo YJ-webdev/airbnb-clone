@@ -79,16 +79,16 @@ const AddressInput = ({
   }, [location, address, locality, state, postalCode, nation]);
 
   return (
-    <div className="flex h-[55vh] w-2/5 flex-col bg-white">
-      <div className="flex flex-1">
-        <Info size={24} className="mr-2" />
+    <div className="mb-10 flex min-h-[360px] w-full flex-col bg-white md:mb-0 md:h-[55vh] md:w-2/5">
+      <div className="mb-10 flex md:flex-1">
+        <Info className="mr-2 h-3 w-3 md:h-6 md:w-6" />
         <p className="text-sm md:text-base">
           Your address is only shared with guests after they&apos;ve made a
           reservation.
         </p>
       </div>
 
-      <div>
+      <div className="flex flex-col md:flex-1">
         <select
           id="country"
           name="country"

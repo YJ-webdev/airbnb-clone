@@ -4,9 +4,10 @@ import { createApproval } from "@/app/action/create-listing";
 
 import { ActionBar } from "@/app/components/become-a-host/action-bar";
 import { Info } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ReviewListing } from "./review-listing";
 import { Listing, User } from "@prisma/client";
+import { useProgress } from "@/app/context/progress-context";
 
 interface ReveiwFormProps {
   params: { id: string };
@@ -15,6 +16,11 @@ interface ReveiwFormProps {
 
 export const ReviewForm = ({ params, data }: ReveiwFormProps) => {
   const [dataLogged, setDataLogged] = useState(true);
+  const { progress, setProgress } = useProgress();
+
+  useEffect(() => {
+    setProgress(100);
+  }, []);
 
   return (
     <form action={createApproval}>
@@ -38,6 +44,7 @@ export const ReviewForm = ({ params, data }: ReveiwFormProps) => {
       </div>
 
       <ActionBar
+        currentStep={100}
         dataLogged={dataLogged}
         nextText="Send Listing"
         prevHref={`/become-a-host/${params.id}/price`}

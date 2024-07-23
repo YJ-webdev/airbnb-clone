@@ -56,7 +56,7 @@ const AddressMap = ({ location }: AddressMapProps) => {
   }, []);
 
   return (
-    <div className="h-[55vh] flex-1 overflow-hidden rounded-[25px]">
+    <div className="h-[55vh] min-h-[360px] w-full overflow-hidden rounded-[25px] md:flex-1">
       {loading && (
         <Skeleton className="h-[55vh] flex-1 overflow-hidden rounded-[25px]" />
       )}

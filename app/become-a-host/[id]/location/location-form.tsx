@@ -5,8 +5,10 @@ import { createLocation } from "@/app/action/create-listing";
 import AddressInput from "./address-input";
 import AddressMap from "./address-map";
 import { ActionBar } from "@/app/components/become-a-host/action-bar";
+import { useProgress } from "@/app/context/progress-context";
 
 export const LocationForm = ({ params }: { params: { id: string } }) => {
+  const { progress, setProgress } = useProgress();
   const [dataLogged, setDataLogged] = useState(false);
   const [mapLocation, setMapLocation] = useState<{
     lat: number;
@@ -16,6 +18,10 @@ export const LocationForm = ({ params }: { params: { id: string } }) => {
   const [formedAddress, setFormedAddress] = useState("");
   const [country, setCountry] = useState<string | undefined>(undefined);
   const [city, setCity] = useState<string | undefined>(undefined);
+
+  useEffect(() => {
+    setProgress(43);
+  }, []);
 
   // Memorized handleAddressSubmit function
   const handleAddressSubmit = useCallback(async (address: string) => {
@@ -53,13 +59,13 @@ export const LocationForm = ({ params }: { params: { id: string } }) => {
   }, [formedAddress, handleAddressSubmit]);
 
   return (
-    <form action={createLocation}>
+    <form action={createLocation} className="mb-28">
       <input type="hidden" name="listingId" value={params.id} />
       <input type="hidden" name="locationValue" value={formedAddress} />
       <input type="hidden" name="country" value={country} />
       <input type="hidden" name="city" value={city} />
 
-      <div className="mx-auto flex max-w-3xl flex-1 items-center justify-center gap-14 pb-2 pl-6 pr-6 pt-5 md:pl-0 md:pr-0">
+      <div className="mx-auto flex max-w-3xl flex-col items-center justify-center pl-5 pr-5 pt-5 md:flex-1 md:flex-row md:gap-10 md:pl-0 md:pr-0">
         <AddressInput
           location={handleAddressSubmit}
           setDataLogged={setDataLogged}
@@ -72,6 +78,7 @@ export const LocationForm = ({ params }: { params: { id: string } }) => {
       <ActionBar
         dataLogged={dataLogged}
         prevHref={`/become-a-host/${params.id}/floor-plan`}
+        currentStep={progress}
       />
     </form>
   );
