@@ -23,9 +23,9 @@ export const Logo = () => {
         <Image
           src={MobileLogo}
           alt="Mobile Logo"
-          height="100"
-          width="100"
-          className="mobile-logo hidden cursor-pointer md:block lg:hidden"
+          height="200"
+          width="200"
+          className="mobile-logo min-w-[44px] cursor-pointer lg:hidden"
         />
       </Link>
     </>

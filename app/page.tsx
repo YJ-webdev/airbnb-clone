@@ -25,7 +25,7 @@ export default async function Home({
   const user = session?.user;
 
   return (
-    <div className="container mx-auto px-5 lg:px-10">
+    <div className="container px-5 lg:px-10">
       <Filter />
 
       {listings.length === 0 ? (
@@ -34,7 +34,7 @@ export default async function Home({
             <FolderSearch strokeWidth={1.5} size={36} className="mx-auto" />
             <div className="flex flex-col space-y-2 text-center">
               <h1 className="text-2xl font-semibold">
-                Sorry, no listings yet for this category.
+                No listings yet for this category.
               </h1>
               <p className="text-foreground/50">
                 Please try searching for a city or other category.
