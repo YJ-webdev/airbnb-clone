@@ -11,11 +11,6 @@ export const PreviewImages = ({ data }: { data?: Listing }) => {
   const [modalIndex, setModalIndex] = useState<number | null>(null);
   const [index, setIndex] = useState(0);
 
-  const handleImageClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-  };
-
   const handlePrev = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     e.stopPropagation();
@@ -57,12 +52,16 @@ export const PreviewImages = ({ data }: { data?: Listing }) => {
         style={{ transform: `translateX(-${index * 100}%)` }}
       >
         {dummyImages.map((url, i) => (
-          <div key={i} className="relative h-full w-full flex-shrink-0">
+          <div
+            key={i}
+            className="relative h-full w-full flex-shrink-0 bg-zinc-200"
+          >
             <Image
               src={url}
               alt="Image of home"
-              layout="fill"
-              objectFit="cover"
+              width={1000}
+              height={1000}
+              className="h-full w-full object-cover"
             />
           </div>
         ))}
@@ -91,6 +90,7 @@ export const PreviewImages = ({ data }: { data?: Listing }) => {
           strokeWidth={1.5}
         />
       </button>
+
       {modalIndex !== null && (
         <ImageModal
           currentIndex={modalIndex}

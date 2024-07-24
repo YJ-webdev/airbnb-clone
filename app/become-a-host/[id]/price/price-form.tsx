@@ -16,7 +16,7 @@ export const PriceForm = ({ params }: { params: { id: string } }) => {
   const [typedValue, setTypedValue] = useState<number>(0);
   const { progress, setProgress } = useProgress();
 
-  const guestPrice = formatFloor(typedValue * GUEST_SERVICE_FEE + typedValue);
+  const unformattedGuestPrice = typedValue * GUEST_SERVICE_FEE + typedValue;
 
   useEffect(() => {
     setProgress(85);
@@ -24,6 +24,9 @@ export const PriceForm = ({ params }: { params: { id: string } }) => {
 
   return (
     <form action={createPrice}>
+      <input type="hidden" name="listingId" value={params.id} />
+      <input type="hidden" name="price" value={unformattedGuestPrice} />
+
       <div className="relative h-full overflow-hidden">
         <DotPattern
           width={20}
@@ -50,8 +53,7 @@ export const PriceForm = ({ params }: { params: { id: string } }) => {
             </p>
           </div>
         </div>
-        <input type="hidden" name="listingId" value={params.id} />
-        <input type="hidden" name="price" value={guestPrice} />
+
         <div className="mb-32 flex flex-col items-center justify-center gap-6">
           <PriceInput
             setDataLogged={setDataLogged}
@@ -62,6 +64,7 @@ export const PriceForm = ({ params }: { params: { id: string } }) => {
             {typedValue > 1000 ? `Price is too high` : ``}
           </p>
         </div>
+
         <ActionBar
           dataLogged={dataLogged}
           prevHref={`/become-a-host/${params.id}/description`}

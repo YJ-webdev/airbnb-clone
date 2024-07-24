@@ -37,7 +37,7 @@ export const ReservePanel = ({ isHost, data, user }: ReservePanelProps) => {
 
   return (
     <>
-      <div className="sticky top-[151px] mr-5 hidden h-full w-[30%] min-w-[300px] rounded-lg border bg-white p-6 shadow-[0px_1px_3px_1px_rgba(0,0,0,0.1)] md:flex md:flex-col">
+      <div className="sticky mr-5 hidden h-full w-[30%] min-w-[300px] rounded-lg border bg-white p-6 shadow-[0px_1px_3px_1px_rgba(0,0,0,0.1)] lg:top-[155px] lg:flex lg:flex-col">
         <div className="flex flex-col gap-4">
           <div className="flex-1 space-y-4">
             <FavoriteButton
@@ -56,20 +56,33 @@ export const ReservePanel = ({ isHost, data, user }: ReservePanelProps) => {
               <span className="text-base font-medium">/ night</span>
             </h3>
             <div className="flex items-baseline justify-between gap-2">
+              <label htmlFor="start" className="sr-only">
+                Start
+              </label>
               <Input
+                id="start"
                 className="h-14 w-full rounded-full text-sm uppercase"
-                name="check-in"
+                name="start"
                 placeholder="Check-in"
               />
+
+              <label htmlFor="end" className="sr-only">
+                End
+              </label>
               <Input
+                id="end"
                 className="h-14 w-full rounded-full text-sm uppercase"
-                name="check-out"
+                name="end"
                 placeholder="Check-out"
               />
             </div>
+            <label htmlFor="guests" className="sr-only">
+              Guests
+            </label>
             <Input
+              id="guests"
+              name="guests"
               className="h-14 w-full rounded-full text-center text-base uppercase"
-              name="Guests"
               type="number"
               min={1}
               max={16}
@@ -95,7 +108,7 @@ export const ReservePanel = ({ isHost, data, user }: ReservePanelProps) => {
         </div>
       </div>
 
-      <div className="fixed bottom-0 flex h-[80px] w-full items-center justify-between border-t bg-white p-6 md:hidden">
+      <div className="fixed bottom-0 flex h-[80px] w-full items-center justify-between border-t bg-white p-6 lg:hidden">
         <div className="flex items-center gap-2">
           <h3>
             <span

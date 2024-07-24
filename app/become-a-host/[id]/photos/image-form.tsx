@@ -36,6 +36,7 @@ export const ImageForm = ({ params }: { params: { id: string } }) => {
         </div>
       </div>
       <ImageUpload setDataLogged={setDataLogged} setImageSrc={setImageSrc} />
+
       <ActionBar
         dataLogged={dataLogged}
         prevHref={`/become-a-host/${params.id}/location`}

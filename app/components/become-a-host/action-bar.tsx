@@ -51,6 +51,7 @@ export function ActionBar({
         />
       </div>
       <div className="mt-2 w-full px-5 lg:px-10"></div>
+
       <ProgressBar value={progress} />
     </div>
   );

@@ -12,9 +12,10 @@ export const DescriptionForm = ({ params }: { params: { id: string } }) => {
   const [dataLogged, setDataLogged] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const { progress, setProgress } = useProgress();
 
   const descriptionMaxLength = 500;
+
+  const { progress, setProgress } = useProgress();
 
   useEffect(() => {
     setProgress(71);
@@ -68,6 +69,7 @@ export const DescriptionForm = ({ params }: { params: { id: string } }) => {
           {description.length}/{descriptionMaxLength}
         </p>
       </div>
+
       <ActionBar
         dataLogged={dataLogged}
         prevHref={`/become-a-host/${params.id}/photos`}

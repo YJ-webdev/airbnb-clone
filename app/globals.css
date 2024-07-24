@@ -140,6 +140,7 @@ img {
   height: 8px;
   width: 100%;
   overflow: hidden;
+  margin-top: -8px;
 }
 
 .progress-bar {

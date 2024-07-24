@@ -34,7 +34,7 @@ export default async function Home({
             <FolderSearch strokeWidth={1.5} size={36} className="mx-auto" />
             <div className="flex flex-col space-y-2 text-center">
               <h1 className="text-2xl font-semibold">
-                No results for this category...
+                Sorry, no listings yet for this category.
               </h1>
               <p className="text-foreground/50">
                 Please try searching for a city or other category.
@@ -43,7 +43,7 @@ export default async function Home({
           </div>
         </div>
       ) : (
-        <div className="mb-28 grid grid-cols-1 justify-between gap-5 sm:grid-cols-2 md:grid-cols-3 md:gap-6 lg:grid-cols-4">
+        <div className="mb-28 grid grid-cols-1 justify-between gap-5 sm:grid-cols-2 md:gap-6 lg:grid-cols-3 xl:grid-cols-4">
           {listings.map((item) => (
             <ListingCard
               key={item.id!}

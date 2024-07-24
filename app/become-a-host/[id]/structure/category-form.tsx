@@ -9,6 +9,7 @@ import { useProgress } from "@/app/context/progress-context";
 export const CategoryForm = ({ params }: { params: { id: string } }) => {
   const [dataLogged, setDataLogged] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string>("");
+
   const { progress, setProgress } = useProgress();
 
   useEffect(() => {

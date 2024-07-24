@@ -4,22 +4,17 @@ import { createFloorPlan } from "@/app/action/create-listing";
 import { Counter } from "@/app/become-a-host/[id]/floor-plan/counter";
 import { ActionBar } from "@/app/components/become-a-host/action-bar";
 import { useProgress } from "@/app/context/progress-context";
-import {
-  Bath,
-  BedSingle,
-  DoorOpen,
-  PersonStanding,
-  UserCheck,
-} from "lucide-react";
+import { Bath, BedSingle, DoorOpen, UserCheck } from "lucide-react";
 import { useEffect, useState } from "react";
 
 export const FloorFrom = ({ params }: { params: { id: string } }) => {
-  const { progress, setProgress } = useProgress();
   const [dataLogged, setDataLogged] = useState(false);
   const [guestCount, setGuestCount] = useState(0);
   const [roomCount, setRoomCount] = useState(0);
   const [bedCount, setBedCount] = useState(0);
   const [bathroomCount, setBathroomCount] = useState(0);
+
+  const { progress, setProgress } = useProgress();
 
   useEffect(() => {
     setProgress(28);
@@ -85,6 +80,7 @@ export const FloorFrom = ({ params }: { params: { id: string } }) => {
           </div>
         </div>
       </div>
+
       <ActionBar
         dataLogged={dataLogged}
         prevHref={`/become-a-host/${params.id}/structure`}

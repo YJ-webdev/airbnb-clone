@@ -1,6 +1,7 @@
 "use client";
 
 import { PreviewImages } from "@/app/components/preview-images";
+import { formatFloor } from "@/app/lib/format-money";
 import { cn } from "@/lib/utils";
 import { Listing, User } from "@prisma/client";
 import React, { useState } from "react";

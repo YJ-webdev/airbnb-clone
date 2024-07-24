@@ -8,7 +8,6 @@ import { ActionBar } from "@/app/components/become-a-host/action-bar";
 import { useProgress } from "@/app/context/progress-context";
 
 export const LocationForm = ({ params }: { params: { id: string } }) => {
-  const { progress, setProgress } = useProgress();
   const [dataLogged, setDataLogged] = useState(false);
   const [mapLocation, setMapLocation] = useState<{
     lat: number;
@@ -18,6 +17,8 @@ export const LocationForm = ({ params }: { params: { id: string } }) => {
   const [formedAddress, setFormedAddress] = useState("");
   const [country, setCountry] = useState<string | undefined>(undefined);
   const [city, setCity] = useState<string | undefined>(undefined);
+
+  const { progress, setProgress } = useProgress();
 
   useEffect(() => {
     setProgress(43);

@@ -82,32 +82,14 @@ export const ListingCard = ({ data, isHost, user }: LisitngCardProps) => {
                   <Image
                     src={url}
                     alt="Image of home"
-                    fill
-                    objectFit="cover"
-                    className="rounded-lg"
+                    width={500}
+                    height={500}
+                    className="h-full w-full object-cover"
+                    priority
                   />
                 </div>
               ))}
             </div>
-            {isHost === true ? (
-              <button
-                className="absolute right-5 top-5 flex h-16 w-16 cursor-pointer flex-col items-center justify-center rounded-full border-none bg-black px-5 py-3 transition-all hover:bg-zinc-500 active:scale-90"
-                aria-label="Edit listing" // Optional but recommended for accessibility
-              >
-                <Edit size={20} className="text-white" strokeWidth={1.5} />
-                <p className="group text-sm font-semibold text-white">Edit</p>
-              </button>
-            ) : (
-              <FavoriteButton
-                data={data}
-                user={user}
-                isFavorite={isFavorite}
-                favorite={favorite}
-                setFavorite={setFavorite}
-                optimisticFavorite={optimisticFavorite}
-                setOptimisticFavorite={setOptimisticFavorite}
-              />
-            )}
 
             <button
               onClick={handlePrev}
@@ -131,7 +113,28 @@ export const ListingCard = ({ data, isHost, user }: LisitngCardProps) => {
                 strokeWidth={1.5}
               />
             </button>
+
+            {isHost === true ? (
+              <button
+                className="absolute right-5 top-5 flex h-16 w-16 cursor-pointer flex-col items-center justify-center rounded-full border-none bg-black px-5 py-3 transition-all hover:bg-zinc-500 active:scale-90"
+                aria-label="Edit listing" // Optional but recommended for accessibility
+              >
+                <Edit size={20} className="text-white" strokeWidth={1.5} />
+                <p className="group text-sm font-semibold text-white">Edit</p>
+              </button>
+            ) : (
+              <FavoriteButton
+                data={data}
+                user={user}
+                isFavorite={isFavorite}
+                favorite={favorite}
+                setFavorite={setFavorite}
+                optimisticFavorite={optimisticFavorite}
+                setOptimisticFavorite={setOptimisticFavorite}
+              />
+            )}
           </div>
+
           <div className="flex-flex-col mt-2">
             <h2 className="text-base font-semibold">
               <span className="">{data.city ? `${data.city}, ` : ""} </span>

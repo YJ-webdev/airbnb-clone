@@ -4,6 +4,7 @@ import { ReservePanel } from "./reserve-panel";
 import { ListingMap } from "./listing-map";
 import { PreviewImages } from "@/app/components/preview-images";
 import getSession from "@/app/lib/get-session";
+import { Calendar } from "./calendar";
 
 async function getListing(id: string) {
   const data = await prisma.listing.findUnique({ where: { id } });
@@ -26,12 +27,12 @@ export default async function ListingPage({
 
   return (
     <div className="mx-auto mt-6 flex max-w-7xl pb-28 md:pb-0">
-      <div className="flex-1 px-5">
-        <h1 className="mb-3 text-xl font-semibold tracking-tight md:tracking-normal lg:text-2xl">
+      <div className="flex flex-1 flex-col gap-5 px-5">
+        <h1 className="-mb-1 text-xl font-semibold tracking-tight md:tracking-normal lg:text-2xl">
           {data.title}
         </h1>
         <div className="relative flex">
-          <div className="mb-32 flex flex-1 flex-col gap-6">
+          <div className="mb-32 flex flex-col gap-6">
             <PreviewImages data={data} />
 
             <div className="space-y-2">
@@ -64,11 +65,7 @@ export default async function ListingPage({
               <h2 className="text-[19px] md:text-[20px]">
                 Pick Your Stay Dates
               </h2>
-              {/* <Calender
-                value={dateRange}
-                disabledDates={disabledDates}
-                onChange={() => {}}
-              /> */}
+              <Calendar />
             </div>
           </div>
         </div>
