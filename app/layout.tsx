@@ -3,9 +3,13 @@ import { Nunito } from "next/font/google";
 import "./globals.css";
 
 import getSession from "./lib/get-session";
-import { Navbar } from "./components/navbar/navbar";
 import { FavoritesProvider } from "./context/favorite-context";
 import { ProgressProvider } from "./context/progress-context";
+import Navbar from "./components/navbar/navbar";
+import {
+  ContentWidthProvider,
+  useContentWidth,
+} from "./context/ContentWidthContext";
 
 const font = Nunito({ subsets: ["latin"] });
 
@@ -26,10 +30,12 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={`${font.className} flex min-h-screen flex-col`}>
-        <Navbar />
         <FavoritesProvider initialFavoriteIds={initialFavoriteIds}>
           <ProgressProvider>
-            <main className="flex-1">{children}</main>
+            <ContentWidthProvider>
+              <Navbar />
+              <main className="flex-1">{children}</main>
+            </ContentWidthProvider>
           </ProgressProvider>
         </FavoritesProvider>
       </body>

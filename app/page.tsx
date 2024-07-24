@@ -25,7 +25,7 @@ export default async function Home({
   const user = session?.user;
 
   return (
-    <div className="container px-5 lg:px-10">
+    <div className="container">
       <Filter />
 
       {listings.length === 0 ? (

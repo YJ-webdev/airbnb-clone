@@ -3,17 +3,14 @@
 import { FavoriteButton } from "@/app/components/favorite-button";
 import { useFavorites } from "@/app/context/favorite-context";
 import { Input } from "@/components/ui/input";
-import { Listing, UserRole } from "@prisma/client";
-import { DefaultSession } from "next-auth";
+import { UserWithRoleAndFavoriteIds } from "@/types";
+import { Listing } from "@prisma/client";
 import { Montserrat } from "next/font/google";
 import { useEffect, useState } from "react";
 
 interface ReservePanelProps {
   isHost: boolean;
-  user?: {
-    role: UserRole;
-    favoriteIds: string[];
-  } & DefaultSession["user"];
+  user?: UserWithRoleAndFavoriteIds;
   data: Listing;
 }
 

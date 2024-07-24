@@ -4,22 +4,19 @@ import { ChevronLeft, ChevronRight, Edit } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { dummyImages } from "../data/dummy-images";
-import { Listing, UserRole } from "@prisma/client";
+import { Listing } from "@prisma/client";
 import { Skeleton } from "@/components/ui/skeleton";
-import { DefaultSession } from "next-auth";
 import Link from "next/link";
 import { FavoriteButton } from "./favorite-button";
 import { useFavorites } from "../context/favorite-context";
+import { UserWithRoleAndFavoriteIds } from "@/types";
 
-type LisitngCardProps = {
+interface LisitngCardProps {
   data: Listing;
   isHost?: boolean;
   searchParams?: { filter: string };
-  user?: {
-    role: UserRole;
-    favoriteIds: string[];
-  } & DefaultSession["user"];
-};
+  user?: UserWithRoleAndFavoriteIds;
+}
 
 export const ListingCard = ({ data, isHost, user }: LisitngCardProps) => {
   const [isLoading, setIsLoading] = useState(true);

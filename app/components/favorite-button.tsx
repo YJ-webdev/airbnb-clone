@@ -1,15 +1,13 @@
 import { cn } from "@/lib/utils";
-import { Listing, UserRole } from "@prisma/client";
+import { Listing } from "@prisma/client";
 import { Heart } from "lucide-react";
-import { DefaultSession } from "next-auth";
 import { useFavorites } from "../context/favorite-context";
+import { UserWithRoleAndFavoriteIds } from "@/types";
 
 interface FavoriteButtonProps {
   data: Listing;
   position?: string;
-  user?: {
-    role: UserRole;
-  } & DefaultSession["user"];
+  user?: UserWithRoleAndFavoriteIds;
   isFavorite: boolean;
   fillColor?: string;
   favorite: boolean;

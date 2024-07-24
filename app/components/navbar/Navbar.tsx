@@ -1,48 +1,16 @@
-import getSession from "@/app/lib/get-session";
-import { Logo } from "./logo";
-import { Search } from "./search";
-import { UserMenu } from "./user-menu";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { LoginDialog } from "../login-dialog/login-dialog";
-import { createListing } from "@/app/action/create-listing";
+import React from "react";
+import getSession from "@/app/lib/get-session"; // Adjust path as necessary
+import { ResponsiveContainer } from "./responsive-container";
 
-export const Navbar = async () => {
+const Navbar = async () => {
   const session = await getSession();
   const user = session?.user;
 
-  const createListingWithId = createListing.bind(null, {
-    userId: user?.id as string,
-  });
-
   return (
     <nav className="z-10 border-b bg-white py-4 shadow-sm">
-      <div className="container mx-auto flex items-center justify-between gap-3 px-5 md:gap-0 lg:px-10">
-        <Logo />
-        <Search />
-        <div className="flex">
-          {user ? (
-            <form action={createListingWithId}>
-              <button
-                type="submit"
-                className="line-clamp-1 hidden cursor-pointer text-nowrap rounded-full py-3 text-center text-[15px] font-semibold transition hover:bg-neutral-100 md:block md:px-4 lg:mr-4"
-              >
-                Airbnb your home
-              </button>
-            </form>
-          ) : (
-            <Dialog>
-              <DialogTrigger className="line-clamp-1 hidden cursor-pointer text-nowrap rounded-full py-3 text-center text-[15px] font-semibold transition hover:bg-neutral-100 md:block md:px-4 lg:mr-4">
-                Airbnb your home
-              </DialogTrigger>
-              <DialogContent className="flex max-h-[75%] flex-col overflow-hidden p-0">
-                <LoginDialog />
-              </DialogContent>
-            </Dialog>
-          )}
-
-          <UserMenu user={user} />
-        </div>
-      </div>
+      <ResponsiveContainer user={user} />
     </nav>
   );
 };
+
+export default Navbar;
