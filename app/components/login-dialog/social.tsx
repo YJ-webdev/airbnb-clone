@@ -36,7 +36,7 @@ export const Social = ({ disabled }: SocialProps) => {
   };
 
   return (
-    <div className="mt-7">
+    <div className="mt-7 pb-2">
       <div className="mb-2 items-center justify-center">
         <hr />
         <p className="z-10 mx-auto w-10 -translate-y-3 bg-white text-center text-sm text-black">

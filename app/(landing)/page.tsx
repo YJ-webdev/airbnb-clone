@@ -47,7 +47,7 @@ export default async function Home({
           {listings.map((item) => (
             <ListingCard
               key={item.id!}
-              user={user}
+              user={user!}
               data={item}
               searchParams={searchParams}
             />

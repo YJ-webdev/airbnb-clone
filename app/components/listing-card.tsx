@@ -10,6 +10,7 @@ import Link from "next/link";
 import { FavoriteButton } from "./favorite-button";
 import { useFavorites } from "../context/favorite-context";
 import { UserWithRoleAndFavoriteIds } from "@/types";
+import { EditButton, EditButton2 } from "./become-a-host/edit-button";
 
 interface LisitngCardProps {
   data: Listing;
@@ -112,13 +113,7 @@ export const ListingCard = ({ data, isHost, user }: LisitngCardProps) => {
             </button>
 
             {isHost === true ? (
-              <button
-                className="absolute right-5 top-5 flex h-16 w-16 cursor-pointer flex-col items-center justify-center rounded-full border-none bg-black px-5 py-3 transition-all hover:bg-zinc-500 active:scale-90"
-                aria-label="Edit listing" // Optional but recommended for accessibility
-              >
-                <Edit size={20} className="text-white" strokeWidth={1.5} />
-                <p className="group text-sm font-semibold text-white">Edit</p>
-              </button>
+              <EditButton2 id={data.id} />
             ) : (
               <FavoriteButton
                 data={data}

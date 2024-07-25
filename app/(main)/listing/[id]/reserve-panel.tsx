@@ -1,11 +1,13 @@
 "use client";
 
+import { EditButton } from "@/app/components/become-a-host/edit-button";
 import { FavoriteButton } from "@/app/components/favorite-button";
 import { useFavorites } from "@/app/context/favorite-context";
 import { Input } from "@/components/ui/input";
 import { UserWithRoleAndFavoriteIds } from "@/types";
 import { Listing } from "@prisma/client";
 import { Montserrat } from "next/font/google";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 interface ReservePanelProps {
@@ -88,9 +90,7 @@ export const ReservePanel = ({ isHost, data, user }: ReservePanelProps) => {
           </div>
 
           {isHost ? (
-            <button className="h-14 w-full rounded-full bg-black px-5 py-3 font-semibold text-white hover:bg-zinc-500">
-              Edit listing
-            </button>
+            <EditButton id={data.id} />
           ) : (
             <div className="flex flex-col items-center justify-center">
               <p className="mb-2 text-center text-sm text-foreground">
