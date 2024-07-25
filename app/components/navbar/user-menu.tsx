@@ -53,10 +53,10 @@ export const UserMenu = ({ user }: UserMenuProps) => {
                 Trips
               </DropdownMenuItem>
               <DropdownMenuItem
-                className="cursor-pointer px-3 py-3 text-[15px] font-semibold"
-                onClick={() => {}}
+                asChild
+                className="cursor-pointer px-3 py-3 text-[15px] font-light"
               >
-                Wishlists
+                <Link href="/favorite">Wishlists</Link>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem className="cursor-pointer px-3 py-3 text-[15px] font-light">

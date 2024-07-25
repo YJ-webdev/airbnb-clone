@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 
 interface ReservePanelProps {
   isHost: boolean;
-  user?: UserWithRoleAndFavoriteIds;
+  user: UserWithRoleAndFavoriteIds;
   data: Listing;
 }
 

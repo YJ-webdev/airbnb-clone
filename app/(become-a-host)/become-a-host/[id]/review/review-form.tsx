@@ -20,6 +20,7 @@ export const ReviewForm = ({ params, data }: ReveiwFormProps) => {
 
   useEffect(() => {
     setProgress(100);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

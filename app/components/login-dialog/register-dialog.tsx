@@ -130,7 +130,7 @@ export const RegisterDialog = () => {
               Sign up
             </Button>
             <p className="text-center text-sm hover:underline">
-              Already have an account?
+              Log in with your account.
             </p>
           </form>
         </Form>

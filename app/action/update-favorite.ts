@@ -1,6 +1,8 @@
 "use server";
 
 import prisma from "../lib/db";
+import { UserWithRoleAndFavoriteIds } from "@/types";
+import { revalidatePath } from "next/cache";
 
 export async function updateFavorite(userId: string, listingId: string) {
   try {
@@ -14,6 +16,8 @@ export async function updateFavorite(userId: string, listingId: string) {
       console.log("No user found");
       return null; // Return null or some indicator of failure
     }
+
+    revalidatePath("/favorites");
 
     const updatedFavorites = user.favoriteIds.includes(listingId)
       ? user.favoriteIds.filter((id) => id !== listingId)
@@ -31,4 +35,18 @@ export async function updateFavorite(userId: string, listingId: string) {
     console.error("Failed to update favorite status:", error);
     throw new Error("Failed to update favorite status");
   }
+}
+
+export default async function getFavoriteListings(
+  user: UserWithRoleAndFavoriteIds,
+) {
+  const favorites = await prisma.listing.findMany({
+    where: {
+      id: {
+        in: [...user.favoriteIds],
+      },
+    },
+  });
+
+  return favorites;
 }

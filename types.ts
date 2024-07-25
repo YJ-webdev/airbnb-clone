@@ -1,4 +1,4 @@
-import { UserRole } from "@prisma/client";
+import { Listing, UserRole } from "@prisma/client";
 import { DefaultSession } from "next-auth";
 
 export type UserWithRoleAndFavoriteIds = {

@@ -66,6 +66,7 @@ export default function Footer() {
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
+    transition: all 0.3s ease-in-out;
   `;
 
   const { contentWidth } = useContentWidth();

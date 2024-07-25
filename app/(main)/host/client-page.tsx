@@ -7,7 +7,7 @@ import { UserWithRoleAndFavoriteIds } from "@/types";
 interface ClientPageProps {
   data: any;
   latestListing: any;
-  user?: UserWithRoleAndFavoriteIds;
+  user: UserWithRoleAndFavoriteIds;
 }
 
 export const ClientPage = ({ data, user, latestListing }: ClientPageProps) => {
@@ -30,12 +30,12 @@ export const ClientPage = ({ data, user, latestListing }: ClientPageProps) => {
       </header>
       <div className="mb-28 grid grid-cols-1 justify-center gap-5 sm:grid-cols-2 md:grid-cols-2 md:gap-6 lg:grid-cols-3">
         {data.map((item: any) => (
-          <ListingCard key={item.id!} data={item} isHost={true} />
+          <ListingCard key={item.id!} data={item} isHost={true} user={user} />
         ))}
       </div>
       <form
         action={createNewListingWithId}
-        className="fixed right-[8px] top-20 z-20 lg:right-[3%]"
+        className="fixed right-[8px] top-24 z-20 lg:right-[5%]"
       >
         <button
           type="submit"

@@ -15,7 +15,7 @@ interface LisitngCardProps {
   data: Listing;
   isHost?: boolean;
   searchParams?: { filter: string };
-  user?: UserWithRoleAndFavoriteIds;
+  user: UserWithRoleAndFavoriteIds;
 }
 
 export const ListingCard = ({ data, isHost, user }: LisitngCardProps) => {

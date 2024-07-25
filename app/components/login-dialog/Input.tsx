@@ -10,7 +10,7 @@ interface InputProps {
   label?: string;
   type?: string;
   formatPrice?: boolean;
-  errors: FieldErrors;
+  errors?: FieldErrors;
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
@@ -55,7 +55,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           className={cn(
             "text-md peer w-full rounded-lg border border-zinc-400 bg-white px-4 pb-2 pl-4 pt-5 font-semibold text-zinc-900 transition focus:border-zinc-700 disabled:cursor-not-allowed disabled:opacity-70",
             formatPrice && "pl-9",
-            errors[id] &&
+            errors?.[id] &&
               "border-rose-500 text-rose-500 focus:outline-1 focus:outline-rose-500",
           )}
         />
@@ -65,7 +65,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             className={cn(
               "text-md absolute left-4 top-5 origin-[0] -translate-y-3 transform text-muted-foreground duration-150 peer-placeholder-shown:-translate-y-1 peer-placeholder-shown:scale-100 peer-focus:-translate-y-5 peer-focus:scale-75",
               formatPrice && "left-9",
-              errors[id] && "text-rose-500",
+              errors?.[id] && "text-rose-500",
               value && "-translate-y-5 scale-75",
               disabled && "text-zinc-400",
             )}

@@ -7,13 +7,14 @@ import { UserWithRoleAndFavoriteIds } from "@/types";
 interface FavoriteButtonProps {
   data: Listing;
   position?: string;
-  user?: UserWithRoleAndFavoriteIds;
+  user: UserWithRoleAndFavoriteIds;
   isFavorite: boolean;
   fillColor?: string;
   favorite: boolean;
   setFavorite: React.Dispatch<React.SetStateAction<boolean>>;
   optimisticFavorite: boolean;
   setOptimisticFavorite: React.Dispatch<React.SetStateAction<boolean>>;
+  onToggleFavorite?: (listingId: string) => void;
 }
 
 export const FavoriteButton = ({
@@ -24,6 +25,7 @@ export const FavoriteButton = ({
   optimisticFavorite,
   setOptimisticFavorite,
   fillColor,
+  onToggleFavorite,
 }: FavoriteButtonProps) => {
   const { toggleFavorite } = useFavorites();
 
@@ -37,6 +39,7 @@ export const FavoriteButton = ({
 
     try {
       await toggleFavorite(user?.id!, data.id);
+      onToggleFavorite?.(data.id);
     } catch (error) {
       setOptimisticFavorite(favorite);
       console.error("Failed to toggle favorite status:", error);

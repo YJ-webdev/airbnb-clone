@@ -15,10 +15,11 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "../components/login-dialog/Input";
+
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Separator } from "@/components/ui/separator";
+import { Input } from "@/app/components/login-dialog/Input";
 
 interface FormFieldProps {
   user: User;
