@@ -23,7 +23,7 @@ const ClientPage = ({ name, email, image }: ClientPageProps) => {
   }, [setContentWidth]);
 
   return (
-    <div className="container mb-80 mt-10 max-w-[68rem]">
+    <div className="favorites container mb-28 mt-10 max-w-[68rem]">
       <PersonnalInfo name={name} email={email} image={image} />
     </div>
   );

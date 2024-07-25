@@ -7,7 +7,7 @@ import { UserWithRoleAndFavoriteIds } from "@/types";
 interface FavoriteButtonProps {
   data: Listing;
   position?: string;
-  user: UserWithRoleAndFavoriteIds;
+  user?: UserWithRoleAndFavoriteIds;
   isFavorite: boolean;
   fillColor?: string;
   favorite: boolean;

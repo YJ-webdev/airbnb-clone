@@ -10,7 +10,7 @@ export const EditButton = ({ id }: EditButtonProps) => {
     <Link href={`/become-a-host/${id}/edit`} passHref>
       <button
         onClick={(e) => e.stopPropagation()}
-        className="h-14 w-full rounded-full bg-black px-5 py-3 font-semibold text-white hover:bg-zinc-500"
+        className="my-1 h-14 w-full rounded-full bg-black px-5 py-3 font-semibold text-white hover:bg-zinc-500"
       >
         Edit listing
       </button>
@@ -27,6 +27,16 @@ export const EditButton2 = ({ id }: EditButtonProps) => {
       >
         <Edit size={20} className="text-white" strokeWidth={1.5} />
         <p className="group text-sm font-semibold text-white">Edit</p>
+      </button>
+    </Link>
+  );
+};
+
+export const EditButton3 = ({ id }: EditButtonProps) => {
+  return (
+    <Link href={`/become-a-host/${id}/edit`} passHref>
+      <button className="rounded-full bg-black px-8 py-3 font-semibold text-white">
+        Edit
       </button>
     </Link>
   );

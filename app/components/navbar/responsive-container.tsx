@@ -25,6 +25,7 @@ export const ResponsiveContainer = ({ user }: ResponsiveContainerProps) => {
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
+    transition: all 0.5s ease-in-out;
   `;
 
   const { contentWidth } = useContentWidth();

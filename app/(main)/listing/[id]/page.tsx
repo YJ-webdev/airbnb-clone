@@ -1,7 +1,6 @@
 import prisma from "@/app/lib/db";
 import getSession from "@/app/lib/get-session";
 import ClientPage from "./client-page";
-// Client component
 
 async function getListing(id: string) {
   const data = await prisma.listing.findUnique({ where: { id } });

@@ -2,7 +2,9 @@
 
 import { createNewListing } from "@/app/action/create-listing";
 import { ListingCard } from "@/app/components/listing-card";
+import { useContentWidth } from "@/app/context/ContentWidthContext";
 import { UserWithRoleAndFavoriteIds } from "@/types";
+import { useEffect } from "react";
 
 interface ClientPageProps {
   data: any;
@@ -15,6 +17,16 @@ export const ClientPage = ({ data, user, latestListing }: ClientPageProps) => {
   const createNewListingWithId = createNewListing.bind(null, {
     userId: userId as string,
   });
+
+  const { setContentWidth } = useContentWidth();
+
+  useEffect(() => {
+    setContentWidth("1400px"); // Example width for max-w-7xl
+
+    return () => {
+      setContentWidth("100%"); // Reset to default width on unmount
+    };
+  }, [setContentWidth]);
 
   return (
     <div className="container relative mx-auto mt-10">
@@ -42,7 +54,7 @@ export const ClientPage = ({ data, user, latestListing }: ClientPageProps) => {
           className="rounded-full bg-gradient-to-r from-rose-500 to-[#e3326d] p-5 text-base font-bold text-white shadow-sm transition-all hover:scale-95"
         >
           {latestListing && !latestListing.approved
-            ? "Resume your listing"
+            ? "Continue with the leftover"
             : "Create a new listing"}
         </button>
       </form>

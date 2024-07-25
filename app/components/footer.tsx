@@ -62,20 +62,20 @@ const footerSections: FooterSectionData[] = [
 
 export default function Footer() {
   const ResponsiveContainer = styled.div<{ contentWidth: string }>`
-    width: ${({ contentWidth }) => contentWidth};
+    max-width: ${({ contentWidth }) => contentWidth};
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
-    transition: all 0.3s ease-in-out;
+    transition: all 0.5s ease-in-out;
   `;
 
   const { contentWidth } = useContentWidth();
 
   return (
-    <footer className="flex h-full w-full border-t bg-zinc-200">
+    <footer className="flex h-full border-t bg-zinc-200">
       <ResponsiveContainer
         contentWidth={contentWidth}
-        className="container px-1"
+        className="mx-auto w-full"
       >
         <div className="flex w-full flex-col gap-y-4 text-left text-sm">
           <div className="mb-12 mt-8 flex w-full justify-start md:gap-20 lg:gap-44">

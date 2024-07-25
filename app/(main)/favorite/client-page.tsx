@@ -1,15 +1,31 @@
+"use client";
+
 import getFavoriteListings from "@/app/action/update-favorite";
 import { ListingCard } from "@/app/components/listing-card";
+import { useContentWidth } from "@/app/context/ContentWidthContext";
 import { UserWithRoleAndFavoriteIds } from "@/types";
 import { Listing } from "@prisma/client";
 import { FolderSearch } from "lucide-react";
+import { useEffect } from "react";
 
 interface FavoriteClientPageProps {
   user: UserWithRoleAndFavoriteIds;
+  favorites: Listing[];
 }
 
-export const FavoriteClientPage = async ({ user }: FavoriteClientPageProps) => {
-  const favorites = await getFavoriteListings(user);
+export const FavoriteClientPage = ({
+  user,
+  favorites,
+}: FavoriteClientPageProps) => {
+  const { setContentWidth } = useContentWidth();
+
+  useEffect(() => {
+    setContentWidth("1400px"); // Example width for max-w-7xl
+
+    return () => {
+      setContentWidth("100%"); // Reset to default width on unmount
+    };
+  }, [setContentWidth]);
 
   return (
     <div className="container mb-28 mt-5 flex flex-col space-y-5">

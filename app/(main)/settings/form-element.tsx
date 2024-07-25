@@ -1,11 +1,5 @@
 import { User } from "next-auth";
-import {
-  useForm,
-  UseFormReturn,
-  FieldErrors,
-  Field,
-  FieldValues,
-} from "react-hook-form";
+import { UseFormReturn, FieldErrors, FieldValues } from "react-hook-form";
 import {
   Form,
   FormControl,
@@ -32,7 +26,6 @@ interface FormFieldProps {
 }
 
 export const FormElement = <T extends FieldValues>({
-  user,
   description,
   id,
   label,

@@ -19,7 +19,8 @@ export const Logo = () => {
           className="desktop-logo mr-6 hidden cursor-pointer lg:block"
           style={{ height: "2rem" }}
         />
-
+      </Link>
+      <Link href="/">
         <Image
           src={MobileLogo}
           alt="Mobile Logo"
