@@ -20,9 +20,9 @@ export const ResponsiveContainer = ({ user }: ResponsiveContainerProps) => {
     userId,
   });
 
-  const ResponsiveNavbar = styled.div<{ contentWidth: string }>`
+  const ResponsiveContainer = styled.div<{ contentWidth: string }>`
     max-width: ${({ contentWidth }) => contentWidth};
-    margin: 0 auto; // Center the navbar
+    margin: 0 auto;
     display: flex;
     justify-content: space-between;
   `;
@@ -30,7 +30,7 @@ export const ResponsiveContainer = ({ user }: ResponsiveContainerProps) => {
   const { contentWidth } = useContentWidth();
 
   return (
-    <ResponsiveNavbar contentWidth={contentWidth}>
+    <ResponsiveContainer contentWidth={contentWidth}>
       <div className="container flex items-center justify-between gap-3 md:gap-0">
         <Logo />
         <Search />
@@ -58,6 +58,6 @@ export const ResponsiveContainer = ({ user }: ResponsiveContainerProps) => {
           <UserMenu user={user} />
         </div>
       </div>
-    </ResponsiveNavbar>
+    </ResponsiveContainer>
   );
 };

@@ -37,7 +37,7 @@ export const ReviewListing = ({ data }: ReviewListingProps) => {
             <p className="rounded-full px-2 py-1 shadow-[0px_1px_3px_1px_rgba(0,0,0,0.1)]">
               ${data.price} / night
             </p>
-            <p>hosted by {data.user.name}</p>
+            <p>Hosted by {data.user.name}</p>
           </div>
 
           <div className="flex min-w-[350px] items-center gap-2">

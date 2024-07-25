@@ -137,7 +137,7 @@ img {
 /* globals.css or relevant CSS file */
 .progress-container {
   background-color: #f3f3f3;
-  height: 8px;
+  height: 4px;
   width: 100%;
   overflow: hidden;
   margin-top: -8px;

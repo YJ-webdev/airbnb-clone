@@ -49,10 +49,10 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         session.user.id = token.sub;
       }
       if (token.role && session.user) {
-        session.user.role = token.role;
+        session.user.role = token.role as UserRole;
       }
       if (token.favoriteIds && session.user) {
-        session.user.favoriteIds = token.favoriteIds;
+        session.user.favoriteIds = token.favoriteIds as string[];
       }
       return session;
     },

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { useContentWidth } from "@/app/context/ContentWidthContext"; // Adjust the path as necessary
+import { useContentWidth } from "@/app/context/ContentWidthContext";
 import { ReservePanel } from "./reserve-panel";
 import { ListingMap } from "./listing-map";
 import { PreviewImages } from "@/app/components/preview-images";
