@@ -1,6 +1,6 @@
-import getSession from "@/app/lib/get-session";
 import { redirect } from "next/navigation";
 import { ImageForm } from "./image-form";
+import getSession from "@/app/lib/get-session";
 
 export default async function PhotosPage({
   params,

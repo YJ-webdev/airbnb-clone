@@ -20,9 +20,7 @@ export const PriceForm = ({ params }: { params: { id: string } }) => {
 
   useEffect(() => {
     setProgress(85);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [setProgress]);
 
   return (
     <form action={createPrice}>

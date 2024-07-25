@@ -1,6 +1,6 @@
-import getSession from "@/app/lib/get-session";
 import { redirect } from "next/navigation";
 import isHost from "@/app/action/host-vaildation";
+import getSession from "@/app/lib/get-session";
 
 export default async function EditPage({ params }: { params: { id: string } }) {
   const session = await getSession();

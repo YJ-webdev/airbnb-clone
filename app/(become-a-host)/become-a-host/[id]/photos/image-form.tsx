@@ -16,7 +16,7 @@ export const ImageForm = ({ params }: { params: { id: string } }) => {
 
   useEffect(() => {
     setProgress(57);
-  }, []);
+  }, [setProgress]);
 
   return (
     <form action={createImages}>

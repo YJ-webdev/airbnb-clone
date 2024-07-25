@@ -18,7 +18,7 @@ export const FloorFrom = ({ params }: { params: { id: string } }) => {
 
   useEffect(() => {
     setProgress(28);
-  }, []);
+  }, [setProgress]);
 
   useEffect(() => {
     if (guestCount > 0 && bathroomCount > 0) {

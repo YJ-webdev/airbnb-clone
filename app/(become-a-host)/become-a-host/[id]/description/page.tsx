@@ -1,13 +1,13 @@
-import getSession from "@/app/lib/get-session";
 import { redirect } from "next/navigation";
 import { DescriptionForm } from "./description-form";
+import { auth } from "@/auth";
 
 export default async function DescriptionPage({
   params,
 }: {
   params: { id: string };
 }) {
-  const session = await getSession();
+  const session = await auth();
   const user = session?.user;
 
   if (!user) {

@@ -14,8 +14,7 @@ export const CategoryForm = ({ params }: { params: { id: string } }) => {
 
   useEffect(() => {
     setProgress(14);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [setProgress]);
 
   return (
     <form action={createStructure}>

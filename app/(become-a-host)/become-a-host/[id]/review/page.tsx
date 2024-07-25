@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
-import getSession from "@/app/lib/get-session";
 import { ReviewForm } from "./review-form";
 import prisma from "@/app/lib/db";
+import getSession from "@/app/lib/get-session";
 
 export default async function ReviewPage({
   params,

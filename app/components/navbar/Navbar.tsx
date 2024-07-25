@@ -1,5 +1,5 @@
 import React from "react";
-import getSession from "@/app/lib/get-session"; // Adjust path as necessary
+import getSession from "@/app/lib/get-session";
 import { ResponsiveContainer } from "./responsive-container";
 
 const Navbar = async () => {

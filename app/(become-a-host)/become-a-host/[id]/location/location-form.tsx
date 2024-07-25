@@ -22,7 +22,7 @@ export const LocationForm = ({ params }: { params: { id: string } }) => {
 
   useEffect(() => {
     setProgress(43);
-  }, []);
+  }, [setProgress]);
 
   // Memorized handleAddressSubmit function
   const handleAddressSubmit = useCallback(async (address: string) => {

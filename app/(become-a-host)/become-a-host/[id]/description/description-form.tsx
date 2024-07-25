@@ -19,7 +19,7 @@ export const DescriptionForm = ({ params }: { params: { id: string } }) => {
 
   useEffect(() => {
     setProgress(71);
-  }, []);
+  }, [setProgress]);
 
   useEffect(() => {
     if (title && description) {
