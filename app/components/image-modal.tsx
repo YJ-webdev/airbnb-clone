@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
-import { FileWithPreview } from "../become-a-host/[id]/photos/image-upload";
+import { FileWithPreview } from "../(become-a-host)/become-a-host/[id]/photos/image-upload";
 import { dummyImages } from "../data/dummy-images";
 
 interface ImageModalProps {

@@ -1,7 +1,7 @@
 "use client";
 
-import { createNewListing } from "../action/create-listing";
-import { ListingCard } from "../components/listing-card";
+import { createNewListing } from "@/app/action/create-listing";
+import { ListingCard } from "@/app/components/listing-card";
 import { UserWithRoleAndFavoriteIds } from "@/types";
 
 interface ClientPageProps {

@@ -1,10 +1,8 @@
-import getSession from "../lib/get-session";
 import { redirect } from "next/navigation";
-import { createNewListing } from "../action/create-listing";
-import prisma from "../lib/db";
-import { ListingCard } from "../components/listing-card";
 import { Listing } from "@prisma/client";
 import { ClientPage } from "./client-page";
+import getSession from "@/app/lib/get-session";
+import prisma from "@/app/lib/db";
 
 export default async function HostPage() {
   const session = await getSession();

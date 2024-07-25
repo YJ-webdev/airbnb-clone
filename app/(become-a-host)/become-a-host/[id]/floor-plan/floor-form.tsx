@@ -1,7 +1,7 @@
 "use client";
 
 import { createFloorPlan } from "@/app/action/create-listing";
-import { Counter } from "@/app/become-a-host/[id]/floor-plan/counter";
+import { Counter } from "@/app/(become-a-host)/become-a-host/[id]/floor-plan/counter";
 import { ActionBar } from "@/app/components/become-a-host/action-bar";
 import { useProgress } from "@/app/context/progress-context";
 import { Bath, BedSingle, DoorOpen, UserCheck } from "lucide-react";

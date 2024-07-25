@@ -7,7 +7,6 @@ import { FavoritesProvider } from "./context/favorite-context";
 import { ProgressProvider } from "./context/progress-context";
 import Navbar from "./components/navbar/navbar";
 import { ContentWidthProvider } from "./context/ContentWidthContext";
-import Footer from "./components/footer";
 
 const font = Nunito({ subsets: ["latin"] });
 
@@ -33,7 +32,6 @@ export default async function RootLayout({
             <ContentWidthProvider>
               <Navbar />
               <main className="flex-1">{children}</main>
-              <Footer />
             </ContentWidthProvider>
           </ProgressProvider>
         </FavoritesProvider>
