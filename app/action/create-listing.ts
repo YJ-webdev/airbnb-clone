@@ -246,5 +246,5 @@ export async function createApproval(formData: FormData) {
     },
   });
 
-  return redirect("/");
+  return redirect(`/become-a-host/${listingId}/congratulations`);
 }
