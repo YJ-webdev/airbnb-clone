@@ -1,33 +1,32 @@
-"use client";
+import prisma from "@/app/lib/db";
+import getSession from "@/app/lib/get-session";
 
-import { useEffect } from "react";
-import { useContentWidth } from "@/app/context/ContentWidthContext";
 import { ReservePanel } from "./reserve-panel";
 import { ListingMap } from "./listing-map";
 import { PreviewImages } from "@/app/components/preview-images";
 import { Calendar } from "./calendar";
-import { Listing } from "@prisma/client";
-import { UserWithRoleAndFavoriteIds } from "@/types";
 import { SocialShare } from "@/app/components/social-share";
 
-interface ListingClientProps {
-  data: Listing;
-  user?: UserWithRoleAndFavoriteIds;
+async function getListing(id: string) {
+  const data = await prisma.listing.findUnique({ where: { id } });
+  return data;
 }
 
-const ClientPage: React.FC<ListingClientProps> = ({ data, user }) => {
-  const { setContentWidth } = useContentWidth();
+export default async function ListingPage({
+  params,
+}: {
+  params: { id: string };
+}) {
+  const session = await getSession();
+  const user = session?.user;
+  const data = await getListing(params.id);
 
-  useEffect(() => {
-    setContentWidth("1280px"); // Example width for max-w-7xl
-
-    return () => {
-      setContentWidth("100%"); // Reset to default width on unmount
-    };
-  }, [setContentWidth]);
+  if (!data) {
+    return null;
+  }
 
   return (
-    <div className="mx-auto mt-6 flex max-w-7xl pb-28 md:pb-0">
+    <div className="mx-auto mt-6 flex max-w-7xl">
       <div className="flex flex-1 flex-col gap-5 px-5">
         <h1 className="-mb-1 text-xl font-semibold tracking-tight md:tracking-normal lg:text-2xl">
           {data.title}
@@ -51,7 +50,7 @@ const ClientPage: React.FC<ListingClientProps> = ({ data, user }) => {
               <div className="flex min-w-[350px] items-center gap-2 text-center text-sm text-foreground md:text-base">
                 <p className="w-full text-center tracking-wide sm:text-left">
                   {`${data.guestCount} Guests ·  ${data.roomCount} bedrooms ·  
-                ${data.bedCount} beds ·  ${data.bathroomCount} bathrooms`}
+            ${data.bedCount} beds ·  ${data.bathroomCount} bathrooms`}
                 </p>
               </div>
             </div>
@@ -72,6 +71,4 @@ const ClientPage: React.FC<ListingClientProps> = ({ data, user }) => {
       <ReservePanel data={data} isHost={data.userId === user?.id} user={user} />
     </div>
   );
-};
-
-export default ClientPage;
+}

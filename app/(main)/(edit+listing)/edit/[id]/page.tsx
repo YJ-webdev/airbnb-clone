@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import isHost from "@/app/action/host-vaildation";
 import getSession from "@/app/lib/get-session";
+import prisma from "@/app/lib/db";
 
 export default async function EditPage({ params }: { params: { id: string } }) {
   const session = await getSession();
@@ -21,10 +22,14 @@ export default async function EditPage({ params }: { params: { id: string } }) {
     return null;
   }
 
+  const data = await prisma.listing.findUnique({ where: { id: params.id } });
+
   return (
-    <div className="container mx-auto flex max-w-[1340px] flex-col">
-      <p>Edit: {params.id}</p>
-      <p>User: {user.id}</p>
-    </div>
+    <>
+      <div className="mx-auto flex max-w-[1280px] flex-col p-5">
+        <p>Edit: {params.id}</p>
+        <p>User: {user.id}</p>
+      </div>
+    </>
   );
 }

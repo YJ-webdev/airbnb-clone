@@ -1,7 +1,8 @@
 "use client";
 
 import styled from "styled-components";
-import { useContentWidth } from "../context/ContentWidthContext";
+import { cn } from "@/lib/utils";
+import { Width } from "@/types";
 
 interface FooterSectionProps {
   title: string;
@@ -60,36 +61,30 @@ const footerSections: FooterSectionData[] = [
   },
 ];
 
-export default function Footer() {
-  const ResponsiveContainer = styled.div<{ contentWidth: string }>`
-    max-width: ${({ contentWidth }) => contentWidth};
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    transition: all 0.5s ease-in-out;
-  `;
+type FooterProps = {
+  width: Width;
+};
 
-  const { contentWidth } = useContentWidth();
-
+export default function Footer({ width }: FooterProps) {
   return (
     <footer className="flex h-full border-t bg-zinc-200">
-      <ResponsiveContainer
-        contentWidth={contentWidth}
-        className="mx-auto w-full"
+      <div
+        className={cn(
+          "mx-auto flex w-full flex-col gap-y-4 text-left text-sm",
+          width && `max-w-[${width}]`,
+        )}
       >
-        <div className="flex w-full flex-col gap-y-4 text-left text-sm">
-          <div className="mb-12 mt-8 flex w-full justify-start md:gap-20 lg:gap-44">
-            {footerSections.map((section, index) => (
-              <FooterSection
-                key={index}
-                title={section.title}
-                items={section.items}
-              />
-            ))}
-          </div>
-          <p className="text-center">© 2034 Airbnb, Inc.</p>
+        <div className="mb-12 mt-8 flex w-full justify-start md:gap-20 lg:gap-44">
+          {footerSections.map((section, index) => (
+            <FooterSection
+              key={index}
+              title={section.title}
+              items={section.items}
+            />
+          ))}
         </div>
-      </ResponsiveContainer>
+        <p className="text-center">© 2034 Airbnb, Inc.</p>
+      </div>
     </footer>
   );
 }

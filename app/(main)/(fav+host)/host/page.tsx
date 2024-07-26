@@ -1,35 +1,57 @@
-"use client";
+import { redirect } from "next/navigation";
+import { Listing } from "@prisma/client";
+import getSession from "@/app/lib/get-session";
+import prisma from "@/app/lib/db";
 
 import { createNewListing } from "@/app/action/create-listing";
 import { ListingCard } from "@/app/components/listing-card";
-import { useContentWidth } from "@/app/context/ContentWidthContext";
 import { UserWithRoleAndFavoriteIds } from "@/types";
-import { useEffect } from "react";
 
-interface ClientPageProps {
-  data: any;
-  latestListing: any;
-  user: UserWithRoleAndFavoriteIds;
-}
-
-export const ClientPage = ({ data, user, latestListing }: ClientPageProps) => {
+export default async function HostPage() {
+  const session = await getSession();
+  const user = session?.user;
   const userId = user?.id as string;
+
+  if (!user) {
+    redirect("/");
+  }
+
   const createNewListingWithId = createNewListing.bind(null, {
     userId: userId as string,
   });
 
-  const { setContentWidth } = useContentWidth();
+  // show only approved listings on the page
+  const approvedListingsForUser: Listing[] = await prisma.listing.findMany({
+    where: {
+      userId: userId,
+      approved: true,
+    },
+    orderBy: {
+      updatedAt: "desc",
+    },
+  });
 
-  useEffect(() => {
-    setContentWidth("1400px"); // Example width for max-w-7xl
+  if (!approvedListingsForUser) {
+    return null;
+  }
+  const data = approvedListingsForUser;
 
-    return () => {
-      setContentWidth("100%"); // Reset to default width on unmount
-    };
-  }, [setContentWidth]);
+  // check if there is uncompleted listing
+  const latestListing = await prisma.listing.findFirst({
+    where: {
+      userId: userId,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
+  if (!latestListing) {
+    return null;
+  }
 
   return (
-    <div className="container relative mx-auto mt-10">
+    <div className="container relative mt-10">
       <header className="mb-8 flex flex-col items-baseline justify-center">
         <h1 className="text-2xl font-semibold">
           Your listings
@@ -60,4 +82,4 @@ export const ClientPage = ({ data, user, latestListing }: ClientPageProps) => {
       </form>
     </div>
   );
-};
+}

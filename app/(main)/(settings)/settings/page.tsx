@@ -1,8 +1,9 @@
 import { redirect } from "next/navigation";
 import { Metadata } from "next";
-import ClientPage from "./client-page";
+
 import prisma from "@/app/lib/db";
 import getSession from "@/app/lib/get-session";
+import { PersonnalInfo } from "./personnal-info";
 
 export const metadata: Metadata = { title: "Airbnb | Account settings" };
 
@@ -26,6 +27,12 @@ export default async function SettingsPage() {
   }
 
   return (
-    <ClientPage name={user?.name!} email={user?.email!} image={user?.image!} />
+    <div className="mx-auto mb-28 mt-10 flex max-w-[68rem] px-5">
+      <PersonnalInfo
+        name={user?.name!}
+        email={user?.email!}
+        image={user?.image!}
+      />
+    </div>
   );
 }

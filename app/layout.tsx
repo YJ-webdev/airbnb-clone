@@ -5,8 +5,6 @@ import "./globals.css";
 import getSession from "./lib/get-session";
 import { FavoritesProvider } from "./context/favorite-context";
 import { ProgressProvider } from "./context/progress-context";
-import Navbar from "./components/navbar/navbar";
-import { ContentWidthProvider } from "./context/ContentWidthContext";
 
 const font = Nunito({ subsets: ["latin"] });
 
@@ -29,10 +27,7 @@ export default async function RootLayout({
       <body className={`${font.className} flex min-h-screen flex-col`}>
         <FavoritesProvider initialFavoriteIds={initialFavoriteIds}>
           <ProgressProvider>
-            <ContentWidthProvider>
-              <Navbar />
-              <main className="flex-1">{children}</main>
-            </ContentWidthProvider>
+            <main className="flex-1">{children}</main>
           </ProgressProvider>
         </FavoritesProvider>
       </body>

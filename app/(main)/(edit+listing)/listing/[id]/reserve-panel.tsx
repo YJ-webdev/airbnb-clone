@@ -10,9 +10,7 @@ import { useFavorites } from "@/app/context/favorite-context";
 import { Input } from "@/components/ui/input";
 import { UserWithRoleAndFavoriteIds } from "@/types";
 import { Listing } from "@prisma/client";
-import { Edit } from "lucide-react";
 import { Montserrat } from "next/font/google";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 
 interface ReservePanelProps {

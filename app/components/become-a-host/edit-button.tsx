@@ -7,7 +7,7 @@ interface EditButtonProps {
 
 export const EditButton = ({ id }: EditButtonProps) => {
   return (
-    <Link href={`/become-a-host/${id}/edit`} passHref>
+    <Link href={`/edit/${id}`} passHref>
       <button
         onClick={(e) => e.stopPropagation()}
         className="my-1 h-14 w-full rounded-full bg-black px-5 py-3 font-semibold text-white hover:bg-zinc-500"
