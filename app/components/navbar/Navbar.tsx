@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 import { Width } from "@/types";
 
 type NavbarProps = {
-  width: Width;
+  width?: Width;
 };
 
 const Navbar = async ({ width }: NavbarProps) => {
@@ -24,7 +24,7 @@ const Navbar = async ({ width }: NavbarProps) => {
     <div className="z-10 border-b bg-white py-4 shadow-sm">
       <nav
         className={cn(
-          "mx-auto flex items-center justify-between gap-3 px-5 md:gap-0",
+          "mx-auto flex max-w-[1400px] items-center justify-between gap-3 px-5 md:gap-0",
           { [`max-w-[${width}]`]: width },
         )}
       >

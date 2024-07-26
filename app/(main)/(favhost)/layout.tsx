@@ -8,9 +8,9 @@ export default function HostLayout({
 }) {
   return (
     <div className="mx-auto">
-      <Navbar width="1400px" />
+      <Navbar />
       {children}
-      <Footer width="1400px" />
+      <Footer />
     </div>
   );
 }

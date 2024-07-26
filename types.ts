@@ -6,4 +6,4 @@ export type UserWithRoleAndFavoriteIds = {
   favoriteIds: string[];
 } & DefaultSession["user"];
 
-export type Width = "1400px" | "1088px" | "1280px";
+export type Width = "68rem" | "1280px";

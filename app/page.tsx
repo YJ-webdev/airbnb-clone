@@ -27,7 +27,7 @@ export default async function Home({
 
   return (
     <>
-      <Navbar width="1400px" />
+      <Navbar />
       <div className="container">
         <Filter />
 

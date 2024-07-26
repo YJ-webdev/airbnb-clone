@@ -62,7 +62,7 @@ const footerSections: FooterSectionData[] = [
 ];
 
 type FooterProps = {
-  width: Width;
+  width?: Width;
 };
 
 export default function Footer({ width }: FooterProps) {
