@@ -15,12 +15,12 @@ export default async function StructurePage({
   }
 
   return (
-    <>
+    <div>
       <h2 className="mx-auto mb-5 max-w-2xl p-5 text-2xl font-semibold tracking-tight transition-colors md:text-3xl">
         Which of these best describes your home?
       </h2>
 
       <CategoryForm params={params} />
-    </>
+    </div>
   );
 }

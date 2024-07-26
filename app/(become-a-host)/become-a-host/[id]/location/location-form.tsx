@@ -52,6 +52,7 @@ export const LocationForm = ({ params }: { params: { id: string } }) => {
         setMapLocation(null); // Clear map location on error
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Effect to trigger handleAddressSubmit when formedAddress changes
@@ -66,16 +67,22 @@ export const LocationForm = ({ params }: { params: { id: string } }) => {
       <input type="hidden" name="country" value={country} />
       <input type="hidden" name="city" value={city} />
 
-      <div className="mx-auto flex max-w-3xl flex-col items-center justify-center pl-5 pr-5 pt-5 md:flex-1 md:flex-row md:gap-10 md:pl-0 md:pr-0">
-        <AddressInput
-          location={handleAddressSubmit}
-          setDataLogged={setDataLogged}
-          setCountry={setCountry}
-          setCity={setCity}
-        />
-        <AddressMap location={mapLocation} />
-      </div>
+      <div className="container mb-28 flex h-[70vh] max-w-4xl flex-col pt-32">
+        <h2 className="flex-1 pb-10 text-2xl font-semibold md:text-3xl">
+          Where&apos;s your place located?{" "}
+        </h2>
 
+        <div className="flex-grow" />
+        <div className="flex max-w-4xl flex-1 flex-col items-center justify-between gap-8 md:flex-1 md:flex-row">
+          <AddressInput
+            location={handleAddressSubmit}
+            setDataLogged={setDataLogged}
+            setCountry={setCountry}
+            setCity={setCity}
+          />
+          <AddressMap location={mapLocation} />
+        </div>
+      </div>
       <ActionBar
         dataLogged={dataLogged}
         prevHref={`/become-a-host/${params.id}/floor-plan`}

@@ -23,8 +23,8 @@ export const ImageForm = ({ params }: { params: { id: string } }) => {
       <input type="hidden" name="listingId" value={params.id} />
       <input type="hidden" name="imageSrc" value={imageSrc as string[]} />
 
-      <div className="mx-auto flex max-w-2xl flex-col space-y-2 p-5 md:pl-0 md:pr-0 md:pt-5">
-        <h2 className="text-2xl font-semibold transition-colors md:text-3xl">
+      <div className="container mb-10 flex max-w-3xl flex-col space-y-2 pt-28">
+        <h2 className="text-2xl font-semibold md:text-3xl">
           Add some photos of your place
         </h2>
         <div className="flex">

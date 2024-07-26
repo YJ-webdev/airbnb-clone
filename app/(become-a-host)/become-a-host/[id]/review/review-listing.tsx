@@ -41,20 +41,9 @@ export const ReviewListing = ({ data }: ReviewListingProps) => {
           </div>
 
           <div className="flex min-w-[350px] items-center gap-2">
-            <p>
-              <span className="font-bold">{data.guestCount}</span> Guests
-            </p>
-            <p>·</p>
-            <p>
-              <span className="font-bold">{data.roomCount}</span> bedrooms
-            </p>
-            <p>·</p>
-            <p>
-              <span className="font-bold">{data.bedCount}</span> beds
-            </p>
-            <p>·</p>
-            <p>
-              <span className="font-bold">{data.guestCount}</span> bathrooms
+            <p className="w-full text-center tracking-wide sm:text-left">
+              {`${data.guestCount} Guests ·  ${data.roomCount} bedrooms ·  
+            ${data.bedCount} beds ·  ${data.bathroomCount} bathrooms`}
             </p>
           </div>
         </div>
@@ -72,13 +61,6 @@ export const ReviewListing = ({ data }: ReviewListingProps) => {
           >
             {description}
           </p>
-          <button
-            type="button"
-            className="absolute bottom-3 right-2 hidden rounded-full border px-3 py-2 text-sm backdrop-blur-md md:block"
-            onClick={handleReadMore}
-          >
-            {readMore === false ? <p>Read more ▼</p> : <p>Read less ▲</p>}
-          </button>
         </div>
       </div>
     </div>

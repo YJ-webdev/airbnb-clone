@@ -15,7 +15,7 @@ export default async function DescriptionPage({
   }
 
   return (
-    <div className="flex flex-col">
+    <div>
       <DescriptionForm params={params} />
     </div>
   );

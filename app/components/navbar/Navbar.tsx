@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 import { Width } from "@/types";
 
 type NavbarProps = {
-  width?: Width;
+  width?: string;
 };
 
 const Navbar = async ({ width }: NavbarProps) => {

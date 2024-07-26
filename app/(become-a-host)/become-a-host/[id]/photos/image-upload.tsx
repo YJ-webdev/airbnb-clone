@@ -116,8 +116,8 @@ const ImageUpload = ({ setDataLogged, setImageSrc }: ImageUploadProps) => {
         <Image
           src={file.preview}
           className="h-full w-full object-cover"
-          width={500}
-          height={500}
+          width={800}
+          height={800}
           alt="Preview"
         />
 
@@ -182,10 +182,10 @@ const ImageUpload = ({ setDataLogged, setImageSrc }: ImageUploadProps) => {
   }, []);
 
   return (
-    <section className="mx-auto max-w-2xl pl-5 pr-5 pt-5 md:pl-0 md:pr-0">
+    <section className="container max-w-3xl">
       <div
         {...getRootProps({
-          className: "mx-auto max-w-2xl flex items-center justify-center",
+          className: "container max-w-3xl flex items-center justify-center",
         })}
       >
         <input {...getInputProps()} />

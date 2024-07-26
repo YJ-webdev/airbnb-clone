@@ -76,7 +76,7 @@ export const PriceInput = ({
   };
 
   return (
-    <div className="z-10 mx-auto mt-16">
+    <div className="mx-auto mt-16">
       <div className="flex items-baseline">
         <div className="flex items-center justify-center">
           <span

@@ -58,6 +58,15 @@
   }
 }
 
+.relative.mb-28 {
+  display: flex;
+  flex-direction: column; /* Align children vertically */
+  align-items: center; /* Align children horizontally */
+  justify-content: center; /* Align children vertically */
+  height: 100vh; /* Make the div take the full height of the viewport */
+  box-sizing: border-box; /* Ensure padding and border are included in the element's total width and height */
+}
+
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }

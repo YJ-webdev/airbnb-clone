@@ -26,7 +26,7 @@ export const ReviewForm = ({ params, data }: ReveiwFormProps) => {
     <form action={createApproval}>
       <input type="hidden" name="listingId" value={params.id} />
 
-      <div className="mx-auto mb-28 flex min-h-[60vh] max-w-4xl flex-col gap-y-5 p-5">
+      <div className="container mb-28 flex min-h-[55vh] max-w-4xl flex-col gap-y-5 pt-20">
         <div className="mb-5 flex flex-col space-y-2">
           <h2 className="text-2xl font-semibold transition-colors md:text-3xl">
             Review your listing

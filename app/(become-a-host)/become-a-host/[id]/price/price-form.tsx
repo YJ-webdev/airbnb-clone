@@ -7,7 +7,6 @@ import { PriceInput } from "./price-input";
 import { Info } from "lucide-react";
 import { createPrice } from "@/app/action/create-listing";
 import { ActionBar } from "@/app/components/become-a-host/action-bar";
-import { formatFloor } from "@/app/lib/format-money";
 import { GUEST_SERVICE_FEE } from "@/app/lib/rates";
 import { useProgress } from "@/app/context/progress-context";
 
@@ -41,28 +40,31 @@ export const PriceForm = ({ params }: { params: { id: string } }) => {
               "radial-gradient(circle, transparent 25%, black 40%)",
           }}
         />
-        <div className="mx-auto flex h-[15Dvh] max-w-2xl flex-col items-baseline gap-4 pl-6 pr-6 pt-5 md:pl-0 md:pr-0">
-          <h2 className="text-2xl font-semibold md:text-3xl">
-            Now, set your price!
-          </h2>
+        <div className="container mb-28 flex h-full min-h-[70%] max-w-2xl flex-col pt-32">
+          <div className="flex flex-1 flex-col items-baseline gap-2">
+            <h2 className="text-2xl font-semibold md:text-3xl">
+              Now, set your price!
+            </h2>
 
-          <div className="flex items-center">
-            <Info size={15} className="mr-2" />
-            <p className="text-sm md:text-base">
-              You can change it later anytime.
+            <div className="flex items-center">
+              <Info size={15} className="mr-2" />
+              <p className="text-sm md:text-base">
+                You can change it later anytime.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex-grow" />
+          <div className="flex flex-1 flex-col items-center justify-center gap-6">
+            <PriceInput
+              setDataLogged={setDataLogged}
+              setTypedValue={setTypedValue}
+            />
+            <PriceCheck typedValue={typedValue} />
+            <p className="text-sm font-bold text-rose-500 md:text-base">
+              {typedValue > 1000 ? `Price is too high` : ``}
             </p>
           </div>
-        </div>
-
-        <div className="mb-32 flex flex-col items-center justify-center gap-6">
-          <PriceInput
-            setDataLogged={setDataLogged}
-            setTypedValue={setTypedValue}
-          />
-          <PriceCheck typedValue={typedValue} />
-          <p className="text-sm font-bold text-rose-500 md:text-base">
-            {typedValue > 1000 ? `Price is too high` : ``}
-          </p>
         </div>
 
         <ActionBar
