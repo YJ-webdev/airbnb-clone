@@ -20,7 +20,7 @@ export const EditButton = ({ id }: EditButtonProps) => {
 
 export const EditButton2 = ({ id }: EditButtonProps) => {
   return (
-    <Link href={`/become-a-host/${id}/edit`} passHref>
+    <Link href={`/edit/${id}`} passHref>
       <button
         className="absolute right-5 top-5 flex h-16 w-16 cursor-pointer flex-col items-center justify-center rounded-full border-none bg-black px-5 py-3 transition-all hover:bg-zinc-500 active:scale-90"
         aria-label="Edit listing" // Optional but recommended for accessibility
@@ -34,7 +34,7 @@ export const EditButton2 = ({ id }: EditButtonProps) => {
 
 export const EditButton3 = ({ id }: EditButtonProps) => {
   return (
-    <Link href={`/become-a-host/${id}/edit`} passHref>
+    <Link href={`/edit/${id}`} passHref>
       <button className="rounded-full bg-black px-8 py-3 font-semibold text-white">
         Edit
       </button>
