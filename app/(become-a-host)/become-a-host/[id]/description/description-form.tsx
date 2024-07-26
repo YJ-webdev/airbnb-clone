@@ -35,7 +35,7 @@ export const DescriptionForm = ({ params }: { params: { id: string } }) => {
       <input type="hidden" name="title" value={title} />
       <input type="hidden" name="description" value={description} />
 
-      <div className="container mb-28 flex h-[70vh] max-w-2xl flex-col pt-32">
+      <div className="container mb-28 flex h-[70vh] max-w-2xl flex-col pt-28">
         <div className="mb-10 flex flex-col space-y-2">
           <h2 className="text-2xl font-semibold transition-colors md:text-3xl">
             Title & Description{" "}

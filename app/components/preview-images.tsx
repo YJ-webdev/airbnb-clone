@@ -42,7 +42,7 @@ export const PreviewImages = ({ data }: { data?: Listing }) => {
   };
 
   return (
-    <div className="group relative h-[60vh] w-full overflow-hidden rounded-lg transition-all">
+    <div className="group relative h-[55vh] w-full overflow-hidden rounded-lg transition-all">
       <div
         onClick={(event) => {
           event.stopPropagation();

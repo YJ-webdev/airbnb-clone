@@ -32,7 +32,7 @@ export const FloorFrom = ({ params }: { params: { id: string } }) => {
     <form action={createFloorPlan}>
       <input type="hidden" name="listingId" value={params.id} />
 
-      <div className="container flex min-h-[80vh] max-w-2xl flex-col gap-5 pt-32">
+      <div className="container flex min-h-[80vh] max-w-2xl flex-col gap-5 pt-28">
         {" "}
         <h2 className="max-w-2xl flex-1 text-2xl font-semibold md:text-3xl">
           Let&apos;s start with the basics!

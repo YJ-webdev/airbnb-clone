@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import WhiteLogo from "@/public/images/whitelogo.png";
-import "@/app/globals.css";
 
 export const LogoHost = () => {
   return (

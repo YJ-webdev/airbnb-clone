@@ -14,7 +14,7 @@ const HostNavbar = async () => {
     <nav className="fixed z-10 mb-10 h-14 w-full bg-black py-3">
       <div className="container flex max-w-[1370px] items-center justify-between gap-3 px-5">
         <LogoHost />
-        <h1 className="mb-10 line-clamp-1 translate-y-1 items-center justify-center text-center font-semibold text-white">
+        <h1 className="mb-10 line-clamp-1 translate-y-1 items-center justify-center text-center text-sm font-semibold text-white">
           We are excited to have you on board!
         </h1>
       </div>

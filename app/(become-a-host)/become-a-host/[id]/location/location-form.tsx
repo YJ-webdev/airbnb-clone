@@ -67,7 +67,7 @@ export const LocationForm = ({ params }: { params: { id: string } }) => {
       <input type="hidden" name="country" value={country} />
       <input type="hidden" name="city" value={city} />
 
-      <div className="container mb-28 flex h-[70vh] max-w-4xl flex-col pt-32">
+      <div className="container mb-28 flex h-[70vh] max-w-4xl flex-col pt-28">
         <h2 className="flex-1 pb-10 text-2xl font-semibold md:text-3xl">
           Where&apos;s your place located?{" "}
         </h2>

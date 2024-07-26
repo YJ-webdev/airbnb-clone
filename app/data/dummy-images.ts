@@ -1,4 +1,5 @@
 export const dummyImages = [
+  "https://media.cntraveler.com/photos/62e167912224089714efc0ec/16:9/w_1920,c_limit/Blue%20Iris%20(web)%2018.jpg",
   "https://media.cntraveler.com/photos/6697e6a5c217cff59703e583/16:9/w_1920,c_limit/Berkeley%20Denver_dsc_3292.jpg",
   "https://media.cntraveler.com/photos/65fee2beda0562d7272de769/16:9/w_1920,c_limit/UK%20PRINT_press_casa%20lucia.%20001.jpg",
   "https://media.cntraveler.com/photos/5d6e22fb23390800088706dc/master/w_1920%2Cc_limit/00-venice-generator-2019-GenVen_C1_36-_RGB.jpg",
@@ -16,7 +17,6 @@ export const dummyImages = [
   "https://media.cntraveler.com/photos/5d1284087fff950840867324/master/w_1280,c_limit/20473517-airbnb-luxe.jpg",
   "https://media.cntraveler.com/photos/5d128407c4d7bd6c00bc00b0/master/w_1280,c_limit/30791488-airbnb-luxe.jpg",
   "https://media.cntraveler.com/photos/625dbf156d43489d388e27ec/master/w_1920%2Cc_limit/_mg_0364-edit.jpg",
-  "https://media.cntraveler.com/photos/5c953ac4aeed5859ef3b0e3a/master/w_1920%2Cc_limit/Le-Barn_2019_nomades-lebarn-domaine-13.jpg",
   "https://media.cntraveler.com/photos/61dc566e094b218de910369c/master/w_1920%2Cc_limit/Hillside-Beach-Club_2019_Hillside-Beach-Club_Floating-Decks_2.jpeg",
-  "https://media.cntraveler.com/photos/626c00733b35d45258600a12/master/w_1920%2Cc_limit/Verdura%2520Resort%2C%2520a%2520Rocco%2520Forte%2520Hotel_22%2520RFH%2520Verdura%2520Resort%2520-%2520Pool%25209190%2520JG%2520May%252019.JPG",
+  "https://media.cntraveler.com/photos/5a99aa29b00933493b9a6d2d/3:2/w_1600,c_limit/Los-Angeles_GettyImages-518488084.jpg",
 ];

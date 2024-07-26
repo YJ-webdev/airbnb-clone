@@ -3,7 +3,6 @@
 import DesktopLogo from "@/public/images/desktop-logo.png";
 import MobileLogo from "@/public/images/airbnb-mobile.webp";
 import Image from "next/image";
-import "@/app/globals.css";
 import Link from "next/link";
 
 export const Logo = () => {

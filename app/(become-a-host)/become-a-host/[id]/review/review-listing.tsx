@@ -24,7 +24,7 @@ export const ReviewListing = ({ data }: ReviewListingProps) => {
     <div className="flex h-full w-full flex-col gap-5 md:flex-row">
       <PreviewImages data={data} />
 
-      <div className="flex min-h-[50Dvh] flex-col space-y-4 md:flex-1">
+      <div className="flex min-h-[45Dvh] flex-col space-y-4 md:flex-1">
         <div className="flex h-[100px] flex-col gap-3">
           <h2 className="flex items-baseline justify-between">
             <p className="text-base font-bold">
@@ -49,18 +49,7 @@ export const ReviewListing = ({ data }: ReviewListingProps) => {
         </div>
         <div className="relative flex flex-1 flex-col gap-3 rounded-lg border p-5 shadow-[0px_1px_3px_1px_rgba(0,0,0,0.1)]">
           <p className="">&quot;{data.title}&quot;</p>
-          <p
-            className={cn(
-              "overflow-hidden transition-all",
-              readMore
-                ? "md:pb-11"
-                : window.innerHeight >= 740
-                  ? "md:line-clamp-[12]"
-                  : "md:line-clamp-[8]",
-            )}
-          >
-            {description}
-          </p>
+          <p className="">{description}</p>
         </div>
       </div>
     </div>
