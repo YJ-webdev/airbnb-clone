@@ -129,7 +129,7 @@ export const ListingCard = ({ data, isHost, user }: LisitngCardProps) => {
 
           <div className="flex-flex-col mt-2">
             <h2 className="text-base font-semibold">
-              <span className="">{data.city ? `${data.city}, ` : ""} </span>
+              <span className="">{data.state ? `${data.state}, ` : ""} </span>
               <span>{data.country}</span>
             </h2>
             <h3 className="capitalize">{data.category}</h3>
