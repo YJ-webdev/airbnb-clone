@@ -39,7 +39,7 @@ export default async function ListingPage({
                 <h2 className="text-[19px] md:text-[20px]">
                   <span className="capitalize">{data.category} place</span> in{" "}
                   <span className="underline">
-                    {data.city ? `${data.city}, ` : ""}
+                    {data.state ? `${data.state}, ` : ""}
                     {data.country}
                   </span>
                 </h2>

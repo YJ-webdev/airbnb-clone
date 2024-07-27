@@ -23,16 +23,12 @@ export default async function SettingsPage() {
   });
 
   if (!user) {
-    redirect("/?callbackUrl=/settings");
+    return redirect("/");
   }
 
   return (
-    <div className="mx-auto mb-28 mt-10 flex max-w-[68rem] px-5">
-      <PersonnalInfo
-        name={user?.name!}
-        email={user?.email!}
-        image={user?.image!}
-      />
+    <div className="container mb-28 mt-5 flex max-w-[68rem]">
+      <PersonnalInfo user={user} />
     </div>
   );
 }
