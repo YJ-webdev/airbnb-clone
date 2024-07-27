@@ -54,15 +54,15 @@ export default async function ListingPage({
                 </p>
               </div>
             </div>
-            <div>{data.description}</div>
+            <p>{data.description}</p>
             <div className="flex flex-col space-y-3">
-              <h2 className="text-[19px] md:text-[20px]">Where it located</h2>
+              <h3 className="text-[19px] md:text-[20px]">Where it located</h3>
               <ListingMap data={data} />
             </div>
             <div className="flex flex-col space-y-3">
-              <h2 className="text-[19px] md:text-[20px]">
+              <h3 className="text-[19px] md:text-[20px]">
                 Pick Your Stay Dates
-              </h2>
+              </h3>
               <Calendar />
             </div>
           </div>

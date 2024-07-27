@@ -8,10 +8,10 @@ export const LogoHost = () => {
     <Link href="/">
       <Image
         src={WhiteLogo}
-        alt="host page Logo"
+        alt="Host Logo"
         height="100"
         width="200"
-        className="z-10 w-[80px] -translate-y-2/3 cursor-pointer"
+        className="z-10 w-[80px] -translate-y-2/3"
       />
     </Link>
   );

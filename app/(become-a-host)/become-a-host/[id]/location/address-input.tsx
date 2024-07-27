@@ -16,6 +16,7 @@ interface AddressFormProps {
   setDataLogged: (value: boolean) => void;
   setCountry?: (value: string) => void;
   setCity?: (value: string) => void;
+  setState?: (value: string) => void;
 }
 
 const AddressInput = ({
@@ -23,12 +24,13 @@ const AddressInput = ({
   setDataLogged,
   setCountry,
   setCity,
+  setState,
 }: AddressFormProps) => {
   const countryData = Country.getAllCountries();
 
   const [address, setAddress] = useState("");
   const [locality, setLocality] = useState("");
-  const [state, setState] = useState<IState | null>(null);
+  const [area, setArea] = useState<IState | null>(null);
   const [postalCode, setPostalCode] = useState("");
   const [nation, setNation] = useState<ICountry | null>(null);
   const [states, setStates] = useState<IState[]>([]);
@@ -38,25 +40,26 @@ const AddressInput = ({
     if (nation) {
       const statesData = State.getStatesOfCountry(nation.isoCode);
       setStates(statesData);
-      setState(null); // reset state selection when nation changes
+      setArea(null); // reset state selection when nation changes
       setLocality(""); // reset city selection when nation changes
     }
   }, [nation]);
 
   useEffect(() => {
-    if (state) {
+    if (area) {
       const citiesData = City.getCitiesOfState(
         nation?.isoCode || "",
-        state.isoCode,
+        area.isoCode,
       );
       setCities(citiesData);
       setLocality(""); // reset city selection when state changes
     }
-  }, [state, nation]);
+  }, [area, nation]);
 
   useEffect(() => {
     if (address && postalCode && nation) {
       if (setCountry && nation) setCountry(nation.name);
+      if (setState && area) setState(area.name);
       if (setCity && locality) setCity(locality);
       setDataLogged(true);
     } else {
@@ -65,18 +68,19 @@ const AddressInput = ({
   }, [
     address,
     locality,
-    state,
+    area,
     postalCode,
     nation,
     setDataLogged,
     setCountry,
     setCity,
+    setState,
   ]);
 
   useEffect(() => {
-    const formedAddress = `${address} ${locality} ${state?.name} ${postalCode} ${nation?.name}`;
+    const formedAddress = `${address} ${locality} ${area?.name} ${postalCode} ${nation?.name}`;
     location(formedAddress);
-  }, [location, address, locality, state, postalCode, nation]);
+  }, [location, address, area, locality, postalCode, nation]);
 
   return (
     <div className="mb-10 flex min-h-[360px] w-full flex-col bg-white md:mb-0 md:h-[55vh] md:w-2/5">
@@ -147,11 +151,10 @@ const AddressInput = ({
               id="state"
               name="state"
               onChange={(e) =>
-                setState(
+                setArea(
                   states.find((s) => s.isoCode === e.target.value) || null,
                 )
               }
-              value={state?.isoCode || ""}
               className="mr-2 w-1/2 border-b border-gray-300 p-2 outline-none"
             >
               <option value="">State</option>

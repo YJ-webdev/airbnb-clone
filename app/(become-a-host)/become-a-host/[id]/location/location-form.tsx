@@ -17,6 +17,7 @@ export const LocationForm = ({ params }: { params: { id: string } }) => {
   const [formedAddress, setFormedAddress] = useState("");
   const [country, setCountry] = useState<string | undefined>(undefined);
   const [city, setCity] = useState<string | undefined>(undefined);
+  const [state, setState] = useState<string | undefined>(undefined);
 
   const { progress, setProgress } = useProgress();
 
@@ -66,6 +67,7 @@ export const LocationForm = ({ params }: { params: { id: string } }) => {
       <input type="hidden" name="locationValue" value={formedAddress} />
       <input type="hidden" name="country" value={country} />
       <input type="hidden" name="city" value={city} />
+      <input type="hidden" name="state" value={state} />
 
       <div className="container mb-28 flex h-[70vh] max-w-4xl flex-col pt-28">
         <h2 className="flex-1 pb-10 text-2xl font-semibold md:text-3xl">
@@ -79,6 +81,7 @@ export const LocationForm = ({ params }: { params: { id: string } }) => {
             setDataLogged={setDataLogged}
             setCountry={setCountry}
             setCity={setCity}
+            setState={setState}
           />
           <AddressMap location={mapLocation} />
         </div>
