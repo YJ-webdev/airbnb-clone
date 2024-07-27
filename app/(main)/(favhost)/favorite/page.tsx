@@ -3,7 +3,7 @@ import getFavoriteListings from "@/app/action/update-favorite";
 import getSession from "@/app/lib/get-session";
 
 import { ListingCard } from "@/app/components/listing-card";
-import { useContentWidth } from "@/app/context/ContentWidthContext";
+
 import { UserWithRoleAndFavoriteIds } from "@/types";
 import { Listing } from "@prisma/client";
 import { FolderSearch } from "lucide-react";
@@ -21,7 +21,7 @@ export default async function FavoritePage() {
   return (
     <div className="container mb-28 mt-5 flex flex-col space-y-5">
       <h1 className="text-2xl font-semibold">
-        You have {favorites.length} favorites
+        You have {favorites.length} wishlists
       </h1>
 
       {favorites.length === 0 && (
@@ -33,7 +33,7 @@ export default async function FavoritePage() {
                 Your wishlist is empty.
               </h1>
               <p className="text-foreground/50">
-                Explorer some listings and add them to your favorites.
+                Explorer some listings and add them to your wishlists.
               </p>
             </div>
           </div>
