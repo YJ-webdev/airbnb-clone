@@ -1,12 +1,11 @@
 import { Logo } from "./logo";
 import { createListing } from "@/app/action/create-listing";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { LoginDialog } from "../login-dialog/login-dialog";
+import { LoginDialog } from "../form/login-dialog";
 import { UserMenu } from "./user-menu";
 import { Search } from "./search";
 import getSession from "@/app/lib/get-session";
 import { cn } from "@/lib/utils";
-import { Width } from "@/types";
 
 type NavbarProps = {
   width?: string;

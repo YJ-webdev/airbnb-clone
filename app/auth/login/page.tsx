@@ -1,6 +1,6 @@
 "use client";
 
-import { LoginDialog } from "@/app/components/login-dialog/login-dialog";
+import { LoginDialog } from "@/app/components/form/login-dialog";
 import { Dialog } from "@/components/ui/dialog";
 import { useSearchParams } from "next/navigation";
 import React from "react";

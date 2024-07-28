@@ -10,34 +10,24 @@ import {
   UpdateProfileSchema,
 } from "@/schema";
 import { hash, compare } from "bcryptjs";
+import { auth } from "@/auth";
 
 export async function updateProfile(values: UpdateProfile) {
-  const session = await getSession();
+  const session = await auth();
   const userId = session?.user?.id;
 
   if (!userId) {
     throw new Error("Not logged in");
   }
 
-  const validatedFields = UpdateProfileSchema.safeParse(values);
+  const { name, email } = UpdateProfileSchema.parse(values);
 
-  if (!validatedFields.success) {
-    return { error: "Invalid fields" };
-  }
+  await prisma.user.update({
+    where: { id: userId },
+    data: { name, email },
+  });
 
-  const { name, email } = validatedFields.data;
-
-  try {
-    await prisma.user.update({
-      where: { id: userId },
-      data: { name, email },
-    });
-
-    revalidatePath("/settings");
-    return { success: "Profile updated!" };
-  } catch (error) {
-    return { error: "Failed to update profile. Please try again." };
-  }
+  revalidatePath("/settings");
 }
 
 export const updatePassword = async (values: UpdatePassword) => {

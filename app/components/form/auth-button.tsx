@@ -16,7 +16,7 @@ interface ButtonProps {
   type?: "submit";
 }
 
-export const Button = ({
+export const AuthButton = ({
   type,
   label,
   onClick,

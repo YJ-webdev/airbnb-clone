@@ -3,8 +3,8 @@
 import { User } from "next-auth";
 import { signOut } from "next-auth/react";
 
-import { LoginDialog } from "../login-dialog/login-dialog";
-import { RegisterDialog } from "../login-dialog/register-dialog";
+import { LoginDialog } from "../form/login-dialog";
+import { RegisterDialog } from "../form/register-dialog";
 import { UserAvatar } from "./user-avatar";
 
 import { AiOutlineMenu } from "react-icons/ai";

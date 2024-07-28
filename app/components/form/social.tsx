@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
-import { Button } from "./button";
+
 import { signIn } from "next-auth/react";
+import { AuthButton } from "./auth-button";
 
 interface SocialProps {
   disabled?: boolean;
@@ -44,7 +45,7 @@ export const Social = ({ disabled }: SocialProps) => {
         </p>
       </div>
       <div className="flex flex-col gap-4">
-        <Button
+        <AuthButton
           outline
           label="Google"
           icon={FcGoogle}
@@ -53,7 +54,7 @@ export const Social = ({ disabled }: SocialProps) => {
           disabled2={disabled2}
           connecting={isGooglePending}
         />
-        <Button
+        <AuthButton
           outline
           label="Github"
           icon={FaGithub}

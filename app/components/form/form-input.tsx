@@ -18,7 +18,7 @@ interface InputProps {
   disabled?: boolean;
 }
 
-const Input = React.forwardRef<HTMLInputElement, InputProps>(
+const FormInput = React.forwardRef<HTMLInputElement, InputProps>(
   (
     {
       id,
@@ -78,6 +78,6 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
   },
 );
 
-Input.displayName = "Input";
+FormInput.displayName = "Input";
 
-export { Input };
+export { FormInput };

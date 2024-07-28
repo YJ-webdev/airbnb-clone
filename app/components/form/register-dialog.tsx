@@ -2,13 +2,14 @@
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Login, LoginSchema } from "@/schema";
+import { Register, RegisterSchema } from "@/schema";
 
 import { useState, useTransition } from "react";
 import { FormError } from "./form-error";
+import { FormSuccess } from "./form-success";
 import { Social } from "./social";
 import { Button } from "@/components/ui/button";
-import { Input } from "./Input";
+import { FormInput } from "./form-input";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
@@ -23,57 +24,41 @@ import {
   DialogDescription,
   DialogHeader,
 } from "@/components/ui/dialog";
-import { login } from "@/app/action/login";
-import { cn } from "@/lib/utils";
-import { FormSuccess } from "./form-success";
+import { register } from "@/app/action/register";
+import { LoginButton } from "./login-button";
 
-interface LoginDialogProps {
-  urlError?: string;
-  title?: string;
-}
-
-export const LoginDialog = ({ urlError, title }: LoginDialogProps) => {
+export const RegisterDialog = () => {
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
   const [isPending, startTransition] = useTransition();
 
-  const form = useForm<Login>({
-    resolver: zodResolver(LoginSchema),
+  const form = useForm<Register>({
+    resolver: zodResolver(RegisterSchema),
     defaultValues: {
       email: "",
       password: "",
+      name: "",
     },
   });
 
-  const onSubmit = (values: Login) => {
+  const onSubmit = async (values: Register) => {
     setError("");
     setSuccess("");
 
     startTransition(() => {
-      login(values).then((data) => {
-        setError(data?.error);
-        setSuccess(data?.success);
-
-        // if (!data?.error) {
-        //   window.location.reload();
-        // }
+      register(values).then((data) => {
+        setError(data.error);
+        setSuccess(data.success);
       });
     });
   };
 
   return (
     <>
-      <DialogHeader
-        className={cn(
-          "sticky top-0 -mb-4 border-b-[1px] px-6 pb-6 pt-6 text-center",
-          title && "mt-5 border-none",
-        )}
-      >
-        <DialogTitle className="text-center">
-          {title ?? "Welcome back!"}
-        </DialogTitle>
+      <DialogHeader className="sticky top-0 -mb-4 border-b-[1px] px-6 pb-6 pt-6 text-center">
+        <DialogTitle className="text-center">Welcome to Airbnb</DialogTitle>
         <DialogDescription className="text-center">
-          {title ? "please try again" : "Log in with your account"}
+          Create your account
         </DialogDescription>
       </DialogHeader>
       <ScrollArea className="flex-1 overflow-auto p-6">
@@ -86,11 +71,29 @@ export const LoginDialog = ({ urlError, title }: LoginDialogProps) => {
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <Input
+                      <FormInput
                         {...field}
-                        disabled={isPending}
                         id="email"
                         label="Email"
+                        disabled={isPending}
+                        errors={form.formState.errors}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />{" "}
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <FormInput
+                        id="name"
+                        {...field}
+                        label="Name"
+                        disabled={isPending}
                         errors={form.formState.errors}
                       />
                     </FormControl>
@@ -104,12 +107,12 @@ export const LoginDialog = ({ urlError, title }: LoginDialogProps) => {
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <Input
-                        {...field}
-                        disabled={isPending}
+                      <FormInput
                         id="password"
+                        {...field}
                         type="password"
                         label="Password"
+                        disabled={isPending}
                         errors={form.formState.errors}
                       />
                     </FormControl>
@@ -118,21 +121,16 @@ export const LoginDialog = ({ urlError, title }: LoginDialogProps) => {
                 )}
               />
             </div>
-            <FormError message={error || urlError} />
+            <FormError message={error} />
             <FormSuccess message={success} />
-            <Button
-              disabled={isPending}
-              type="submit"
-              className="w-full rounded-lg bg-gradient-to-r from-rose-500 to-[#e3326d] py-[25px] text-[16px] font-semibold"
-            >
-              {isPending ? "Please, wait.." : "Log in"}
-            </Button>
+
+            <LoginButton isPending={isPending} label="Sign up" />
             <p className="text-center text-sm hover:underline">
-              You don&apos;t have an account?
+              Log in with your account.
             </p>
           </form>
         </Form>
-        <Social disabled={isPending} />
+        <Social />
       </ScrollArea>
     </>
   );
