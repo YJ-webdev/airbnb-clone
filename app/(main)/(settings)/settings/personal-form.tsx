@@ -12,17 +12,16 @@ import {
   FormItem,
   FormMessage,
   Form,
-  FormLabel,
 } from "@/components/ui/form";
 
 import { FormError } from "@/app/components/form/form-error";
 import { FormSuccess } from "@/app/components/form/form-success";
 import { FormInput } from "@/app/components/form/form-input";
 import { FormButton } from "./form-button";
-import { User } from "next-auth";
+import { UserWithRoleAndFavoriteIds } from "@/types";
 
 interface PersonalInfoProps {
-  user: User;
+  user: UserWithRoleAndFavoriteIds;
 }
 
 export const PersonalForm = ({ user }: PersonalInfoProps) => {
@@ -33,8 +32,8 @@ export const PersonalForm = ({ user }: PersonalInfoProps) => {
   const form = useForm<UpdateProfile>({
     resolver: zodResolver(UpdateProfileSchema),
     defaultValues: {
-      email: user.email || "",
-      name: user.name || "",
+      email: user.email || undefined,
+      name: user.name || undefined,
     },
   });
 

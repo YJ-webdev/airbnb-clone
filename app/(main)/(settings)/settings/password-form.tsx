@@ -108,7 +108,7 @@ export const PasswordForm = ({ user }: PersonalInfoProps) => {
           )}
         />
 
-        <FormButton isPending={isPending} />
+        <FormButton disabled={isPending} />
         <div className="absolute bottom-0 right-1/2 flex translate-x-1/2 items-center justify-center gap-x-2">
           <FormError message={passwordError || ""} />
           <FormSuccess message={passwordSuccess || ""} />

@@ -10,10 +10,9 @@ import {
   UpdateProfileSchema,
 } from "@/schema";
 import { hash, compare } from "bcryptjs";
-import { auth } from "@/auth";
 
 export async function updateProfile(values: UpdateProfile) {
-  const session = await auth();
+  const session = await getSession();
   const userId = session?.user?.id;
 
   if (!userId) {

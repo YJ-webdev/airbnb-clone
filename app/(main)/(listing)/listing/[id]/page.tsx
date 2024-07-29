@@ -68,7 +68,7 @@ export default async function ListingPage({
           </div>
         </div>
       </div>
-      <ReservePanel data={data} isHost={data.userId === user?.id} user={user} />
+      <ReservePanel data={data} user={user} />
     </div>
   );
 }

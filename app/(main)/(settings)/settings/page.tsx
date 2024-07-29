@@ -6,12 +6,12 @@ import { SecureLeaflet } from "./secure-leaflet";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Pencil } from "lucide-react";
 import { PasswordForm } from "./password-form";
-import { auth } from "@/auth";
+import getSession from "@/app/lib/get-session";
 
 export const metadata: Metadata = { title: "Airbnb | Account settings" };
 
 export default async function SettingsPage() {
-  const session = await auth();
+  const session = await getSession();
   const user = session?.user;
 
   if (!user) {
@@ -19,12 +19,13 @@ export default async function SettingsPage() {
   }
 
   return (
-    <div className="container mb-28 mt-5 flex max-w-[68rem]">
-      <div className="w-full">
+    <div className="container mb-28 mt-5 flex max-w-2xl sm:min-h-[60vh]">
+      <div className="flex w-full flex-col">
         <h1 className="mb-5 mt-5 text-xl font-semibold sm:mb-12 sm:text-2xl">
           Settings
         </h1>
-        <div className="flex gap-12">
+        <div className="flex-grow" />
+        <div className="flex gap-12 sm:top-1/2">
           <div className="flex flex-1 flex-col items-center justify-between gap-8 sm:flex-row sm:items-start">
             <Avatar className="group relative m-1 flex h-20 w-20 items-center justify-center bg-zinc-200 transition-all duration-200">
               {user ? (
@@ -47,12 +48,13 @@ export default async function SettingsPage() {
             </Avatar>
             <div className="flex w-full flex-col gap-4 md:flex-1">
               <PersonalForm user={user} />
-              <hr />
-              <PasswordForm user={user} />
+              {/* <hr />
+              <PasswordForm user={user} /> */}
             </div>
-            <SecureLeaflet />
+            {/* <SecureLeaflet /> */}
           </div>
         </div>
+        <div className="flex-grow" />
       </div>
     </div>
   );

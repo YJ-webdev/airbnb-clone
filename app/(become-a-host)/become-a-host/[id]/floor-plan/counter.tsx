@@ -8,9 +8,10 @@ import { useState } from "react";
 interface CounterProps {
   name: string;
   setCount: (value: number) => void;
+  small?: boolean;
 }
 
-export const Counter = ({ name, setCount }: CounterProps) => {
+export const Counter = ({ small, name, setCount }: CounterProps) => {
   const [amount, setAmount] = useState(0);
 
   const increase = () => {
@@ -34,10 +35,11 @@ export const Counter = ({ name, setCount }: CounterProps) => {
         type="button"
         onClick={decrease}
         className={cn(
-          "h-9 w-9 rounded-full border-zinc-300 bg-white p-0 text-muted-foreground hover:bg-white",
+          "ml-2 rounded-full border-zinc-300 bg-white p-0 text-muted-foreground hover:bg-white",
           amount === 0
             ? "cursor-default opacity-30 hover:border-zinc-300 hover:text-muted-foreground"
             : "hover:border-black hover:text-black",
+          small ? "h-8 w-8" : "h-9 w-9",
         )}
       >
         <Minus size={14} />
@@ -59,6 +61,7 @@ export const Counter = ({ name, setCount }: CounterProps) => {
           amount === 16
             ? "cursor-default opacity-30 hover:border-zinc-300 hover:text-muted-foreground"
             : "hover:border-black hover:text-black",
+          small ? "h-8 w-8" : "h-9 w-9",
         )}
         onClick={increase}
       >

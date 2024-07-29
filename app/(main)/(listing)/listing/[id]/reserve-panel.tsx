@@ -1,9 +1,5 @@
 "use client";
 
-import {
-  EditButton,
-  EditButton3,
-} from "@/app/components/become-a-host/edit-button";
 import { FavoriteButton } from "@/app/components/favorite-button";
 import { SocialShare } from "@/app/components/social-share";
 import { useFavorites } from "@/app/context/favorite-context";
@@ -14,7 +10,6 @@ import { Montserrat } from "next/font/google";
 import { useEffect, useState } from "react";
 
 interface ReservePanelProps {
-  isHost: boolean;
   user?: UserWithRoleAndFavoriteIds;
   data: Listing;
 }
@@ -24,7 +19,7 @@ const montserrat = Montserrat({
   weight: ["400", "500", "600", "700"],
 });
 
-export const ReservePanel = ({ isHost, data, user }: ReservePanelProps) => {
+export const ReservePanel = ({ data, user }: ReservePanelProps) => {
   const { favoriteIds } = useFavorites();
   const isFavorite = favoriteIds.includes(data.id);
 
@@ -92,19 +87,16 @@ export const ReservePanel = ({ isHost, data, user }: ReservePanelProps) => {
             />
           </div>
 
-          {isHost ? (
-            <EditButton id={data.id} />
-          ) : (
-            <div className="flex flex-col items-center justify-center">
-              <p className="mb-2 text-center text-sm text-foreground">
-                It won&apos;t be charged yet.
-              </p>
+          <div className="flex flex-col items-center justify-center">
+            <p className="mb-2 text-center text-sm text-foreground">
+              It won&apos;t be charged yet.
+            </p>
 
-              <button className="my-1 h-14 w-full rounded-full bg-gradient-to-r from-rose-500 to-[#e3326d] px-5 py-3 font-semibold text-white">
-                Reserve
-              </button>
-            </div>
-          )}
+            <button className="my-1 h-14 w-full rounded-full bg-gradient-to-r from-rose-500 to-[#e3326d] px-5 py-3 font-semibold text-white">
+              Reserve
+            </button>
+          </div>
+
           <div className="mx-auto flex items-center">
             <SocialShare data={data} />
           </div>
@@ -134,13 +126,10 @@ export const ReservePanel = ({ isHost, data, user }: ReservePanelProps) => {
             fillColor={fillColor}
           />
         </div>
-        {isHost ? (
-          <EditButton3 id={data.id} />
-        ) : (
-          <button className="rounded-full bg-gradient-to-r from-rose-500 to-[#e3326d] px-5 py-3 font-semibold text-white">
-            Reserve
-          </button>
-        )}
+
+        <button className="rounded-full bg-gradient-to-r from-rose-500 to-[#e3326d] px-5 py-3 font-semibold text-white">
+          Reserve
+        </button>
       </div>
     </>
   );

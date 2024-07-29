@@ -7,7 +7,6 @@ import { Login, LoginSchema } from "@/schema";
 import { useState, useTransition } from "react";
 import { FormError } from "./form-error";
 import { Social } from "./social";
-import { Button } from "@/components/ui/button";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
