@@ -6,8 +6,6 @@ export type UserWithRoleAndFavoriteIds = {
   favoriteIds: string[];
 } & DefaultSession["user"];
 
-export type Width = "68rem" | "1280px" | "42rem" | "1400px";
-
 export type mapLocation = {
   latitude: number;
   longitude: number;

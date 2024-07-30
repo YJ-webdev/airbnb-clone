@@ -26,6 +26,7 @@ export function CreationSubmit({
           size="lg"
           className={cn(
             "px-7 py-6 text-[16px] font-bold",
+            pending && `cursor-default opacity-50`,
             nextText === `Send Listing` &&
               `bg-gradient-to-r from-rose-500 to-[#e3326d] transition-colors hover:from-[#fd56aa] hover:to-[#f86596]`,
             pending &&

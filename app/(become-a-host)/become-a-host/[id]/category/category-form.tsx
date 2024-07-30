@@ -9,6 +9,7 @@ import { Card, CardHeader } from "@/components/ui/card";
 import { ActionBar } from "@/app/components/become-a-host/action-bar";
 import { useProgress } from "@/app/context/progress-context";
 import { updateCategory } from "@/app/action/create-listing";
+import { useLocalStorage } from "@/app/lib/useLocalStorage";
 
 export const EditCategoryForm = ({
   userId,
@@ -21,6 +22,8 @@ export const EditCategoryForm = ({
 
   const [dataLogged, setDataLogged] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string>("");
+
+  // const { setItem, getItem } = useLocalStorage("value");
 
   const { progress, setProgress } = useProgress();
 

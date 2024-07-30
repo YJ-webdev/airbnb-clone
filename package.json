@@ -53,6 +53,7 @@
     "react-icons": "^5.2.1",
     "react-router-dom": "^6.25.1",
     "react-share": "^5.1.0",
+    "sharp": "^0.33.4",
     "styled-components": "^6.1.12",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",

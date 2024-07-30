@@ -126,7 +126,7 @@ export const ListingCard = ({ data, isHost, user }: LisitngCardProps) => {
           {isHost === true ? (
             <Link
               href={`/become-a-host/${data.id}/category`}
-              className="absolute right-5 top-5 flex h-16 w-16 cursor-pointer flex-col items-center justify-center rounded-full border-none bg-black px-5 py-3 transition-all hover:bg-zinc-500 active:scale-90"
+              className="absolute right-5 top-5 z-20 flex h-16 w-16 cursor-pointer flex-col items-center justify-center rounded-full border-none bg-black px-5 py-3 transition-all hover:bg-zinc-500 active:scale-90"
               aria-label="Edit listing"
             >
               <Edit size={20} className="text-white" strokeWidth={1.5} />
