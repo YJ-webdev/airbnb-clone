@@ -8,9 +8,9 @@ export default function SettingsLayout({
 }) {
   return (
     <div className="mx-auto">
-      <Navbar />
+      <Navbar width="1280px" />
       {children}
-      <Footer />
+      <Footer width="1280px" />
     </div>
   );
 }

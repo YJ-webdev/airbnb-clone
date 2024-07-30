@@ -10,7 +10,7 @@ export default function HostLayout({
     <div className="mx-auto">
       <Navbar />
       {children}
-      <Footer width="1400px" />
+      <Footer />
     </div>
   );
 }

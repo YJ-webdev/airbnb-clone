@@ -1,8 +1,6 @@
 "use client";
 
-import styled from "styled-components";
 import { cn } from "@/lib/utils";
-import { Width } from "@/types";
 
 interface FooterSectionProps {
   title: string;
@@ -62,7 +60,7 @@ const footerSections: FooterSectionData[] = [
 ];
 
 type FooterProps = {
-  width?: Width;
+  width?: string;
 };
 
 export default function Footer({ width }: FooterProps) {
@@ -71,7 +69,7 @@ export default function Footer({ width }: FooterProps) {
       <div
         className={cn(
           "mx-auto flex w-full max-w-[1400px] flex-col gap-y-4 text-left text-sm",
-          width && `max-w-[${width}]`,
+          width ? `max-w-[1280px]` : "max-w-[1400px]",
         )}
       >
         <div className="mb-12 mt-8 flex w-full justify-start md:gap-20 lg:gap-44">

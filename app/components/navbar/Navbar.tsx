@@ -22,8 +22,8 @@ const Navbar = async ({ width }: NavbarProps) => {
     <div className="z-10 border-b bg-white py-4 shadow-sm">
       <nav
         className={cn(
-          "mx-auto flex max-w-[1400px] items-center justify-between gap-3 px-5 md:gap-0",
-          { [`max-w-[${width}]`]: width },
+          "mx-auto flex items-center justify-between gap-3 px-5 md:gap-0",
+          width ? `max-w-[1280px]` : "max-w-[1400px]",
         )}
       >
         <Logo />
