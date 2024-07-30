@@ -14,5 +14,5 @@ export default async function PricePage({
     redirect("/");
   }
 
-  return <PriceForm params={params} />;
+  return <PriceForm params={params} userId={user.id as string} />;
 }

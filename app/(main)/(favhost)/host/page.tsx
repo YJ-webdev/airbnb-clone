@@ -3,9 +3,8 @@ import { Listing } from "@prisma/client";
 import getSession from "@/app/lib/get-session";
 import prisma from "@/app/lib/db";
 
-import { createNewListing } from "@/app/action/create-listing";
+import { continueListing, createNewListing } from "@/app/action/create-listing";
 import { ListingCard } from "@/app/components/listing-card";
-import { UserWithRoleAndFavoriteIds } from "@/types";
 
 export default async function HostPage() {
   const session = await getSession();
@@ -16,9 +15,7 @@ export default async function HostPage() {
     redirect("/");
   }
 
-  const createNewListingWithId = createNewListing.bind(null, {
-    userId: userId as string,
-  });
+  const createNewListingWithId = createNewListing.bind(null, userId);
 
   // show only approved listings on the page
   const approvedListingsForUser: Listing[] = await prisma.listing.findMany({

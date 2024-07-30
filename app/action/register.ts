@@ -3,9 +3,10 @@
 import { hash } from "bcryptjs";
 
 import prisma from "@/app/lib/db";
-import { Register, RegisterSchema } from "@/schema";
+
 import { getUserByEmail } from "@/data/user";
 import { generateVerificationToken } from "@/lib/tokens";
+import { Register, RegisterSchema } from "@/schema/auth";
 
 export const register = async (values: Register) => {
   const validatedfields = RegisterSchema.safeParse(values);

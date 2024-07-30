@@ -70,7 +70,7 @@ export default function Footer({ width }: FooterProps) {
     <footer className="flex h-full border-t bg-zinc-200">
       <div
         className={cn(
-          "mx-auto flex w-full flex-col gap-y-4 text-left text-sm",
+          "mx-auto flex w-full max-w-[1400px] flex-col gap-y-4 text-left text-sm",
           width && `max-w-[${width}]`,
         )}
       >

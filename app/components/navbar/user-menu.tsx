@@ -1,6 +1,5 @@
 "use client";
 
-import { User } from "next-auth";
 import { signOut } from "next-auth/react";
 
 import { LoginDialog } from "../form/login-dialog";
@@ -18,16 +17,15 @@ import {
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { createListing } from "@/app/action/create-listing";
+import { continueListing } from "@/app/action/create-listing";
+import { UserWithRoleAndFavoriteIds } from "@/types";
 
 interface UserMenuProps {
-  user?: User;
+  user?: UserWithRoleAndFavoriteIds;
 }
 
 export const UserMenu = ({ user }: UserMenuProps) => {
-  const createListingWithId = createListing.bind(null, {
-    userId: user?.id as string,
-  });
+  const continueListingWithId = continueListing.bind(null, user?.id as string);
 
   return (
     <>
@@ -60,7 +58,7 @@ export const UserMenu = ({ user }: UserMenuProps) => {
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem className="cursor-pointer px-3 py-3 text-[15px] font-light">
-                <form action={createListingWithId} className="w-full">
+                <form action={continueListingWithId} className="w-full">
                   <button type="submit" className="w-full text-start">
                     Airbnb your home
                   </button>

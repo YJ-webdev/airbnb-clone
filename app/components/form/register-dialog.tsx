@@ -2,13 +2,11 @@
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Register, RegisterSchema } from "@/schema";
 
 import { useState, useTransition } from "react";
 import { FormError } from "./form-error";
 import { FormSuccess } from "./form-success";
 import { Social } from "./social";
-import { Button } from "@/components/ui/button";
 import { FormInput } from "./form-input";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -26,6 +24,7 @@ import {
 } from "@/components/ui/dialog";
 import { register } from "@/app/action/register";
 import { LoginButton } from "./login-button";
+import { Register, RegisterSchema } from "@/schema/auth";
 
 export const RegisterDialog = () => {
   const [error, setError] = useState<string | undefined>("");

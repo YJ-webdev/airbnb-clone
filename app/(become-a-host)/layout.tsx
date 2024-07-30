@@ -1,4 +1,4 @@
-import HostNavbar from "./host-nav";
+import HostNavbar from "../components/navbar/host-nav";
 
 export default function BecomeAHostLayout({
   children,

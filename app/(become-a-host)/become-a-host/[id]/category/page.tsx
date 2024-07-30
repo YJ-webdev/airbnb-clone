@@ -1,17 +1,14 @@
 import { redirect } from "next/navigation";
-import { CategoryForm } from "./category-form";
-import getSession from "@/app/lib/get-session";
 
-export default async function StructurePage({
-  params,
-}: {
-  params: { id: string };
-}) {
+import getSession from "@/app/lib/get-session";
+import { CategoryForm } from "./category-form";
+
+export default async function CategoryPage() {
   const session = await getSession();
   const user = session?.user;
 
-  if (!user) {
-    redirect("/");
+  if (!user || !user.id) {
+    return redirect("/login");
   }
 
   return (
@@ -20,7 +17,7 @@ export default async function StructurePage({
         Which of these best describes your home?
       </h2>
 
-      <CategoryForm params={params} />
+      <CategoryForm userId={user.id} />
     </div>
   );
 }

@@ -11,12 +11,12 @@ export default async function FloorPlanPage({
   const user = session?.user;
 
   if (!user) {
-    redirect("/");
+    return redirect("/login");
   }
 
   return (
     <div>
-      <FloorFrom params={params} />
+      <FloorFrom params={params} userId={user.id as string} />
     </div>
   );
 }

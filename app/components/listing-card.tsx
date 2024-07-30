@@ -10,7 +10,7 @@ import Link from "next/link";
 import { FavoriteButton } from "./favorite-button";
 import { useFavorites } from "../context/favorite-context";
 import { UserWithRoleAndFavoriteIds } from "@/types";
-import { EditButton, EditButton2 } from "./become-a-host/edit-button";
+// import { EditButton } from "./become-a-host/edit-button";
 
 interface LisitngCardProps {
   data: Listing;
@@ -66,76 +66,84 @@ export const ListingCard = ({ data, isHost, user }: LisitngCardProps) => {
           </div>
         </div>
       ) : (
-        <Link href={`/listing/${data.id}`}>
-          <div className="group relative h-[300px] w-full overflow-hidden rounded-lg transition-all">
-            <div
-              className="flex h-full w-full rounded-lg transition-all duration-500 ease-in-out"
-              style={{ transform: `translateX(-${index * 100}%)` }}
-            >
-              {dummyImages.map((url, i) => (
-                <div
-                  key={i}
-                  className="relative h-full w-full flex-shrink-0 bg-zinc-200"
-                >
-                  <Image
-                    src={url}
-                    alt="Image of home"
-                    width={500}
-                    height={500}
-                    className="h-full w-full object-cover"
-                    priority
-                  />
-                </div>
-              ))}
+        <div className="relative">
+          <Link href={`/listing/${data.id}`}>
+            <div className="group h-[300px] w-full overflow-hidden rounded-lg transition-all">
+              <div
+                className="flex h-full w-full rounded-lg transition-all duration-500 ease-in-out"
+                style={{ transform: `translateX(-${index * 100}%)` }}
+              >
+                {dummyImages.map((url, i) => (
+                  <div
+                    key={i}
+                    className="relative h-full w-full flex-shrink-0 bg-zinc-200"
+                  >
+                    <Image
+                      src={url}
+                      alt="Image of home"
+                      width={500}
+                      height={500}
+                      className="h-full w-full object-cover"
+                      priority
+                    />
+                  </div>
+                ))}
+              </div>
+
+              <button
+                onClick={handlePrev}
+                type="button"
+                className="absolute left-3 top-[135px] z-20 hidden h-8 w-8 rounded-full bg-white transition-opacity duration-500 ease-in-out hover:scale-105 group-hover:block"
+              >
+                <ChevronLeft
+                  size={20}
+                  className="ml-1 transition-all hover:-translate-x-[1px] hover:scale-105"
+                  strokeWidth={1.5}
+                />
+              </button>
+              <button
+                type="button"
+                onClick={handleNext}
+                className="absolute right-3 top-[135px] z-20 hidden h-8 w-8 rounded-full bg-white transition-opacity duration-1000 ease-in-out hover:scale-105 group-hover:block"
+              >
+                <ChevronRight
+                  size={20}
+                  className="ml-2 transition-all hover:translate-x-[1px] hover:scale-105"
+                  strokeWidth={1.5}
+                />
+              </button>
             </div>
 
-            <button
-              onClick={handlePrev}
-              type="button"
-              className="absolute left-3 top-[135px] z-20 hidden h-8 w-8 rounded-full bg-white transition-opacity duration-500 ease-in-out hover:scale-105 group-hover:block"
+            <div className="flex-flex-col mt-2">
+              <h2 className="text-base font-semibold">
+                <span className="">{data.state ? `${data.state}, ` : ""} </span>
+                <span>{data.country}</span>
+              </h2>
+              <h3 className="capitalize">{data.category}</h3>
+              <p>${data.price} / night</p>
+            </div>
+          </Link>{" "}
+          {isHost === true ? (
+            <Link
+              href={`/become-a-host/${data.id}/category`}
+              className="absolute right-5 top-5 flex h-16 w-16 cursor-pointer flex-col items-center justify-center rounded-full border-none bg-black px-5 py-3 transition-all hover:bg-zinc-500 active:scale-90"
+              aria-label="Edit listing"
             >
-              <ChevronLeft
-                size={20}
-                className="ml-1 transition-all hover:-translate-x-[1px] hover:scale-105"
-                strokeWidth={1.5}
-              />
-            </button>
-            <button
-              type="button"
-              onClick={handleNext}
-              className="absolute right-3 top-[135px] z-20 hidden h-8 w-8 rounded-full bg-white transition-opacity duration-1000 ease-in-out hover:scale-105 group-hover:block"
-            >
-              <ChevronRight
-                size={20}
-                className="ml-2 transition-all hover:translate-x-[1px] hover:scale-105"
-                strokeWidth={1.5}
-              />
-            </button>
-
-            {isHost === true ? (
-              <EditButton2 id={data.id} />
-            ) : (
-              <FavoriteButton
-                data={data}
-                user={user}
-                isFavorite={isFavorite}
-                favorite={favorite}
-                setFavorite={setFavorite}
-                optimisticFavorite={optimisticFavorite}
-                setOptimisticFavorite={setOptimisticFavorite}
-              />
-            )}
-          </div>
-
-          <div className="flex-flex-col mt-2">
-            <h2 className="text-base font-semibold">
-              <span className="">{data.state ? `${data.state}, ` : ""} </span>
-              <span>{data.country}</span>
-            </h2>
-            <h3 className="capitalize">{data.category}</h3>
-            <p>${data.price} / night</p>
-          </div>
-        </Link>
+              <Edit size={20} className="text-white" strokeWidth={1.5} />
+              <p className="group text-sm font-semibold text-white">Edit</p>
+            </Link>
+          ) : (
+            <FavoriteButton
+              data={data}
+              user={user}
+              isFavorite={isFavorite}
+              favorite={favorite}
+              setFavorite={setFavorite}
+              optimisticFavorite={optimisticFavorite}
+              setOptimisticFavorite={setOptimisticFavorite}
+            />
+          )}
+        </div>
       )}
     </>
   );

@@ -16,7 +16,7 @@ export default async function DescriptionPage({
 
   return (
     <div>
-      <DescriptionForm params={params} />
+      <DescriptionForm params={params} userId={user.id as string} />
     </div>
   );
 }

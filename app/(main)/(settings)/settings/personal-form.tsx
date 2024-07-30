@@ -2,7 +2,7 @@
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { UpdateProfile, UpdateProfileSchema } from "@/schema";
+
 import { updateProfile } from "@/app/action/update-profile";
 import { useState, useTransition } from "react";
 
@@ -19,6 +19,7 @@ import { FormSuccess } from "@/app/components/form/form-success";
 import { FormInput } from "@/app/components/form/form-input";
 import { FormButton } from "./form-button";
 import { UserWithRoleAndFavoriteIds } from "@/types";
+import { UpdateProfile, UpdateProfileSchema } from "@/schema/profile";
 
 interface PersonalInfoProps {
   user: UserWithRoleAndFavoriteIds;

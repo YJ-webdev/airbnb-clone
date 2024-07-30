@@ -2,7 +2,6 @@
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Login, LoginSchema } from "@/schema";
 
 import { useState, useTransition } from "react";
 import { FormError } from "./form-error";
@@ -26,6 +25,7 @@ import { cn } from "@/lib/utils";
 import { FormSuccess } from "./form-success";
 import { FormInput } from "./form-input";
 import { LoginButton } from "./login-button";
+import { Login, LoginSchema } from "@/schema/auth";
 
 interface LoginDialogProps {
   urlError?: string;

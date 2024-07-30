@@ -7,7 +7,13 @@ import AddressMap from "./address-map";
 import { ActionBar } from "@/app/components/become-a-host/action-bar";
 import { useProgress } from "@/app/context/progress-context";
 
-export const LocationForm = ({ params }: { params: { id: string } }) => {
+export const LocationForm = ({
+  params,
+  userId,
+}: {
+  params: { id: string };
+  userId: string;
+}) => {
   const [dataLogged, setDataLogged] = useState(false);
   const [mapLocation, setMapLocation] = useState<{
     lat: number;
@@ -18,6 +24,8 @@ export const LocationForm = ({ params }: { params: { id: string } }) => {
   const [country, setCountry] = useState<string | undefined>(undefined);
   const [city, setCity] = useState<string | undefined>(undefined);
   const [state, setState] = useState<string | undefined>(undefined);
+
+  const createLocationWithId = createLocation.bind(null, userId);
 
   const { progress, setProgress } = useProgress();
 
@@ -62,7 +70,7 @@ export const LocationForm = ({ params }: { params: { id: string } }) => {
   }, [formedAddress, handleAddressSubmit]);
 
   return (
-    <form action={createLocation} className="mb-28">
+    <form action={createLocationWithId} className="mb-28">
       <input type="hidden" name="listingId" value={params.id} />
       <input type="hidden" name="locationValue" value={formedAddress} />
       <input type="hidden" name="country" value={country} />
@@ -86,11 +94,7 @@ export const LocationForm = ({ params }: { params: { id: string } }) => {
           <AddressMap location={mapLocation} />
         </div>
       </div>
-      <ActionBar
-        dataLogged={dataLogged}
-        prevHref={`/become-a-host/${params.id}/floor-plan`}
-        currentStep={progress}
-      />
+      <ActionBar dataLogged={dataLogged} currentStep={progress} />
     </form>
   );
 };

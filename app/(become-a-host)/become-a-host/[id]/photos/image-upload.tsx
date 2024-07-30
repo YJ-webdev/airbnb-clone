@@ -185,13 +185,13 @@ const ImageUpload = ({ setDataLogged, setImageSrc }: ImageUploadProps) => {
     <section className="container max-w-3xl">
       <div
         {...getRootProps({
-          className: "container max-w-3xl flex items-center justify-center",
+          className: " max-w-3xl flex items-center justify-center",
         })}
       >
         <input {...getInputProps()} />
 
         {files.length === 0 && (
-          <div className="mb-28 flex h-[400px] w-full cursor-pointer flex-col items-center justify-center space-y-2 rounded-xl bg-zinc-50 outline-dashed outline-1 outline-zinc-500">
+          <div className="mb-28 flex h-[400px] w-full cursor-pointer flex-col items-center justify-center rounded-xl bg-zinc-50 outline-dashed outline-1 outline-zinc-500">
             <ImageIcon size={30} strokeWidth={1.5} color="#5e606c" />
             <p className="font-semibold text-[#5e606c]">
               Upload max. 20 photos!

@@ -9,17 +9,25 @@ import { useProgress } from "@/app/context/progress-context";
 
 import React from "react";
 
-export const ImageForm = ({ params }: { params: { id: string } }) => {
+export const ImageForm = ({
+  params,
+  userId,
+}: {
+  params: { id: string };
+  userId: string;
+}) => {
   const [dataLogged, setDataLogged] = useState(false);
   const [imageSrc, setImageSrc] = useState<string[]>([]);
   const { progress, setProgress } = useProgress();
+
+  const createImagesWithId = createImages.bind(null, userId);
 
   useEffect(() => {
     setProgress(57);
   }, [setProgress]);
 
   return (
-    <form action={createImages}>
+    <form action={createImagesWithId}>
       <input type="hidden" name="listingId" value={params.id} />
       <input type="hidden" name="imageSrc" value={imageSrc as string[]} />
 
@@ -37,11 +45,7 @@ export const ImageForm = ({ params }: { params: { id: string } }) => {
       </div>
       <ImageUpload setDataLogged={setDataLogged} setImageSrc={setImageSrc} />
 
-      <ActionBar
-        dataLogged={dataLogged}
-        prevHref={`/become-a-host/${params.id}/location`}
-        currentStep={progress}
-      />
+      <ActionBar dataLogged={dataLogged} currentStep={progress} />
     </form>
   );
 };

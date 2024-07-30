@@ -7,12 +7,20 @@ import { useProgress } from "@/app/context/progress-context";
 import { Bath, BedSingle, DoorOpen, UserCheck } from "lucide-react";
 import { useEffect, useState } from "react";
 
-export const FloorFrom = ({ params }: { params: { id: string } }) => {
+export const FloorFrom = ({
+  params,
+  userId,
+}: {
+  params: { id: string };
+  userId: string;
+}) => {
   const [dataLogged, setDataLogged] = useState(false);
   const [guestCount, setGuestCount] = useState(0);
   const [roomCount, setRoomCount] = useState(0);
   const [bedCount, setBedCount] = useState(0);
   const [bathroomCount, setBathroomCount] = useState(0);
+
+  const createFloorPlanWithId = createFloorPlan.bind(null, userId);
 
   const { progress, setProgress } = useProgress();
 
@@ -29,7 +37,7 @@ export const FloorFrom = ({ params }: { params: { id: string } }) => {
   }, [guestCount, bathroomCount]);
 
   return (
-    <form action={createFloorPlan}>
+    <form action={createFloorPlanWithId}>
       <input type="hidden" name="listingId" value={params.id} />
 
       <div className="container flex min-h-[80vh] max-w-2xl flex-col gap-5 pt-28">
@@ -90,11 +98,7 @@ export const FloorFrom = ({ params }: { params: { id: string } }) => {
         <div className="flex-gow" />
       </div>
 
-      <ActionBar
-        dataLogged={dataLogged}
-        prevHref={`/become-a-host/${params.id}/structure`}
-        currentStep={progress}
-      />
+      <ActionBar dataLogged={dataLogged} currentStep={progress} />
     </form>
   );
 };

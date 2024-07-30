@@ -16,7 +16,7 @@ export default async function LocationPage({
 
   return (
     <div>
-      <LocationForm params={params} />
+      <LocationForm params={params} userId={user.id as string} />
     </div>
   );
 }

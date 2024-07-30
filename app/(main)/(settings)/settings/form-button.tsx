@@ -6,7 +6,7 @@ export const FormButton = ({ disabled }: { disabled: boolean }) => {
       type="submit"
       className="h-[50px] w-fit rounded-lg bg-rose-500 text-base font-semibold hover:bg-rose-400"
     >
-      {disabled ? "Updating..." : "Confirm"}
+      {disabled ? "Updating..." : "Save Changes"}
     </Button>
   );
 };

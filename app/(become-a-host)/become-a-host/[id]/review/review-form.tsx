@@ -12,18 +12,21 @@ import { useProgress } from "@/app/context/progress-context";
 interface ReveiwFormProps {
   params: { id: string };
   data: Listing & { user: User };
+  userId: string;
 }
 
-export const ReviewForm = ({ params, data }: ReveiwFormProps) => {
+export const ReviewForm = ({ params, data, userId }: ReveiwFormProps) => {
   const [dataLogged, setDataLogged] = useState(true);
   const { progress, setProgress } = useProgress();
+
+  const createApprovalWithId = createApproval.bind(null, userId);
 
   useEffect(() => {
     setProgress(100);
   }, [setProgress]);
 
   return (
-    <form action={createApproval}>
+    <form action={createApprovalWithId}>
       <input type="hidden" name="listingId" value={params.id} />
 
       <div className="container mb-28 flex min-h-[50vh] max-w-4xl flex-col gap-y-5 pt-[90px]">
@@ -47,7 +50,6 @@ export const ReviewForm = ({ params, data }: ReveiwFormProps) => {
         currentStep={100}
         dataLogged={dataLogged}
         nextText="Send Listing"
-        prevHref={`/become-a-host/${params.id}/price`}
         className={
           "bg-gradient-to-r from-rose-500 to-[#e3326d] transition-colors hover:from-[#fd56aa] hover:to-[#f86596]"
         }

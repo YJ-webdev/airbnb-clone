@@ -1,11 +1,12 @@
+import { cn } from "@/lib/utils";
+import getSession from "@/app/lib/get-session";
+
 import { Logo } from "./logo";
-import { createListing } from "@/app/action/create-listing";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { LoginDialog } from "../form/login-dialog";
 import { UserMenu } from "./user-menu";
 import { Search } from "./search";
-import getSession from "@/app/lib/get-session";
-import { cn } from "@/lib/utils";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { continueListing } from "@/app/action/create-listing";
 
 type NavbarProps = {
   width?: string;
@@ -15,9 +16,7 @@ const Navbar = async ({ width }: NavbarProps) => {
   const session = await getSession();
   const user = session?.user;
   const userId = user?.id as string;
-  const createListingWithId = createListing.bind(null, {
-    userId,
-  });
+  const continueListingWithId = continueListing.bind(null, userId);
 
   return (
     <div className="z-10 border-b bg-white py-4 shadow-sm">
@@ -31,7 +30,7 @@ const Navbar = async ({ width }: NavbarProps) => {
         <Search />
         <div className="flex">
           {user ? (
-            <form action={createListingWithId}>
+            <form action={continueListingWithId}>
               <button
                 type="submit"
                 className="line-clamp-1 hidden cursor-pointer text-nowrap rounded-full py-3 text-center text-[15px] font-semibold transition hover:bg-neutral-100 md:block md:px-4 lg:mr-4"

@@ -14,5 +14,5 @@ export default async function PhotosPage({
     redirect("/");
   }
 
-  return <ImageForm params={params} />;
+  return <ImageForm params={params} userId={user.id as string} />;
 }

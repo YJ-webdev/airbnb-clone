@@ -11,7 +11,7 @@ export const LogoHost = () => {
         alt="Host Logo"
         height="100"
         width="200"
-        className="z-10 w-[80px] -translate-y-2/3"
+        className="z-10 w-[80px]"
       />
     </Link>
   );

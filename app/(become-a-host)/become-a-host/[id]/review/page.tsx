@@ -28,5 +28,5 @@ export default async function ReviewPage({
     return null; // Return null to avoid further execution
   }
 
-  return <ReviewForm params={params} data={data} />;
+  return <ReviewForm params={params} data={data} userId={user.id as string} />;
 }

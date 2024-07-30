@@ -8,10 +8,18 @@ import { Textarea } from "@/components/ui/textarea";
 import { Info } from "lucide-react";
 import { useEffect, useState } from "react";
 
-export const DescriptionForm = ({ params }: { params: { id: string } }) => {
+export const DescriptionForm = ({
+  params,
+  userId,
+}: {
+  params: { id: string };
+  userId: string;
+}) => {
   const [dataLogged, setDataLogged] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+
+  const createDescriptionWithId = createDescription.bind(null, userId);
 
   const descriptionMaxLength = 500;
 
@@ -30,7 +38,7 @@ export const DescriptionForm = ({ params }: { params: { id: string } }) => {
   }, [title, description]);
 
   return (
-    <form action={createDescription}>
+    <form action={createDescriptionWithId}>
       <input type="hidden" name="listingId" value={params.id} />
       <input type="hidden" name="title" value={title} />
       <input type="hidden" name="description" value={description} />
@@ -74,11 +82,7 @@ export const DescriptionForm = ({ params }: { params: { id: string } }) => {
         <div className="flex-grow" />
       </div>
 
-      <ActionBar
-        dataLogged={dataLogged}
-        prevHref={`/become-a-host/${params.id}/photos`}
-        currentStep={progress}
-      />
+      <ActionBar dataLogged={dataLogged} currentStep={progress} />
     </form>
   );
 };

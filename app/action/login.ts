@@ -1,11 +1,12 @@
 "use server";
 
 import { signIn } from "@/auth";
-import { Login, LoginSchema } from "@/schema";
+
 import { AuthError } from "next-auth";
 import { getUserByEmail } from "@/data/user";
 import { generateVerificationToken } from "@/lib/tokens";
 import { isRedirectError } from "next/dist/client/components/redirect";
+import { Login, LoginSchema } from "@/schema/auth";
 
 export const login = async (values: Login) => {
   const validatedfields = LoginSchema.safeParse(values);

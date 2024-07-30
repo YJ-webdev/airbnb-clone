@@ -10,10 +10,18 @@ import { ActionBar } from "@/app/components/become-a-host/action-bar";
 import { GUEST_SERVICE_FEE } from "@/app/lib/rates";
 import { useProgress } from "@/app/context/progress-context";
 
-export const PriceForm = ({ params }: { params: { id: string } }) => {
+export const PriceForm = ({
+  params,
+  userId,
+}: {
+  params: { id: string };
+  userId: string;
+}) => {
   const [dataLogged, setDataLogged] = useState(false);
   const [typedValue, setTypedValue] = useState<number>(0);
   const { progress, setProgress } = useProgress();
+
+  const createPriceWithId = createPrice.bind(null, userId);
 
   const unformattedGuestPrice = typedValue * GUEST_SERVICE_FEE + typedValue;
 
@@ -22,7 +30,7 @@ export const PriceForm = ({ params }: { params: { id: string } }) => {
   }, [setProgress]);
 
   return (
-    <form action={createPrice}>
+    <form action={createPriceWithId}>
       <input type="hidden" name="listingId" value={params.id} />
       <input type="hidden" name="price" value={unformattedGuestPrice} />
 
@@ -67,11 +75,7 @@ export const PriceForm = ({ params }: { params: { id: string } }) => {
           </div>
         </div>
 
-        <ActionBar
-          dataLogged={dataLogged}
-          prevHref={`/become-a-host/${params.id}/description`}
-          currentStep={progress}
-        />
+        <ActionBar dataLogged={dataLogged} currentStep={progress} />
       </div>
     </form>
   );
