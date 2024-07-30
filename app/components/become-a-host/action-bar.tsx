@@ -9,9 +9,9 @@ import { ProgressBar } from "./progress-bar";
 
 interface ActionBarProps {
   dataLogged: boolean;
-  prevHref?: string;
+  prevHref: string;
   nextText?: string;
-  prevText?: string;
+  firstStep?: boolean;
   className?: string;
   currentStep?: number;
 }
@@ -20,7 +20,7 @@ export function ActionBar({
   dataLogged,
   prevHref,
   nextText,
-  prevText,
+  firstStep,
   className,
   currentStep,
 }: ActionBarProps) {
@@ -35,12 +35,16 @@ export function ActionBar({
   return (
     <div className="fixed bottom-0 z-10 flex h-24 w-full flex-col border-t bg-white">
       <div className="container mx-auto flex h-full items-center justify-between px-5 lg:px-10">
-        <Link
-          href={prevHref ?? "/host"}
-          className="rounded-sm bg-white px-5 py-3 text-[16px] font-bold hover:bg-zinc-100"
-        >
-          {prevText ?? "Previous"}
-        </Link>
+        {firstStep === true ? (
+          <button disabled type="button" />
+        ) : (
+          <Link
+            href={prevHref}
+            className="rounded-sm bg-white px-5 py-3 text-[16px] font-bold hover:bg-zinc-100"
+          >
+            Previous
+          </Link>
+        )}
 
         <CreationSubmit
           dataLogged={dataLogged}

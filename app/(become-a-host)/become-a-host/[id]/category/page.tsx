@@ -1,9 +1,13 @@
 import { redirect } from "next/navigation";
 
 import getSession from "@/app/lib/get-session";
-import { CategoryForm } from "./category-form";
+import { EditCategoryForm } from "./category-form";
 
-export default async function CategoryPage() {
+export default async function CategoryPage({
+  params,
+}: {
+  params: { id: string };
+}) {
   const session = await getSession();
   const user = session?.user;
 
@@ -17,7 +21,7 @@ export default async function CategoryPage() {
         Which of these best describes your home?
       </h2>
 
-      <CategoryForm userId={user.id} />
+      <EditCategoryForm userId={user.id} params={params} />
     </div>
   );
 }

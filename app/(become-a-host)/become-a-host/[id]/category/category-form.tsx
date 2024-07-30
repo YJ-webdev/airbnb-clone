@@ -8,10 +8,16 @@ import { useEffect, useState } from "react";
 import { Card, CardHeader } from "@/components/ui/card";
 import { ActionBar } from "@/app/components/become-a-host/action-bar";
 import { useProgress } from "@/app/context/progress-context";
-import { createCategory } from "@/app/action/create-listing";
+import { updateCategory } from "@/app/action/create-listing";
 
-export const CategoryForm = ({ userId }: { userId: string }) => {
-  const createCategoryWithId = createCategory.bind(null, userId);
+export const EditCategoryForm = ({
+  userId,
+  params,
+}: {
+  userId: string;
+  params: { id: string };
+}) => {
+  const updateCategoryWithId = updateCategory.bind(null, userId);
 
   const [dataLogged, setDataLogged] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string>("");
@@ -33,8 +39,9 @@ export const CategoryForm = ({ userId }: { userId: string }) => {
   }, [setProgress]);
 
   return (
-    <form action={createCategoryWithId}>
+    <form action={updateCategoryWithId}>
       <input type="hidden" name="category" value={selectedCategory} />
+      <input type="hidden" name="listingId" value={params.id} />
 
       <div className="mx-auto mb-28 grid max-w-2xl grid-cols-2 gap-4 pl-5 pr-5 md:grid-cols-3">
         {categoryData.map((item) => (
@@ -77,7 +84,8 @@ export const CategoryForm = ({ userId }: { userId: string }) => {
 
       <ActionBar
         dataLogged={dataLogged}
-        prevText="Cancel"
+        prevHref="/host"
+        firstStep={true}
         currentStep={progress}
       />
     </form>

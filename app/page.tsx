@@ -36,9 +36,7 @@ export default async function Home({
             <div className="absolute top-1/2 flex -translate-y-1/2 flex-col space-y-8">
               <FolderSearch strokeWidth={1.5} size={36} className="mx-auto" />
               <div className="flex flex-col space-y-2 text-center">
-                <h1 className="text-2xl font-semibold">
-                  No listings yet for this category.
-                </h1>
+                <h1 className="text-2xl font-semibold">No listings yet.</h1>
                 <p className="text-foreground/50">
                   Please try searching for a city or other category.
                 </p>

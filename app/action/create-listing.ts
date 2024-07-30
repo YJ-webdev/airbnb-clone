@@ -103,6 +103,31 @@ export async function continueListing(userId: string) {
   }
 }
 
+export async function updateCategory(userId: string, formData: FormData) {
+  const listingId = formData.get("listingId") as string;
+  const category = formData.get("category") as string;
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+  });
+
+  if (!user) {
+    return redirect("/login");
+  }
+
+  const listing = await prisma.listing.update({
+    where: {
+      id: listingId,
+    },
+    data: {
+      userId: userId,
+      category: category,
+      addedCategory: true,
+    },
+  });
+
+  return redirect(`/become-a-host/${listing.id}/floor-plan`);
+}
+
 export async function createCategory(userId: string, formData: FormData) {
   const category = formData.get("category") as string;
   const user = await prisma.user.findUnique({

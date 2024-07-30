@@ -15,15 +15,15 @@ export const LocationForm = ({
   userId: string;
 }) => {
   const [dataLogged, setDataLogged] = useState(false);
-  const [mapLocation, setMapLocation] = useState<{
-    lat: number;
-    lng: number;
-  } | null>(null);
 
   const [formedAddress, setFormedAddress] = useState("");
   const [country, setCountry] = useState<string | undefined>(undefined);
   const [city, setCity] = useState<string | undefined>(undefined);
   const [state, setState] = useState<string | undefined>(undefined);
+  const [mapLocation, setMapLocation] = useState<{
+    lat: number;
+    lng: number;
+  } | null>(null);
 
   const createLocationWithId = createLocation.bind(null, userId);
 

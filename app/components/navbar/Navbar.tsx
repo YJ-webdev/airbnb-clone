@@ -33,7 +33,7 @@ const Navbar = async ({ width }: NavbarProps) => {
             <form action={continueListingWithId}>
               <button
                 type="submit"
-                className="line-clamp-1 hidden cursor-pointer text-nowrap rounded-full py-3 text-center text-[15px] font-semibold transition hover:bg-neutral-100 md:block md:px-4 lg:mr-4"
+                className="mr-2 line-clamp-1 hidden cursor-pointer text-nowrap rounded-full py-3 text-center text-[15px] font-semibold transition hover:bg-neutral-100 md:block md:px-4 lg:mr-4"
               >
                 Airbnb your home
               </button>

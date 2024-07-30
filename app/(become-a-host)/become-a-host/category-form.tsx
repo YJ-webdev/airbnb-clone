@@ -77,7 +77,8 @@ export const CategoryForm = ({ userId }: { userId: string }) => {
 
       <ActionBar
         dataLogged={dataLogged}
-        prevText="Cancel"
+        prevHref="/host"
+        firstStep={true}
         currentStep={progress}
       />
     </form>
