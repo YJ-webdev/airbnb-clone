@@ -8,10 +8,6 @@ import { ActionBar } from "@/app/components/become-a-host/action-bar";
 import { useProgress } from "@/app/context/progress-context";
 import { ICity, ICountry, IState } from "country-state-city";
 
-type TCountry = ICountry | null | string;
-type TState = IState | null | string;
-type TCity = ICity | null | string;
-
 type LocationFormProps = {
   params: { id: string };
   userId: string;
@@ -32,11 +28,10 @@ export const LocationForm = ({
   initialPostalCode,
 }: LocationFormProps) => {
   const [dataLogged, setDataLogged] = useState(false);
-
   const [street, setStreet] = useState(initialStreet || "");
-  const [country, setCountry] = useState<TCountry>(initialCountry || null);
-  const [city, setCity] = useState<TCity>(initialCity || null);
-  const [state, setState] = useState<TState>(initialState || null);
+  const [country, setCountry] = useState<string | undefined>(initialCountry);
+  const [city, setCity] = useState(initialCity || "");
+  const [state, setState] = useState<string | undefined>(initialState);
   const [postalCode, setPostalCode] = useState(initialPostalCode || "");
   const [mapLocation, setMapLocation] = useState<{
     lat: number;
@@ -94,10 +89,10 @@ export const LocationForm = ({
     <form action={createLocationWithId} className="mb-28">
       <input type="hidden" name="listingId" value={params.id} />
       <input type="hidden" name="street" value={street} />
-      <input type="hidden" name="country" value={country as string} />
-      <input type="hidden" name="city" value={city as string} />
-      <input type="hidden" name="state" value={state as string} />
       <input type="hidden" name="postalCode" value={postalCode} />
+      <input type="hidden" name="country" value={country} />
+      <input type="hidden" name="city" value={city} />
+      <input type="hidden" name="state" value={state} />
 
       <div className="container mb-28 flex h-[70vh] max-w-4xl flex-col pt-28">
         <h2 className="flex-1 pb-10 text-2xl font-semibold md:text-3xl">
