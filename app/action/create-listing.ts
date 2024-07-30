@@ -187,6 +187,7 @@ export async function createLocation(userId: string, formData: FormData) {
   const country = formData.get("country") as string;
   const city = formData.get("city") as string;
   const state = formData.get("state") as string;
+  const postalCode = formData.get("postalCode") as string;
 
   const user = await prisma.user.findUnique({
     where: { id: userId },
@@ -206,6 +207,7 @@ export async function createLocation(userId: string, formData: FormData) {
       city: city,
       state: state,
       addedLocation: true,
+      postalCode: postalCode,
     },
   });
 

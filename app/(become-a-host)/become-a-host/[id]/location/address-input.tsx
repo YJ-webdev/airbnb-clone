@@ -11,76 +11,80 @@ import {
 } from "country-state-city";
 import { Info } from "lucide-react";
 
+type TCountry = ICountry | null | string;
+type TState = IState | null | string;
+type TCity = ICity | null | string;
+
 interface AddressFormProps {
-  location: (value: string) => void;
   setDataLogged: (value: boolean) => void;
-  setCountry?: (value: string) => void;
-  setCity?: (value: string) => void;
-  setState?: (value: string) => void;
+  street: string;
+  country: TCountry;
+  city: TCity;
+  state: TState;
+  postalCode: string;
+  setStreet: (value: string) => void;
+  setCountry: (value: TCountry) => void;
+  setCity: (value: TCity) => void;
+  setState: (value: TState) => void;
+  setPostalCode: (value: string) => void;
+  initialCountry?: string;
+  initialCity?: string;
+  initialState?: string;
+  initialStreet?: string;
+  initialPostalCode?: string;
 }
 
 const AddressInput = ({
-  location,
   setDataLogged,
+  street,
+  country,
+  city,
+  state,
+  postalCode,
+  setStreet,
   setCountry,
   setCity,
   setState,
+  setPostalCode,
+  initialCountry,
+  initialCity,
+  initialState,
+  initialStreet,
+  initialPostalCode,
 }: AddressFormProps) => {
   const countryData = Country.getAllCountries();
-
-  const [address, setAddress] = useState("");
-  const [locality, setLocality] = useState("");
-  const [area, setArea] = useState<IState | null>(null);
-  const [postalCode, setPostalCode] = useState("");
-  const [nation, setNation] = useState<ICountry | null>(null);
   const [states, setStates] = useState<IState[]>([]);
   const [cities, setCities] = useState<ICity[]>([]);
 
   useEffect(() => {
-    if (nation) {
-      const statesData = State.getStatesOfCountry(nation.isoCode);
+    if (country) {
+      const statesData = State.getStatesOfCountry(
+        typeof country === "string" ? country : country.isoCode,
+      );
       setStates(statesData);
-      setArea(null); // reset state selection when nation changes
-      setLocality(""); // reset city selection when nation changes
+      setState(""); // reset state selection when nation changes
+      setCity(""); // reset city selection when nation changes
     }
-  }, [nation]);
+  }, [country, setState, setCity]);
 
   useEffect(() => {
-    if (area) {
+    if (state) {
       const citiesData = City.getCitiesOfState(
-        nation?.isoCode || "",
-        area.isoCode,
+        typeof country === "string" ? country : country?.isoCode || "",
+        typeof state === "string" ? state : state.isoCode,
       );
       setCities(citiesData);
-      setLocality(""); // reset city selection when state changes
+      setCity(""); // reset city selection when state changes
     }
-  }, [area, nation]);
+  }, [state, country, setCity]);
 
   useEffect(() => {
-    if (address && postalCode && nation) {
-      if (setCountry && nation) setCountry(nation.name);
-      if (setState && area) setState(area.name);
-      if (setCity && locality) setCity(locality);
+    if (street && postalCode && country) {
       setDataLogged(true);
     } else {
       setDataLogged(false);
     }
-  }, [
-    address,
-    locality,
-    area,
-    postalCode,
-    nation,
-    setDataLogged,
-    setCountry,
-    setCity,
-    setState,
-  ]);
-
-  useEffect(() => {
-    const formedAddress = `${address} ${locality} ${area?.name} ${postalCode} ${nation?.name}`;
-    location(formedAddress);
-  }, [location, address, area, locality, postalCode, nation]);
+  }, [street, postalCode, country, setDataLogged]);
 
   return (
     <div className="mb-10 flex min-h-[360px] w-full flex-col bg-white md:mb-0 md:h-[55vh] md:w-2/5">
@@ -97,7 +101,7 @@ const AddressInput = ({
           id="country"
           name="country"
           onChange={(e) =>
-            setNation(
+            setCountry(
               countryData.find((c) => c.isoCode === e.target.value) || null,
             )
           }
@@ -117,8 +121,8 @@ const AddressInput = ({
             id="location-input"
             name="address"
             type="text"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
+            value={street}
+            onChange={(e) => setStreet(e.target.value)}
             placeholder="Address"
             required
             className="w-full border-b border-gray-300 p-2 outline-none"
@@ -135,8 +139,8 @@ const AddressInput = ({
           <select
             id="city"
             name="city"
-            onChange={(e) => setLocality(e.target.value)}
-            value={locality}
+            onChange={(e) => setCity(e.target.value)}
+            value={typeof city === "string" ? city : city?.name || ""}
             className="w-full border-b border-gray-300 p-2 outline-none"
           >
             <option value="">City</option>
@@ -151,7 +155,7 @@ const AddressInput = ({
               id="state"
               name="state"
               onChange={(e) =>
-                setArea(
+                setState(
                   states.find((s) => s.isoCode === e.target.value) || null,
                 )
               }

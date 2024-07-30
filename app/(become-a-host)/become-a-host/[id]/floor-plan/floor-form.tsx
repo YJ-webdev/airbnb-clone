@@ -7,34 +7,44 @@ import { useProgress } from "@/app/context/progress-context";
 import { Bath, BedSingle, DoorOpen, UserCheck } from "lucide-react";
 import { useEffect, useState } from "react";
 
+type FloorFromProps = {
+  params: { id: string };
+  userId: string;
+  initialGuestCount?: number;
+  initialRoomCount?: number;
+  initialBedCount?: number;
+  initialBathroomCount?: number;
+};
+
 export const FloorFrom = ({
   params,
   userId,
-}: {
-  params: { id: string };
-  userId: string;
-}) => {
+  initialGuestCount,
+  initialRoomCount,
+  initialBedCount,
+  initialBathroomCount,
+}: FloorFromProps) => {
   const [dataLogged, setDataLogged] = useState(false);
-  const [guestCount, setGuestCount] = useState(0);
-  const [roomCount, setRoomCount] = useState(0);
-  const [bedCount, setBedCount] = useState(0);
-  const [bathroomCount, setBathroomCount] = useState(0);
+  const [guestCount, setGuestCount] = useState(initialGuestCount);
+  const [roomCount, setRoomCount] = useState(initialRoomCount);
+  const [bedCount, setBedCount] = useState(initialBedCount);
+  const [bathroomCount, setBathroomCount] = useState(initialBathroomCount);
 
   const createFloorPlanWithId = createFloorPlan.bind(null, userId);
 
   const { progress, setProgress } = useProgress();
 
   useEffect(() => {
-    setProgress(28);
-  }, [setProgress]);
-
-  useEffect(() => {
-    if (guestCount > 0 && bathroomCount > 0) {
+    if (
+      guestCount !== undefined &&
+      guestCount > 0 &&
+      bathroomCount !== undefined &&
+      bathroomCount > 0
+    ) {
       setDataLogged(true);
-    } else {
-      setDataLogged(false);
     }
-  }, [guestCount, bathroomCount]);
+    setProgress(28);
+  }, [setProgress, guestCount, bathroomCount]);
 
   return (
     <form action={createFloorPlanWithId}>
@@ -58,7 +68,11 @@ export const FloorFrom = ({
                   How many guests fit comfortably in your place?
                 </p>
               </div>
-              <Counter name="guestCount" setCount={setGuestCount} />
+              <Counter
+                name="guestCount"
+                setCount={setGuestCount}
+                initialCount={initialGuestCount}
+              />
             </div>
           </div>
           <div className="mt-8 flex flex-col gap-y-5 border-b pb-8">
@@ -69,7 +83,11 @@ export const FloorFrom = ({
                   Bedrooms
                 </h3>
               </div>
-              <Counter name="roomCount" setCount={setRoomCount} />
+              <Counter
+                name="roomCount"
+                setCount={setRoomCount}
+                initialCount={initialRoomCount}
+              />
             </div>
           </div>
           <div className="mt-8 flex flex-col gap-y-5 border-b pb-8">
@@ -80,7 +98,11 @@ export const FloorFrom = ({
                   Beds
                 </h3>
               </div>
-              <Counter name="bedCount" setCount={setBedCount} />
+              <Counter
+                name="bedCount"
+                setCount={setBedCount}
+                initialCount={initialBedCount}
+              />
             </div>
           </div>
           <div className="mt-8 flex flex-col gap-y-5 border-b pb-8">
@@ -91,7 +113,11 @@ export const FloorFrom = ({
                   Bathrooms
                 </h3>
               </div>
-              <Counter name="bathroomCount" setCount={setBathroomCount} />
+              <Counter
+                name="bathroomCount"
+                setCount={setBathroomCount}
+                initialCount={initialBathroomCount}
+              />
             </div>
           </div>
         </div>

@@ -9,37 +9,35 @@ import { Card, CardHeader } from "@/components/ui/card";
 import { ActionBar } from "@/app/components/become-a-host/action-bar";
 import { useProgress } from "@/app/context/progress-context";
 import { updateCategory } from "@/app/action/create-listing";
-import { useLocalStorage } from "@/app/lib/useLocalStorage";
 
 export const EditCategoryForm = ({
   userId,
   params,
+  initialCategory,
 }: {
   userId: string;
   params: { id: string };
+  initialCategory: string;
 }) => {
-  const updateCategoryWithId = updateCategory.bind(null, userId);
-
   const [dataLogged, setDataLogged] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState<string>("");
-
-  // const { setItem, getItem } = useLocalStorage("value");
-
+  const [selectedCategory, setSelectedCategory] =
+    useState<string>(initialCategory);
   const { progress, setProgress } = useProgress();
+
+  const updateCategoryWithId = updateCategory.bind(null, userId);
 
   const handleSelectCategory = (item: ICategoryData) => {
     if (item) {
       setSelectedCategory(item.name);
-      setDataLogged(true);
     } else {
       setSelectedCategory("");
-      setDataLogged(false);
     }
   };
 
   useEffect(() => {
+    selectedCategory ? setDataLogged(true) : setDataLogged(false);
     setProgress(14);
-  }, [setProgress]);
+  }, [setProgress, selectedCategory]);
 
   return (
     <form action={updateCategoryWithId}>

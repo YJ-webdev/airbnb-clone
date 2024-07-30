@@ -9,10 +9,16 @@ interface CounterProps {
   name: string;
   setCount: (value: number) => void;
   small?: boolean;
+  initialCount?: number;
 }
 
-export const Counter = ({ small, name, setCount }: CounterProps) => {
-  const [amount, setAmount] = useState(0);
+export const Counter = ({
+  small,
+  name,
+  setCount,
+  initialCount,
+}: CounterProps) => {
+  const [amount, setAmount] = useState(initialCount || 0);
 
   const increase = () => {
     if (amount < 16) {

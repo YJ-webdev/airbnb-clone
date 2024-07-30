@@ -6,20 +6,38 @@ import AddressInput from "./address-input";
 import AddressMap from "./address-map";
 import { ActionBar } from "@/app/components/become-a-host/action-bar";
 import { useProgress } from "@/app/context/progress-context";
+import { ICity, ICountry, IState } from "country-state-city";
+
+type TCountry = ICountry | null | string;
+type TState = IState | null | string;
+type TCity = ICity | null | string;
+
+type LocationFormProps = {
+  params: { id: string };
+  userId: string;
+  initialState?: string;
+  initialCountry?: string;
+  initialCity?: string;
+  initialStreet?: string;
+  initialPostalCode?: string;
+};
 
 export const LocationForm = ({
   params,
   userId,
-}: {
-  params: { id: string };
-  userId: string;
-}) => {
+  initialCountry,
+  initialState,
+  initialCity,
+  initialStreet,
+  initialPostalCode,
+}: LocationFormProps) => {
   const [dataLogged, setDataLogged] = useState(false);
 
-  const [formedAddress, setFormedAddress] = useState("");
-  const [country, setCountry] = useState<string | undefined>(undefined);
-  const [city, setCity] = useState<string | undefined>(undefined);
-  const [state, setState] = useState<string | undefined>(undefined);
+  const [street, setStreet] = useState(initialStreet || "");
+  const [country, setCountry] = useState<TCountry>(initialCountry || null);
+  const [city, setCity] = useState<TCity>(initialCity || null);
+  const [state, setState] = useState<TState>(initialState || null);
+  const [postalCode, setPostalCode] = useState(initialPostalCode || "");
   const [mapLocation, setMapLocation] = useState<{
     lat: number;
     lng: number;
@@ -30,15 +48,18 @@ export const LocationForm = ({
   const { progress, setProgress } = useProgress();
 
   useEffect(() => {
+    if (country && street && postalCode !== "") {
+      setDataLogged(true);
+    } else {
+      setDataLogged(false);
+    }
     setProgress(43);
-  }, [setProgress]);
+  }, [setProgress, street, country, city, state, postalCode]);
 
   // Memorized handleAddressSubmit function
   const handleAddressSubmit = useCallback(async (address: string) => {
-    setFormedAddress(address);
-    {
-      formedAddress !== "" && setDataLogged(true);
-    }
+    setStreet(address);
+
     const axios = require("axios");
     if (address) {
       try {
@@ -66,16 +87,17 @@ export const LocationForm = ({
 
   // Effect to trigger handleAddressSubmit when formedAddress changes
   useEffect(() => {
-    handleAddressSubmit(formedAddress);
-  }, [formedAddress, handleAddressSubmit]);
+    handleAddressSubmit(street);
+  }, [street, handleAddressSubmit]);
 
   return (
     <form action={createLocationWithId} className="mb-28">
       <input type="hidden" name="listingId" value={params.id} />
-      <input type="hidden" name="locationValue" value={formedAddress} />
-      <input type="hidden" name="country" value={country} />
-      <input type="hidden" name="city" value={city} />
-      <input type="hidden" name="state" value={state} />
+      <input type="hidden" name="street" value={street} />
+      <input type="hidden" name="country" value={country as string} />
+      <input type="hidden" name="city" value={city as string} />
+      <input type="hidden" name="state" value={state as string} />
+      <input type="hidden" name="postalCode" value={postalCode} />
 
       <div className="container mb-28 flex h-[70vh] max-w-4xl flex-col pt-28">
         <h2 className="flex-1 pb-10 text-2xl font-semibold md:text-3xl">
@@ -85,11 +107,22 @@ export const LocationForm = ({
         <div className="flex-grow" />
         <div className="flex max-w-4xl flex-1 flex-col items-center justify-between gap-8 md:flex-1 md:flex-row">
           <AddressInput
-            location={handleAddressSubmit}
             setDataLogged={setDataLogged}
+            street={street}
+            setStreet={setStreet}
+            country={country}
+            city={city}
+            state={state}
+            postalCode={postalCode}
             setCountry={setCountry}
             setCity={setCity}
             setState={setState}
+            setPostalCode={setPostalCode}
+            initialCountry={initialCountry}
+            initialCity={initialCity}
+            initialState={initialState}
+            initialStreet={initialStreet}
+            initialPostalCode={initialPostalCode}
           />
           <AddressMap location={mapLocation} />
         </div>
