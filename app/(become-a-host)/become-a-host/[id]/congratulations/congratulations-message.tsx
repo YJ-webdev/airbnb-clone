@@ -18,7 +18,7 @@ export const CongratulationsMessage = ({
       </p>
       <Link
         href={`/`}
-        className="rounded-full bg-black px-8 py-4 text-center text-white hover:bg-zinc-700"
+        className="rounded-full bg-gradient-to-r from-rose-500 to-[#e3326d] px-8 py-4 text-center text-white hover:bg-zinc-700"
       >
         Go to home page
       </Link>

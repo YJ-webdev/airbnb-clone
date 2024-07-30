@@ -12,7 +12,7 @@ export default function Congratulations({
     <div className="relative flex h-screen">
       <Image
         className="absolute -z-10 w-full object-cover"
-        src="https://media.cntraveler.com/photos/5a298cf2a82c263e97bd8d82/16:9/w_1920,c_limit/Bedroom1-OxfordHotel-DenverCO-CRJasonDewey.jpg"
+        src="https://media.cntraveler.com/photos/5f6abb5a4297925b041ef2b9/16:9/w_1920%2Cc_limit/le-barthelemy.jpg"
         // height={700}
         // width={1000}
         alt="congratulations"
