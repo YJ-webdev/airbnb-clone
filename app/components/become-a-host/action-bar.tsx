@@ -1,18 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { CreationSubmit } from "./submit-buttons";
 
 import { useProgress } from "@/app/context/progress-context";
 import { ProgressBar } from "./progress-bar";
-import { Loader2 } from "lucide-react";
-import { useRouter } from "next/navigation";
 
 interface ActionBarProps {
   dataLogged: boolean;
-
+  prevHref?: string;
   nextText?: string;
   prevText?: string;
   className?: string;
@@ -21,16 +18,13 @@ interface ActionBarProps {
 
 export function ActionBar({
   dataLogged,
-
+  prevHref,
   nextText,
   prevText,
   className,
   currentStep,
 }: ActionBarProps) {
   const { progress, setProgress } = useProgress();
-  const [isLoading, setIsLoading] = useState(false);
-
-  const router = useRouter();
 
   useEffect(() => {
     if (currentStep !== undefined) {
@@ -41,14 +35,12 @@ export function ActionBar({
   return (
     <div className="fixed bottom-0 z-10 flex h-24 w-full flex-col border-t bg-white">
       <div className="container mx-auto flex h-full items-center justify-between px-5 lg:px-10">
-        <button
-          onClick={() => {
-            router.back();
-          }}
+        <Link
+          href={prevHref ?? "/host"}
           className="rounded-sm bg-white px-5 py-3 text-[16px] font-bold hover:bg-zinc-100"
         >
           {prevText ?? "Previous"}
-        </button>
+        </Link>
 
         <CreationSubmit
           dataLogged={dataLogged}

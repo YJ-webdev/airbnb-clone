@@ -75,7 +75,11 @@ export const PriceForm = ({
           </div>
         </div>
 
-        <ActionBar dataLogged={dataLogged} currentStep={progress} />
+        <ActionBar
+          dataLogged={dataLogged}
+          prevHref={`/become-a-host/${params.id}/description`}
+          currentStep={progress}
+        />
       </div>
     </form>
   );

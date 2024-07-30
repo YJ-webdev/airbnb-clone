@@ -98,7 +98,11 @@ export const FloorFrom = ({
         <div className="flex-gow" />
       </div>
 
-      <ActionBar dataLogged={dataLogged} currentStep={progress} />
+      <ActionBar
+        dataLogged={dataLogged}
+        prevHref={`/become-a-host/${params.id}/category`}
+        currentStep={progress}
+      />
     </form>
   );
 };

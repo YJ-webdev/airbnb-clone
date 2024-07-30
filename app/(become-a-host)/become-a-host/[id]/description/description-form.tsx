@@ -82,7 +82,11 @@ export const DescriptionForm = ({
         <div className="flex-grow" />
       </div>
 
-      <ActionBar dataLogged={dataLogged} currentStep={progress} />
+      <ActionBar
+        dataLogged={dataLogged}
+        prevHref={`/become-a-host/${params.id}/photos`}
+        currentStep={progress}
+      />
     </form>
   );
 };

@@ -94,7 +94,11 @@ export const LocationForm = ({
           <AddressMap location={mapLocation} />
         </div>
       </div>
-      <ActionBar dataLogged={dataLogged} currentStep={progress} />
+      <ActionBar
+        dataLogged={dataLogged}
+        prevHref={`/become-a-host/${params.id}/floor-plan`}
+        currentStep={progress}
+      />
     </form>
   );
 };

@@ -45,7 +45,11 @@ export const ImageForm = ({
       </div>
       <ImageUpload setDataLogged={setDataLogged} setImageSrc={setImageSrc} />
 
-      <ActionBar dataLogged={dataLogged} currentStep={progress} />
+      <ActionBar
+        dataLogged={dataLogged}
+        prevHref={`/become-a-host/${params.id}/location`}
+        currentStep={progress}
+      />
     </form>
   );
 };
