@@ -109,20 +109,15 @@ export const LocationForm = ({
           <AddressInput
             setDataLogged={setDataLogged}
             street={street}
-            setStreet={setStreet}
             country={country}
             city={city}
             state={state}
             postalCode={postalCode}
+            setStreet={setStreet}
             setCountry={setCountry}
             setCity={setCity}
             setState={setState}
             setPostalCode={setPostalCode}
-            initialCountry={initialCountry}
-            initialCity={initialCity}
-            initialState={initialState}
-            initialStreet={initialStreet}
-            initialPostalCode={initialPostalCode}
           />
           <AddressMap location={mapLocation} />
         </div>

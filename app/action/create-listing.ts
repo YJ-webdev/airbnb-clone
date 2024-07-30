@@ -183,7 +183,7 @@ export async function createFloorPlan(userId: string, formData: FormData) {
 
 export async function createLocation(userId: string, formData: FormData) {
   const listingId = formData.get("listingId") as string;
-  const locationValue = formData.get("locationValue") as string;
+  const locationValue = formData.get("street") as string;
   const country = formData.get("country") as string;
   const city = formData.get("city") as string;
   const state = formData.get("state") as string;

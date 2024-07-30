@@ -27,11 +27,6 @@ interface AddressFormProps {
   setCity: (value: TCity) => void;
   setState: (value: TState) => void;
   setPostalCode: (value: string) => void;
-  initialCountry?: string;
-  initialCity?: string;
-  initialState?: string;
-  initialStreet?: string;
-  initialPostalCode?: string;
 }
 
 const AddressInput = ({
@@ -46,11 +41,6 @@ const AddressInput = ({
   setCity,
   setState,
   setPostalCode,
-  initialCountry,
-  initialCity,
-  initialState,
-  initialStreet,
-  initialPostalCode,
 }: AddressFormProps) => {
   const countryData = Country.getAllCountries();
   const [states, setStates] = useState<IState[]>([]);
