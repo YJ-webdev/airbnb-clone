@@ -39,19 +39,21 @@ const shortcutsItems: PickersShortcutsItem<DateRange<Dayjs>>[] = [
 export default function calendar2() {
   return (
     <>
-      <div className="hidden rounded-lg border p-1 shadow-[0px_1px_3px_1px_rgba(0,0,0,0.1)] md:block">
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <StaticDateRangePicker
-            disablePast
-            slotProps={{
-              shortcuts: {
-                items: shortcutsItems,
-              },
-              actionBar: { actions: [] },
-            }}
-            calendars={2}
-          />
-        </LocalizationProvider>
+      <div className="hidden w-full items-center rounded-lg border shadow-[0px_1px_3px_1px_rgba(0,0,0,0.1)] md:flex">
+        <div className="mx-auto items-center p-1">
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <StaticDateRangePicker
+              disablePast
+              slotProps={{
+                // shortcuts: {
+                //   items: shortcutsItems,
+                // },
+                actionBar: { actions: [] },
+              }}
+              calendars={2}
+            />
+          </LocalizationProvider>
+        </div>
       </div>
 
       <div className="rounded-lg border p-1 shadow-[0px_1px_3px_1px_rgba(0,0,0,0.1)] md:hidden">

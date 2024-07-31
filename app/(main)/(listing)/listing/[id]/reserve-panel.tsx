@@ -3,14 +3,12 @@
 import { FavoriteButton } from "@/app/components/favorite-button";
 import { SocialShare } from "@/app/components/social-share";
 import { useFavorites } from "@/app/context/favorite-context";
-import { Input } from "@/components/ui/input";
 import { UserWithRoleAndFavoriteIds } from "@/types";
 import { Listing } from "@prisma/client";
 import { Montserrat } from "next/font/google";
 import { useEffect, useState } from "react";
 import Calendar from "./calendar";
-import { Counter } from "@/app/(become-a-host)/become-a-host/[id]/floor-plan/counter";
-import { SharedCounter } from "./shared-count";
+import { AdultAndChildren } from "./adult-and-children";
 
 interface ReservePanelProps {
   user?: UserWithRoleAndFavoriteIds;
@@ -29,22 +27,9 @@ export const ReservePanel = ({ data, user }: ReservePanelProps) => {
   const [favorite, setFavorite] = useState(isFavorite);
   const fillColor = "fill-zinc-500/50";
 
-  const [count, setCount] = useState(0);
-
-  const [adultCount, setAdultCount] = useState(1);
-  const [childCount, setChildCount] = useState(0);
-
-  const total = adultCount + childCount;
-  const left = data?.guestCount! - total;
-  const [remaining, setRemaining] = useState(left);
-
   useEffect(() => {
     setFavorite(isFavorite);
   }, [isFavorite]);
-
-  useEffect(() => {
-    setRemaining(data?.guestCount! - total);
-  }, [adultCount, childCount, data?.guestCount, total]);
 
   const [optimisticFavorite, setOptimisticFavorite] = useState(favorite);
 
@@ -72,35 +57,7 @@ export const ReservePanel = ({ data, user }: ReservePanelProps) => {
               <Calendar />
             </div>
 
-            <div className="flex items-center justify-between py-2">
-              Adults{" "}
-              <SharedCounter
-                small
-                name="Guests"
-                setCount={setAdultCount}
-                count={adultCount}
-                min={1}
-                max={data?.guestCount!}
-                total={total}
-              />
-            </div>
-            <div className="flex items-center justify-between py-2">
-              Children{" "}
-              <SharedCounter
-                small
-                name="Children"
-                setCount={setChildCount}
-                count={childCount}
-                min={0}
-                max={data?.guestCount!}
-                total={total}
-              />
-            </div>
-
-            <div className="flex items-center justify-between py-2">
-              Pet{" "}
-              <Counter small name="Pet" setCount={setCount} min={0} max={1} />
-            </div>
+            <AdultAndChildren data={data} user={user} />
           </div>
 
           <div className="flex flex-col items-center justify-center">

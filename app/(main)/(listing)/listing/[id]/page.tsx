@@ -7,6 +7,7 @@ import { PreviewImages } from "@/app/components/preview-images";
 
 import { SocialShare } from "@/app/components/social-share";
 import Calendar2 from "./calendar-expanded";
+import { AdultAndChildren } from "./adult-and-children";
 
 async function getListing(id: string) {
   const data = await prisma.listing.findUnique({ where: { id } });
@@ -67,6 +68,14 @@ export default async function ListingPage({
                 Pick Your Stay Dates
               </h3>
               <Calendar2 />
+            </div>
+            <div className="mb-16 flex flex-col space-y-3 lg:mb-0 lg:hidden">
+              <h3 className="text-[19px] font-semibold md:text-[20px]">
+                Select Number of Adults and Children
+              </h3>
+              <div className="container">
+                <AdultAndChildren user={user} data={data} />
+              </div>
             </div>
           </div>
         </div>
