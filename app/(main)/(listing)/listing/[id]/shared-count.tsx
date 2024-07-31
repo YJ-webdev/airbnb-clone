@@ -75,7 +75,7 @@ export const SharedCounter = ({
         type="button"
         className={cn(
           "h-9 w-9 rounded-full border-zinc-300 bg-white p-0 text-muted-foreground hover:bg-white",
-          count === max ?? 16
+          total === max ?? 16
             ? "cursor-default opacity-30 hover:border-zinc-300 hover:text-muted-foreground"
             : "hover:border-black hover:text-black",
           small ? "h-8 w-8" : "h-9 w-9",

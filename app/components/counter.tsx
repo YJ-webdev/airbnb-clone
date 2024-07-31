@@ -22,7 +22,7 @@ export const Counter = ({
   min,
   max,
 }: CounterProps) => {
-  const [amount, setAmount] = useState(initialCount || 1);
+  const [amount, setAmount] = useState(initialCount ?? 1);
 
   const increase = () => {
     if (amount < (max ?? 16)) {
@@ -44,7 +44,7 @@ export const Counter = ({
         variant="outline"
         type="button"
         onClick={decrease}
-        disabled={amount === min ?? 0}
+        disabled={amount === min || amount === 0}
         className={cn(
           "rounded-full border-zinc-300 bg-white p-0 text-muted-foreground hover:bg-white",
           amount === min ?? 0
@@ -68,10 +68,10 @@ export const Counter = ({
         variant="outline"
         size="icon"
         type="button"
-        disabled={amount === max ?? 16}
+        disabled={amount === max || amount === 16}
         className={cn(
           "h-9 w-9 rounded-full border-zinc-300 bg-white p-0 text-muted-foreground hover:bg-white",
-          amount === max ?? 16
+          amount === max || amount === 16
             ? "cursor-default opacity-30 hover:border-zinc-300 hover:text-muted-foreground"
             : "hover:border-black hover:text-black",
           small ? "h-8 w-8" : "h-9 w-9",

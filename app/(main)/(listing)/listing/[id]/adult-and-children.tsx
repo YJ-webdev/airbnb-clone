@@ -5,7 +5,7 @@ import { Listing } from "@prisma/client";
 import { Montserrat } from "next/font/google";
 import { useEffect, useState } from "react";
 import { SharedCounter } from "./shared-count";
-import { Counter } from "@/app/(become-a-host)/become-a-host/[id]/floor-plan/counter";
+import { Counter } from "@/app/components/counter";
 
 interface ReservePanelProps {
   user?: UserWithRoleAndFavoriteIds;
@@ -57,7 +57,15 @@ export const AdultAndChildren = ({ data, user }: ReservePanelProps) => {
       </div>
 
       <div className="flex items-center justify-between py-2">
-        Pet <Counter small name="Pet" setCount={setCount} min={0} max={1} />
+        Pet{" "}
+        <Counter
+          small
+          name="Pet"
+          setCount={setCount}
+          min={0}
+          max={1}
+          initialCount={0}
+        />
       </div>
     </div>
   );

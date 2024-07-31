@@ -1,8 +1,9 @@
 "use client";
 
 import { createFloorPlan } from "@/app/action/create-listing";
-import { Counter } from "@/app/(become-a-host)/become-a-host/[id]/floor-plan/counter";
+
 import { ActionBar } from "@/app/components/become-a-host/action-bar";
+import { Counter } from "@/app/components/counter";
 import { useProgress } from "@/app/context/progress-context";
 import { Bath, BedSingle, DoorOpen, UserCheck } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -73,7 +74,7 @@ export const FloorFrom = ({
               <Counter
                 name="guestCount"
                 setCount={setGuestCount}
-                initialCount={initialGuestCount}
+                initialCount={initialGuestCount || 1}
                 min={1}
               />
             </div>
@@ -119,7 +120,7 @@ export const FloorFrom = ({
               <Counter
                 name="bathroomCount"
                 setCount={setBathroomCount}
-                initialCount={initialBathroomCount}
+                initialCount={initialBathroomCount || 1}
                 min={1}
               />
             </div>
