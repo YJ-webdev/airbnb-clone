@@ -120,7 +120,7 @@ export const ListingCard = ({ data, isHost, user }: LisitngCardProps) => {
                 <span>{data.country}</span>
               </h2>
               <h3 className="capitalize">{data.category}</h3>
-              <p>${data.price} / night</p>
+              <p>${data.guestPrice} / night</p>
             </div>
           </Link>{" "}
           {isHost === true ? (

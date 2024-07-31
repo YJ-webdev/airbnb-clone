@@ -107,7 +107,8 @@ model Listing {
   bathroomCount Int?
   guestCount    Int?
   bedCount      Int?
-  price         Int?
+  guestPrice    Int?
+  enteredPrice  Int?
   userId        String
 
   addedCategory    Boolean @default(false)

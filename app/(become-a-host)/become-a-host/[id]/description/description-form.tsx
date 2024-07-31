@@ -8,16 +8,22 @@ import { Textarea } from "@/components/ui/textarea";
 import { Info } from "lucide-react";
 import { useEffect, useState } from "react";
 
+interface DescriptionFormProps {
+  params: { id: string };
+  userId: string;
+  initialTitle?: string;
+  initialDescription?: string;
+}
+
 export const DescriptionForm = ({
   params,
   userId,
-}: {
-  params: { id: string };
-  userId: string;
-}) => {
+  initialTitle,
+  initialDescription,
+}: DescriptionFormProps) => {
   const [dataLogged, setDataLogged] = useState(false);
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  const [title, setTitle] = useState(initialTitle);
+  const [description, setDescription] = useState(initialDescription);
 
   const createDescriptionWithId = createDescription.bind(null, userId);
 
@@ -26,16 +32,13 @@ export const DescriptionForm = ({
   const { progress, setProgress } = useProgress();
 
   useEffect(() => {
-    setProgress(71);
-  }, [setProgress]);
-
-  useEffect(() => {
     if (title && description) {
       setDataLogged(true);
     } else {
       setDataLogged(false);
     }
-  }, [title, description]);
+    setProgress(71);
+  }, [setProgress, title, description]);
 
   return (
     <form action={createDescriptionWithId}>
@@ -60,6 +63,7 @@ export const DescriptionForm = ({
           <Input
             name="title"
             required
+            value={title}
             placeholder="Short but Significant"
             type="text"
             className="text-md max-w-1xl h-12 border border-zinc-500 px-4 font-medium placeholder:text-muted-foreground focus:outline focus:outline-1 focus:outline-black"
@@ -70,13 +74,14 @@ export const DescriptionForm = ({
           <Textarea
             name="description"
             required
+            value={description}
             placeholder="Share what makes your place special."
             className="text-md max-w-1xl h-60 border border-zinc-500 font-medium focus:outline focus:outline-1 focus:outline-black"
             maxLength={500}
             onChange={(e) => setDescription(e.target.value)}
           />
           <p className="text-end">
-            {description.length}/{descriptionMaxLength}
+            {description?.length}/{descriptionMaxLength}
           </p>
         </div>
         <div className="flex-grow" />

@@ -20,8 +20,7 @@ export const EditCategoryForm = ({
   initialCategory: string;
 }) => {
   const [dataLogged, setDataLogged] = useState(false);
-  const [selectedCategory, setSelectedCategory] =
-    useState<string>(initialCategory);
+  const [selectedCategory, setSelectedCategory] = useState(initialCategory);
   const { progress, setProgress } = useProgress();
 
   const updateCategoryWithId = updateCategory.bind(null, userId);

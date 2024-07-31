@@ -18,8 +18,9 @@ import { FormError } from "@/app/components/form/form-error";
 import { FormSuccess } from "@/app/components/form/form-success";
 import { FormInput } from "@/app/components/form/form-input";
 import { FormButton } from "./form-button";
-import { UserWithRoleAndFavoriteIds } from "@/types";
 import { UpdateProfile, UpdateProfileSchema } from "@/schema/profile";
+import { User } from "@prisma/client";
+import { UserWithRoleAndFavoriteIds } from "@/types";
 
 interface PersonalInfoProps {
   user: UserWithRoleAndFavoriteIds;
@@ -35,6 +36,10 @@ export const PersonalForm = ({ user }: PersonalInfoProps) => {
     defaultValues: {
       email: user.email || undefined,
       name: user.name || undefined,
+      // phone: user.phone || undefined,
+      // governmentId: user.governmentId || undefined,
+      // address: user.address || undefined,
+      // emergencyContact: user.emergencyContact || undefined,
     },
   });
 
@@ -52,7 +57,7 @@ export const PersonalForm = ({ user }: PersonalInfoProps) => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="relative flex w-full flex-col items-end gap-4"
+        className="relative flex w-full flex-col items-end gap-6"
       >
         <FormField
           control={form.control}
@@ -79,6 +84,59 @@ export const PersonalForm = ({ user }: PersonalInfoProps) => {
             </FormItem>
           )}
         />
+
+        {/* <FormField
+          control={form.control}
+          name="phone"
+          render={({ field }) => (
+            <FormItem className="w-full">
+              <FormControl>
+                <FormInput {...field} id="phone" label="Phone number" />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="governmentId"
+          render={({ field }) => (
+            <FormItem className="w-full">
+              <FormControl>
+                <FormInput {...field} id="governmentId" label="Government ID" />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="address"
+          render={({ field }) => (
+            <FormItem className="w-full">
+              <FormControl>
+                <FormInput {...field} id="address" label="Adress" />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="emergency Contact"
+          render={({ field }) => (
+            <FormItem className="w-full">
+              <FormControl>
+                <FormInput
+                  {...field}
+                  id="emergencyContact"
+                  label="Emergency Contact"
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        /> */}
 
         <FormButton disabled={isPending} />
         <div className="absolute bottom-0 right-1/2 flex translate-x-1/2 items-center justify-center gap-x-2">

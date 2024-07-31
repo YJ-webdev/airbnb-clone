@@ -268,7 +268,8 @@ export async function createDescription(userId: string, formData: FormData) {
 
 export async function createPrice(userId: string, formData: FormData) {
   const listingId = formData.get("listingId") as string;
-  const price = formData.get("price") as unknown as number;
+  const guestPrice = formData.get("guestPrice") as unknown as number;
+  const enteredPrice = formData.get("enteredPrice") as unknown as number;
 
   const user = await prisma.user.findUnique({
     where: { id: userId },
@@ -283,7 +284,8 @@ export async function createPrice(userId: string, formData: FormData) {
       id: listingId,
     },
     data: {
-      price: Number(price),
+      guestPrice: Number(guestPrice),
+      enteredPrice: Number(enteredPrice),
       addedPrice: true,
     },
   });

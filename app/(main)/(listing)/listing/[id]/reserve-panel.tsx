@@ -8,6 +8,9 @@ import { UserWithRoleAndFavoriteIds } from "@/types";
 import { Listing } from "@prisma/client";
 import { Montserrat } from "next/font/google";
 import { useEffect, useState } from "react";
+import Calendar from "./calendar";
+import { Counter } from "@/app/(become-a-host)/become-a-host/[id]/floor-plan/counter";
+import { SharedCounter } from "./shared-count";
 
 interface ReservePanelProps {
   user?: UserWithRoleAndFavoriteIds;
@@ -26,9 +29,22 @@ export const ReservePanel = ({ data, user }: ReservePanelProps) => {
   const [favorite, setFavorite] = useState(isFavorite);
   const fillColor = "fill-zinc-500/50";
 
+  const [count, setCount] = useState(0);
+
+  const [adultCount, setAdultCount] = useState(1);
+  const [childCount, setChildCount] = useState(0);
+
+  const total = adultCount + childCount;
+  const left = data?.guestCount! - total;
+  const [remaining, setRemaining] = useState(left);
+
   useEffect(() => {
     setFavorite(isFavorite);
   }, [isFavorite]);
+
+  useEffect(() => {
+    setRemaining(data?.guestCount! - total);
+  }, [adultCount, childCount, data?.guestCount, total]);
 
   const [optimisticFavorite, setOptimisticFavorite] = useState(favorite);
 
@@ -49,50 +65,50 @@ export const ReservePanel = ({ data, user }: ReservePanelProps) => {
             />
 
             <h3 className={`${montserrat.className} text-[22px] font-semibold`}>
-              ${data.price}{" "}
+              ${data.guestPrice}{" "}
               <span className="text-base font-medium">/ night</span>
             </h3>
             <div className="flex items-baseline justify-between gap-2">
-              <label htmlFor="start" className="sr-only">
-                Start
-              </label>
-              <Input
-                id="start"
-                className="h-14 w-full rounded-full text-sm uppercase"
-                name="start"
-                placeholder="Check-in"
-              />
+              <Calendar />
+            </div>
 
-              <label htmlFor="end" className="sr-only">
-                End
-              </label>
-              <Input
-                id="end"
-                className="h-14 w-full rounded-full text-sm uppercase"
-                name="end"
-                placeholder="Check-out"
+            <div className="flex items-center justify-between py-2">
+              Adults{" "}
+              <SharedCounter
+                small
+                name="Guests"
+                setCount={setAdultCount}
+                count={adultCount}
+                min={1}
+                max={data?.guestCount!}
+                total={total}
               />
             </div>
-            <label htmlFor="guests" className="sr-only">
-              Guests
-            </label>
-            <Input
-              id="guests"
-              name="guests"
-              className="h-14 w-full rounded-full text-center text-base uppercase"
-              type="number"
-              min={1}
-              max={16}
-              placeholder="Guests"
-            />
+            <div className="flex items-center justify-between py-2">
+              Children{" "}
+              <SharedCounter
+                small
+                name="Children"
+                setCount={setChildCount}
+                count={childCount}
+                min={0}
+                max={data?.guestCount!}
+                total={total}
+              />
+            </div>
+
+            <div className="flex items-center justify-between py-2">
+              Pet{" "}
+              <Counter small name="Pet" setCount={setCount} min={0} max={1} />
+            </div>
           </div>
 
           <div className="flex flex-col items-center justify-center">
-            <p className="mb-2 text-center text-sm text-foreground">
+            {/* <p className="mb-2 text-center text-sm text-foreground">
               It won&apos;t be charged yet.
-            </p>
+            </p> */}
 
-            <button className="my-1 h-14 w-full rounded-full bg-gradient-to-r from-rose-500 to-[#e3326d] px-5 py-3 font-semibold text-white">
+            <button className="my-1 h-14 w-full rounded-lg bg-gradient-to-r from-rose-500 to-[#e3326d] px-5 py-3 font-semibold text-white">
               Reserve
             </button>
           </div>
@@ -109,7 +125,7 @@ export const ReservePanel = ({ data, user }: ReservePanelProps) => {
             <span
               className={`${montserrat.className} text-[22px] font-semibold`}
             >
-              ${data.price}
+              ${data.guestPrice}
             </span>{" "}
             / night
           </h3>

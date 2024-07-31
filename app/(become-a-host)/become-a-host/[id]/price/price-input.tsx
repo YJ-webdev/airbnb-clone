@@ -19,6 +19,7 @@ import { Pointer } from "lucide-react";
 interface PriceInputProps {
   setTypedValue: Dispatch<SetStateAction<number>>;
   setDataLogged: (value: boolean) => void;
+  initialPrice?: number;
 }
 
 const montserrat = Montserrat({
@@ -29,8 +30,11 @@ const montserrat = Montserrat({
 export const PriceInput = ({
   setTypedValue,
   setDataLogged,
+  initialPrice,
 }: PriceInputProps) => {
-  const [inputValue, setInputValue] = useState<string>("");
+  const [inputValue, setInputValue] = useState<string | number>(
+    initialPrice || "",
+  );
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -106,7 +110,7 @@ export const PriceInput = ({
                 <Pointer size={25} strokeWidth={2} onClick={handleIconClick} />
               </TooltipTrigger>
               <TooltipContent>
-                <p>Edit</p>
+                <p>Focus</p>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>

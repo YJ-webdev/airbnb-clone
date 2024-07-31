@@ -10,15 +10,15 @@ import { ActionBar } from "@/app/components/become-a-host/action-bar";
 import { GUEST_SERVICE_FEE } from "@/app/lib/rates";
 import { useProgress } from "@/app/context/progress-context";
 
-export const PriceForm = ({
-  params,
-  userId,
-}: {
+interface PriceFormProps {
   params: { id: string };
   userId: string;
-}) => {
+  initialPrice?: number;
+}
+
+export const PriceForm = ({ params, userId, initialPrice }: PriceFormProps) => {
   const [dataLogged, setDataLogged] = useState(false);
-  const [typedValue, setTypedValue] = useState<number>(0);
+  const [typedValue, setTypedValue] = useState<number>(initialPrice || 0);
   const { progress, setProgress } = useProgress();
 
   const createPriceWithId = createPrice.bind(null, userId);
@@ -26,13 +26,19 @@ export const PriceForm = ({
   const unformattedGuestPrice = typedValue * GUEST_SERVICE_FEE + typedValue;
 
   useEffect(() => {
+    if (typedValue > 10 && typedValue < 10000) {
+      setDataLogged(true);
+    } else {
+      setDataLogged(false);
+    }
     setProgress(85);
-  }, [setProgress]);
+  }, [setProgress, typedValue]);
 
   return (
     <form action={createPriceWithId}>
       <input type="hidden" name="listingId" value={params.id} />
-      <input type="hidden" name="price" value={unformattedGuestPrice} />
+      <input type="hidden" name="enteredPrice" value={typedValue} />
+      <input type="hidden" name="guestPrice" value={unformattedGuestPrice} />
 
       <div className="relative h-full overflow-hidden">
         <DotPattern
@@ -67,6 +73,7 @@ export const PriceForm = ({
             <PriceInput
               setDataLogged={setDataLogged}
               setTypedValue={setTypedValue}
+              initialPrice={initialPrice}
             />
             <PriceCheck typedValue={typedValue} />
             <p className="text-sm font-bold text-rose-500 md:text-base">

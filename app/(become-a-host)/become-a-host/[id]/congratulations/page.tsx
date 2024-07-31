@@ -11,7 +11,7 @@ export default function Congratulations({
   return (
     <div className="relative flex h-screen">
       <Image
-        className="absolute -z-10 w-full object-cover"
+        className="absolute -z-10 w-full object-cover opacity-50"
         src="https://media.cntraveler.com/photos/5f6abb5a4297925b041ef2b9/16:9/w_1920%2Cc_limit/le-barthelemy.jpg"
         // height={700}
         // width={1000}

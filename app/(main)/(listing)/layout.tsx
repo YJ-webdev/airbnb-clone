@@ -10,6 +10,7 @@ export default function EditLayout({
     <div className="mx-auto">
       <Navbar width="1280px" />
       {children}
+      <Footer width="1280px" />
     </div>
   );
 }

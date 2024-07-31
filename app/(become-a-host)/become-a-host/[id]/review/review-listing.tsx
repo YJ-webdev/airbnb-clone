@@ -23,7 +23,7 @@ export const ReviewListing = ({ data }: ReviewListingProps) => {
 
           <div className="flex items-baseline justify-between">
             <p className="rounded-full px-2 py-1 shadow-[0px_1px_3px_1px_rgba(0,0,0,0.1)]">
-              ${data.price} / night
+              ${data.guestPrice} / night
             </p>
             <p>Hosted by {data.user.name}</p>
           </div>
