@@ -14,10 +14,10 @@ import { Info } from "lucide-react";
 interface AddressFormProps {
   setDataLogged: (value: boolean) => void;
   street: string;
-  country: string | undefined;
-  city: string | undefined;
-  state: string | undefined;
   postalCode: string;
+  country: string | undefined;
+  state: string | undefined;
+  city: string | undefined;
   setStreet: (value: string) => void;
   setCountry: (value: string) => void;
   setCity: (value: string) => void;
@@ -30,13 +30,12 @@ const AddressInput = ({
   street,
   country,
   city,
-  state,
   postalCode,
   setStreet,
-  setCountry,
   setCity,
   setState,
   setPostalCode,
+  setCountry,
 }: AddressFormProps) => {
   const countryData = Country.getAllCountries();
   const [states, setStates] = useState<IState[]>([]);
@@ -45,13 +44,14 @@ const AddressInput = ({
   const [province, setProvince] = useState<IState | null>(null);
 
   useEffect(() => {
-    if (country) {
+    if (nation) {
       const statesData = State.getStatesOfCountry(nation?.isoCode);
+      setCountry(nation?.name);
       setStates(statesData);
       setState(""); // reset state selection when nation changes
       setCity(""); // reset city selection when nation changes
     }
-  }, [nation, setState, setCity, country]);
+  }, [nation, setState, setCity, country, setCountry]);
 
   useEffect(() => {
     if (province) {
@@ -59,31 +59,19 @@ const AddressInput = ({
         nation?.isoCode || "",
         province.isoCode,
       );
+      setState(province?.name);
       setCities(citiesData);
       setCity(""); // reset city selection when state changes
     }
-  }, [province, nation, setCity]);
+  }, [province, nation, setCity, setState]);
 
   useEffect(() => {
     if (street && postalCode && nation) {
-      if (setCountry && nation) setCountry(nation.name);
-      if (setState && province) setState(province.name);
-      if (setCity && city) setCity(city);
       setDataLogged(true);
     } else {
       setDataLogged(false);
     }
-  }, [
-    street,
-    postalCode,
-    nation,
-    setCountry,
-    setState,
-    setCity,
-    province,
-    city,
-    setDataLogged,
-  ]);
+  }, [street, postalCode, nation, setDataLogged]);
 
   return (
     <div className="mb-10 flex min-h-[360px] w-full flex-col bg-white md:mb-0 md:h-[55vh] md:w-2/5">

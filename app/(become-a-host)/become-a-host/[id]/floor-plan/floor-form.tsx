@@ -42,6 +42,8 @@ export const FloorFrom = ({
       bathroomCount > 0
     ) {
       setDataLogged(true);
+    } else {
+      setDataLogged(false);
     }
     setProgress(28);
   }, [setProgress, guestCount, bathroomCount]);
@@ -72,6 +74,7 @@ export const FloorFrom = ({
                 name="guestCount"
                 setCount={setGuestCount}
                 initialCount={initialGuestCount}
+                min={1}
               />
             </div>
           </div>
@@ -117,6 +120,7 @@ export const FloorFrom = ({
                 name="bathroomCount"
                 setCount={setBathroomCount}
                 initialCount={initialBathroomCount}
+                min={1}
               />
             </div>
           </div>

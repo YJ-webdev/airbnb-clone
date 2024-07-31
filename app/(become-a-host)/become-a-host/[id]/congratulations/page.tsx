@@ -11,8 +11,8 @@ export default function Congratulations({
   return (
     <div className="relative flex h-screen">
       <Image
-        className="absolute -z-10 w-full object-cover opacity-50"
-        src="https://media.cntraveler.com/photos/5f6abb5a4297925b041ef2b9/16:9/w_1920%2Cc_limit/le-barthelemy.jpg"
+        className="absolute -z-10 w-full object-cover"
+        src="https://media.cntraveler.com/photos/6439708de281b56fd186eca2/16:9/w_1920,c_limit/slow%20travel%20-%20sunset%20-%20GettyImages-1295941145.jpg"
         // height={700}
         // width={1000}
         alt="congratulations"

@@ -61,7 +61,7 @@ export default async function ListingPage({
               <h3 className="text-[19px] font-semibold md:text-[20px]">
                 Where it located
               </h3>
-              <ListingMap data={data} />
+              <ListingMap lat={data?.lat!} lng={data?.lng!} />
             </div>
             <div className="flex flex-col space-y-3">
               <h3 className="text-[19px] font-semibold md:text-[20px]">

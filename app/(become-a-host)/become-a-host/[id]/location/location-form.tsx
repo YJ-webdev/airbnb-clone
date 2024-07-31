@@ -6,7 +6,6 @@ import AddressInput from "./address-input";
 import AddressMap from "./address-map";
 import { ActionBar } from "@/app/components/become-a-host/action-bar";
 import { useProgress } from "@/app/context/progress-context";
-import { ICity, ICountry, IState } from "country-state-city";
 
 type LocationFormProps = {
   params: { id: string };
@@ -16,6 +15,9 @@ type LocationFormProps = {
   initialCity?: string;
   initialStreet?: string;
   initialPostalCode?: string;
+  initialMarkerLocation?: string;
+  initialLat?: number;
+  initialLng?: number;
 };
 
 export const LocationForm = ({
@@ -26,6 +28,8 @@ export const LocationForm = ({
   initialCity,
   initialStreet,
   initialPostalCode,
+  initialLng,
+  initialLat,
 }: LocationFormProps) => {
   const [dataLogged, setDataLogged] = useState(false);
   const [street, setStreet] = useState(initialStreet || "");
@@ -33,30 +37,26 @@ export const LocationForm = ({
   const [city, setCity] = useState(initialCity || "");
   const [state, setState] = useState<string | undefined>(initialState);
   const [postalCode, setPostalCode] = useState(initialPostalCode || "");
+  const [lat, setLat] = useState<number>(initialLat || 0);
+  const [lng, setLng] = useState<number>(initialLng || 0);
+
+  const createLocationWithId = createLocation.bind(null, userId);
+  const { progress, setProgress } = useProgress();
+
+  const initialMarkerLocation = { lat: initialLat || 0, lng: initialLng || 0 };
+
   const [mapLocation, setMapLocation] = useState<{
     lat: number;
     lng: number;
-  } | null>(null);
-
-  const createLocationWithId = createLocation.bind(null, userId);
-
-  const { progress, setProgress } = useProgress();
-
-  useEffect(() => {
-    if (country && street && postalCode !== "") {
-      setDataLogged(true);
-    } else {
-      setDataLogged(false);
-    }
-    setProgress(43);
-  }, [setProgress, street, country, city, state, postalCode]);
+  } | null>(initialMarkerLocation);
 
   // Memorized handleAddressSubmit function
   const handleAddressSubmit = useCallback(async (address: string) => {
     setStreet(address);
+    setProgress(43);
 
     const axios = require("axios");
-    if (address) {
+    if (address !== initialStreet) {
       try {
         const response = await axios.get(
           `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${process.env.NEXT_PUBLIC_GOOGLE_GEOCODING_API_KEY}`,
@@ -67,17 +67,18 @@ export const LocationForm = ({
         if (response.data.status === "OK" && response.data.results.length > 0) {
           const { lat, lng } = response.data.results[0].geometry.location;
           setMapLocation({ lat, lng });
+          setLat(lat);
+          setLng(lng);
         } else if (response.data.status === "ZERO_RESULTS") {
-          setMapLocation(null); // Clear map location if no results found
+          setMapLocation(null);
         } else {
-          setMapLocation(null); // Clear map location on other errors
+          setMapLocation(null);
         }
       } catch (error) {
         console.error("Error fetching geocoding data:", error);
-        setMapLocation(null); // Clear map location on error
+        setMapLocation(null);
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Effect to trigger handleAddressSubmit when formedAddress changes
@@ -94,13 +95,16 @@ export const LocationForm = ({
       <input type="hidden" name="city" value={city} />
       <input type="hidden" name="state" value={state} />
 
+      <input type="hidden" name="lat" value={lat} />
+      <input type="hidden" name="lng" value={lng} />
+
       <div className="container mb-28 flex h-[70vh] max-w-4xl flex-col pt-28">
         <h2 className="flex-1 pb-10 text-2xl font-semibold md:text-3xl">
           Where&apos;s your place located?{" "}
         </h2>
 
         <div className="flex-grow" />
-        <div className="flex max-w-4xl flex-1 flex-col items-center justify-between gap-8 md:flex-1 md:flex-row">
+        <div className="flex max-w-4xl flex-1 flex-col items-center justify-between gap-1 md:flex-1 md:flex-row md:gap-10">
           <AddressInput
             setDataLogged={setDataLogged}
             street={street}
@@ -114,7 +118,7 @@ export const LocationForm = ({
             setState={setState}
             setPostalCode={setPostalCode}
           />
-          <AddressMap location={mapLocation} />
+          <AddressMap location={mapLocation} setLat={setLat} setLng={setLng} />
         </div>
       </div>
       <ActionBar

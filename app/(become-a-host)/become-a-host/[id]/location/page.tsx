@@ -27,6 +27,8 @@ export default async function LocationPage({
         initialCity={listingData?.city || undefined}
         initialStreet={listingData?.locationValue || undefined}
         initialPostalCode={listingData?.postalCode || undefined}
+        initialLat={listingData?.lat || undefined}
+        initialLng={listingData?.lng || undefined}
       />
     </div>
   );

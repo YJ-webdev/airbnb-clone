@@ -14,10 +14,12 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 interface AddressMapProps {
   location: { lat: number; lng: number } | null;
+  setLng: (value: number) => void;
+  setLat: (value: number) => void;
 }
 
-const AddressMap = ({ location }: AddressMapProps) => {
-  const [mapCenter, setMapCenter] = useState(location || { lat: 0, lng: 0 });
+const AddressMap = ({ location, setLat, setLng }: AddressMapProps) => {
+  const [mapCenter, setMapCenter] = useState(location);
   const [markerRef, marker] = useAdvancedMarkerRef();
   const [infoWindowShown, setInfoWindowShown] = useState(true);
   const [markerLocation, setMarkerLocation] = useState(location);
@@ -40,6 +42,8 @@ const AddressMap = ({ location }: AddressMapProps) => {
       const lng = newPosition.lng();
       const newMarkerLocation = { lat, lng };
       setMarkerLocation(newMarkerLocation);
+      setLat(lat);
+      setLng(lng);
       console.log("Marker dragged to:", newMarkerLocation); // Log new position
     }
   };
@@ -96,7 +100,7 @@ const AddressMap = ({ location }: AddressMapProps) => {
               anchor={marker}
               headerContent={
                 <h3 className="text-sm font-normal">
-                  Make it clear to guests where your place is located.
+                  Make it clear where your place is located.
                 </h3>
               }
             />

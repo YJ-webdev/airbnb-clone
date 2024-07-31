@@ -1,6 +1,6 @@
 import { LogoHost } from "@/app/components/navbar/logo-host";
 import getSession from "@/app/lib/get-session";
-import { DoorClosed, DoorOpen } from "lucide-react";
+import { DoorOpen } from "lucide-react";
 import Link from "next/link";
 
 const HostNavbar = async () => {

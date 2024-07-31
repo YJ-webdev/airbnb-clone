@@ -102,6 +102,8 @@ model Listing {
   state         String?
   city          String?
   locationValue String?
+  lat           Float?
+  lng           Float?
   postalCode    String?
   roomCount     Int?
   bathroomCount Int?

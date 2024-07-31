@@ -1,6 +1,7 @@
 "use server";
 
 import prisma from "@/app/lib/db";
+import { JsonArray } from "@prisma/client/runtime/library";
 import { redirect } from "next/navigation";
 
 export async function createNewListing(userId: string) {
@@ -188,6 +189,8 @@ export async function createLocation(userId: string, formData: FormData) {
   const city = formData.get("city") as string;
   const state = formData.get("state") as string;
   const postalCode = formData.get("postalCode") as string;
+  const lat = formData.get("lat") as string;
+  const lng = formData.get("lng") as string;
 
   const user = await prisma.user.findUnique({
     where: { id: userId },
@@ -208,6 +211,8 @@ export async function createLocation(userId: string, formData: FormData) {
       state: state,
       addedLocation: true,
       postalCode: postalCode,
+      lat: Number(lat),
+      lng: Number(lng),
     },
   });
 
@@ -268,8 +273,8 @@ export async function createDescription(userId: string, formData: FormData) {
 
 export async function createPrice(userId: string, formData: FormData) {
   const listingId = formData.get("listingId") as string;
-  const guestPrice = formData.get("guestPrice") as unknown as number;
-  const enteredPrice = formData.get("enteredPrice") as unknown as number;
+  const guestPrice = formData.get("guestPrice") as string;
+  const enteredPrice = formData.get("enteredPrice") as string;
 
   const user = await prisma.user.findUnique({
     where: { id: userId },

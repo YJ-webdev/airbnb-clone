@@ -44,6 +44,7 @@ export const Counter = ({
         variant="outline"
         type="button"
         onClick={decrease}
+        disabled={amount === min ?? 0}
         className={cn(
           "rounded-full border-zinc-300 bg-white p-0 text-muted-foreground hover:bg-white",
           amount === min ?? 0
@@ -67,6 +68,7 @@ export const Counter = ({
         variant="outline"
         size="icon"
         type="button"
+        disabled={amount === max ?? 16}
         className={cn(
           "h-9 w-9 rounded-full border-zinc-300 bg-white p-0 text-muted-foreground hover:bg-white",
           amount === max ?? 16

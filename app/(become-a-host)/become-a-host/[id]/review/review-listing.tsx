@@ -10,10 +10,12 @@ export const ReviewListing = ({ data }: ReviewListingProps) => {
 
   return (
     <div className="flex h-full w-full flex-col gap-5 md:flex-row">
-      <PreviewImages data={data} />
+      <div className="flex flex-1">
+        <PreviewImages data={data} />
+      </div>
 
-      <div className="flex min-h-[45Dvh] flex-col space-y-4 md:flex-1">
-        <div className="flex h-[100px] flex-col gap-3">
+      <div className="flex min-h-[45Dvh] flex-col space-y-5 md:flex-1">
+        <div className="flex flex-col gap-3">
           <h3 className="flex items-baseline justify-between">
             <p className="text-base font-bold">
               {data.state ? `${data.state}, ` : ""} {data.country}
@@ -22,8 +24,8 @@ export const ReviewListing = ({ data }: ReviewListingProps) => {
           </h3>
 
           <div className="flex items-baseline justify-between">
-            <p className="rounded-full px-2 py-1 shadow-[0px_1px_3px_1px_rgba(0,0,0,0.1)]">
-              ${data.guestPrice} / night
+            <p>
+              <span className="font-semibold">${data.guestPrice}</span> / night
             </p>
             <p>Hosted by {data.user.name}</p>
           </div>
@@ -35,7 +37,7 @@ export const ReviewListing = ({ data }: ReviewListingProps) => {
             </p>
           </div>
         </div>
-        <div className="relative flex flex-1 flex-col gap-3 rounded-lg border p-5 shadow-[0px_1px_3px_1px_rgba(0,0,0,0.1)]">
+        <div className="flex flex-col gap-3 rounded-lg border p-5 shadow-[0px_1px_3px_1px_rgba(0,0,0,0.1)]">
           <h2 className="">&quot;{data.title}&quot;</h2>
           <p className="">{description}</p>
         </div>
