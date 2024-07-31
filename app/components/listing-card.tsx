@@ -1,6 +1,13 @@
 "use client";
 
-import { ChevronLeft, ChevronRight, Edit } from "lucide-react";
+import {
+  Bed,
+  ChevronLeft,
+  ChevronRight,
+  Edit,
+  UserCheck,
+  UserIcon,
+} from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { dummyImages } from "../data/dummy-images";
@@ -10,6 +17,8 @@ import Link from "next/link";
 import { FavoriteButton } from "./favorite-button";
 import { useFavorites } from "../context/favorite-context";
 import { UserWithRoleAndFavoriteIds } from "@/types";
+import { IoBedSharp } from "react-icons/io5";
+import { MdPerson } from "react-icons/md";
 // import { EditButton } from "./become-a-host/edit-button";
 
 interface LisitngCardProps {
@@ -119,7 +128,19 @@ export const ListingCard = ({ data, isHost, user }: LisitngCardProps) => {
                 <span className="">{data.state ? `${data.state}, ` : ""} </span>
                 <span>{data.country}</span>
               </h2>
-              <h3 className="capitalize">{data.category}</h3>
+              <div className="flex justify-between">
+                <h3 className="capitalize">{data.category}</h3>{" "}
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-1">
+                    <UserIcon className="h-4 w-4" />
+                    {data.guestCount}
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <Bed className="h-4 w-4" />
+                    {data.bedCount}
+                  </div>
+                </div>
+              </div>
               <p>${data.guestPrice} / night</p>
             </div>
           </Link>{" "}

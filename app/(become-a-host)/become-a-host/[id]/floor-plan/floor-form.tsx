@@ -105,7 +105,8 @@ export const FloorFrom = ({
               <Counter
                 name="bedCount"
                 setCount={setBedCount}
-                initialCount={initialBedCount}
+                initialCount={initialBedCount || 1}
+                min={1}
               />
             </div>
           </div>
