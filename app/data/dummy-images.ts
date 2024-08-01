@@ -1,12 +1,7 @@
 export const dummyImages = [
-  "https://media.cntraveler.com/photos/62e167912224089714efc0ec/16:9/w_1920,c_limit/Blue%20Iris%20(web)%2018.jpg",
+  "https://media.cntraveler.com/photos/59efa0c2ae4bf22242a1f7c8/16:9/w_1920%2Cc_limit/Exterior1-PrincedeGalles-Paris-CRHotel.jpg",
   "https://media.cntraveler.com/photos/6697e6a5c217cff59703e583/16:9/w_1920,c_limit/Berkeley%20Denver_dsc_3292.jpg",
-  "https://media.cntraveler.com/photos/65fee2beda0562d7272de769/16:9/w_1920,c_limit/UK%20PRINT_press_casa%20lucia.%20001.jpg",
   "https://media.cntraveler.com/photos/5d6e22fb23390800088706dc/master/w_1920%2Cc_limit/00-venice-generator-2019-GenVen_C1_36-_RGB.jpg",
-  "https://media.cntraveler.com/photos/6482304be86ef621f54af764/16:9/w_1920,c_limit/Bulgari%20Hotel%20Roma_JUNIOR%20SUITE%20(2).jpg",
-  "https://media.cntraveler.com/photos/59d7d6ec848e071fdf49460a/16:9/w_1920,c_limit/Pool-HALCYONahotelinCherryCreek-Colorado-CRHotel.jpg",
-  "https://media.cntraveler.com/photos/63353df5fae6e445e2495340/master/w_1920%2Cc_limit/Clayton%2520Members%2520Club%2520&%2520Hotel%2520%25C2%25A9%2520Jimena%2520Peck%2520&%2520Caleb%2520Alvarado_04-28-21-Jimena-Peck-Clayton-Hotel1348-Edit.jpg",
-  "https://media.cntraveler.com/photos/6525b7a410c3175241cf2f74/master/w_1920%2Cc_limit/Four%2520Seasons%2520Ritz%2520Lisbon_LIS_1820.jpg",
   "https://media.cntraveler.com/photos/668317de2e9e6c9cb1546fcc/master/w_1920%2Cc_limit/Henrietta%2520Suites_King%2520bedroom%25201%2520e.JPG",
   "https://media.cntraveler.com/photos/5f5f9fc9987090832029b0fe/master/w_1280,c_limit/high-line-hotel-1.jpg",
   "https://media.cntraveler.com/photos/667a237b6eb1b81983bb1f1f/master/w_1920%2Cc_limit/CNT_Charlston%2520Airbnbs_1093330416.png",

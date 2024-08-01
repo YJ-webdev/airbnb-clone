@@ -90,8 +90,8 @@ export const ListingCard = ({ data, isHost, user }: LisitngCardProps) => {
                     <Image
                       src={url}
                       alt="Image of home"
-                      width={500}
-                      height={500}
+                      width={1000}
+                      height={1000}
                       className="h-full w-full object-cover"
                       priority
                     />
@@ -124,13 +124,14 @@ export const ListingCard = ({ data, isHost, user }: LisitngCardProps) => {
             </div>
 
             <div className="flex-flex-col mt-2">
-              <h2 className="text-base font-semibold">
-                <span className="">{data.state ? `${data.state}, ` : ""} </span>
-                <span>{data.country}</span>
-              </h2>
-              <div className="flex justify-between">
-                <h3 className="capitalize">{data.category}</h3>{" "}
-                <div className="flex items-center gap-3">
+              <div className="flex items-start justify-between">
+                <h2 className="text-base font-semibold">
+                  <span className="">
+                    {data.state ? `${data.state}, ` : ""}{" "}
+                  </span>
+                  <span>{data.country}</span>
+                </h2>
+                <div className="ml-2 flex items-center gap-3">
                   <div className="flex items-center gap-1">
                     <UserIcon className="h-4 w-4" />
                     {data.guestCount}
@@ -141,7 +142,14 @@ export const ListingCard = ({ data, isHost, user }: LisitngCardProps) => {
                   </div>
                 </div>
               </div>
-              <p>${data.guestPrice} / night</p>
+
+              <div className="flex justify-between">
+                <h3 className="capitalize text-zinc-500">{data.category}</h3>{" "}
+              </div>
+              <p>
+                <span className="font-semibold">${data.guestPrice}</span> /
+                night
+              </p>
             </div>
           </Link>{" "}
           {isHost === true ? (
