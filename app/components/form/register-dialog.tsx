@@ -22,7 +22,7 @@ import {
   DialogDescription,
   DialogHeader,
 } from "@/components/ui/dialog";
-import { register } from "@/app/action/register";
+import { register } from "@/app/actions/register";
 import { LoginButton } from "./login-button";
 import { Register, RegisterSchema } from "@/schema/auth";
 

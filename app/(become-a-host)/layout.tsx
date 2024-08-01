@@ -1,5 +1,4 @@
 import HostNavbar from "../components/navbar/host-nav";
-import { LocalStorageContextProvider } from "../context/local-storage-context";
 
 export default function BecomeAHostLayout({
   children,
@@ -9,7 +8,7 @@ export default function BecomeAHostLayout({
   return (
     <div className="mx-auto">
       <HostNavbar />
-      <LocalStorageContextProvider>{children}</LocalStorageContextProvider>
+      {children}
     </div>
   );
 }

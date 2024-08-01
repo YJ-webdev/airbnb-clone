@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { PriceCheck } from "./price-check";
 import { PriceInput } from "./price-input";
 import { Info } from "lucide-react";
-import { createPrice } from "@/app/action/create-listing";
+import { createPrice } from "@/app/actions/create-listing";
 import { ActionBar } from "@/app/components/become-a-host/action-bar";
 import { GUEST_SERVICE_FEE } from "@/app/lib/rates";
 import { useProgress } from "@/app/context/progress-context";

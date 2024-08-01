@@ -1,6 +1,6 @@
 "use client";
 
-import { createFloorPlan } from "@/app/action/create-listing";
+import { createFloorPlan } from "@/app/actions/create-listing";
 
 import { ActionBar } from "@/app/components/become-a-host/action-bar";
 import { Counter } from "@/app/components/counter";

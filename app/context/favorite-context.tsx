@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useState, ReactNode } from "react";
-import { updateFavorite } from "../action/update-favorite";
+import { updateFavorite } from "../actions/update-favorite";
 
 interface FavoritesContextProps {
   favoriteIds: string[];

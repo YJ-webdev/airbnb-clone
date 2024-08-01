@@ -1,6 +1,6 @@
 "use client";
 
-import { createApproval } from "@/app/action/create-listing";
+import { createApproval } from "@/app/actions/create-listing";
 
 import { ActionBar } from "@/app/components/become-a-host/action-bar";
 import { Info } from "lucide-react";

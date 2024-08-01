@@ -3,7 +3,10 @@ import { Listing } from "@prisma/client";
 import getSession from "@/app/lib/get-session";
 import prisma from "@/app/lib/db";
 
-import { continueListing, createNewListing } from "@/app/action/create-listing";
+import {
+  continueListing,
+  createNewListing,
+} from "@/app/actions/create-listing";
 import { ListingCard } from "@/app/components/listing-card";
 
 export default async function HostPage() {

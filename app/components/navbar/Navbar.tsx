@@ -6,7 +6,7 @@ import { LoginDialog } from "../form/login-dialog";
 import { UserMenu } from "./user-menu";
 import { Search } from "./search";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { continueListing } from "@/app/action/create-listing";
+import { continueListing } from "@/app/actions/create-listing";
 
 type NavbarProps = {
   width?: string;

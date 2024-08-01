@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import getFavoriteListings from "@/app/action/update-favorite";
+import getFavoriteListings from "@/app/actions/update-favorite";
 import getSession from "@/app/lib/get-session";
 
 import { ListingCard } from "@/app/components/listing-card";

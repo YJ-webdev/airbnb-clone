@@ -3,7 +3,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { updateProfile } from "@/app/action/update-profile";
+import { updateProfile } from "@/app/actions/update-profile";
 import { useState, useTransition } from "react";
 
 import {

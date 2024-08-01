@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { Card, CardHeader } from "@/components/ui/card";
 import { ActionBar } from "@/app/components/become-a-host/action-bar";
 import { useProgress } from "@/app/context/progress-context";
-import { updateCategory } from "@/app/action/create-listing";
+import { updateCategory } from "@/app/actions/create-listing";
 
 export const EditCategoryForm = ({
   userId,

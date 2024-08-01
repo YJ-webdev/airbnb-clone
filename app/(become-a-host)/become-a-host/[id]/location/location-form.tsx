@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
-import { createLocation } from "@/app/action/create-listing";
+import { createLocation } from "@/app/actions/create-listing";
 import AddressInput from "./address-input";
 import AddressMap from "./address-map";
 import { ActionBar } from "@/app/components/become-a-host/action-bar";

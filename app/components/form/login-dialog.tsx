@@ -20,7 +20,7 @@ import {
   DialogDescription,
   DialogHeader,
 } from "@/components/ui/dialog";
-import { login } from "@/app/action/login";
+import { login } from "@/app/actions/login";
 import { cn } from "@/lib/utils";
 import { FormSuccess } from "./form-success";
 import { FormInput } from "./form-input";

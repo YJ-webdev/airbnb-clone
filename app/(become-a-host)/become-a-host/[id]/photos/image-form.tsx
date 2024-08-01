@@ -4,7 +4,7 @@ import ImageUpload from "./image-upload";
 import { useEffect, useState } from "react";
 import { ActionBar } from "@/app/components/become-a-host/action-bar";
 import { Info } from "lucide-react";
-import { createImages } from "@/app/action/create-listing";
+import { createImages } from "@/app/actions/create-listing";
 import { useProgress } from "@/app/context/progress-context";
 
 import React from "react";

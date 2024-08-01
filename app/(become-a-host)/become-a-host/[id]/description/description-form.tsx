@@ -1,6 +1,6 @@
 "use client";
 
-import { createDescription } from "@/app/action/create-listing";
+import { createDescription } from "@/app/actions/create-listing";
 import { ActionBar } from "@/app/components/become-a-host/action-bar";
 import { useProgress } from "@/app/context/progress-context";
 import { Input } from "@/components/ui/input";

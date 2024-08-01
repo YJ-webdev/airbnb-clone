@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { continueListing } from "@/app/action/create-listing";
+import { continueListing } from "@/app/actions/create-listing";
 import { UserWithRoleAndFavoriteIds } from "@/types";
 
 interface UserMenuProps {
