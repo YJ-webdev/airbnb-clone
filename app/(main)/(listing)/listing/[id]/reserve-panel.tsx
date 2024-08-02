@@ -61,11 +61,10 @@ export const ReservePanel = ({ data, user }: ReservePanelProps) => {
           </div>
 
           <div className="flex flex-col items-center justify-center">
-            {/* <p className="mb-2 text-center text-sm text-foreground">
-              It won&apos;t be charged yet.
-            </p> */}
-
-            <button className="my-1 h-14 w-full rounded-lg bg-gradient-to-r from-rose-500 to-[#e3326d] px-5 py-3 font-semibold text-white">
+            <button
+              type="submit"
+              className="my-1 h-14 w-full rounded-lg bg-gradient-to-r from-rose-500 to-[#e3326d] px-5 py-3 font-semibold text-white"
+            >
               Reserve
             </button>
           </div>
@@ -100,7 +99,10 @@ export const ReservePanel = ({ data, user }: ReservePanelProps) => {
           />
         </div>
 
-        <button className="rounded-full bg-gradient-to-r from-rose-500 to-[#e3326d] px-5 py-3 font-semibold text-white">
+        <button
+          type="submit"
+          className="rounded-full bg-gradient-to-r from-rose-500 to-[#e3326d] px-5 py-3 font-semibold text-white"
+        >
           Reserve
         </button>
       </div>

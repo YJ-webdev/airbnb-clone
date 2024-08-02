@@ -8,41 +8,26 @@ import { StaticDateRangePicker } from "@mui/x-date-pickers-pro/StaticDateRangePi
 import { PickersShortcutsItem } from "@mui/x-date-pickers/PickersShortcuts";
 import { DateRange } from "@mui/x-date-pickers-pro/models";
 import { MobileDateRangePicker } from "@mui/x-date-pickers-pro/MobileDateRangePicker";
+import { useDatePick } from "@/app/context/date-pick-context";
 
-const shortcutsItems: PickersShortcutsItem<DateRange<Dayjs>>[] = [
-  {
-    label: "This Week",
-    getValue: () => {
-      const today = dayjs();
-      return [today.startOf("week"), today.endOf("week")];
-    },
-  },
+const shortcutsItems: PickersShortcutsItem<DateRange<Dayjs>>[] = [];
 
-  {
-    label: "Current Month",
-    getValue: () => {
-      const today = dayjs();
-      return [today.startOf("month"), today.endOf("month")];
-    },
-  },
-  {
-    label: "Next Month",
-    getValue: () => {
-      const today = dayjs();
-      const startOfNextMonth = today.endOf("month").add(1, "day");
-      return [startOfNextMonth, startOfNextMonth.endOf("month")];
-    },
-  },
-  { label: "Reset", getValue: () => [null, null] },
-];
+export default function Calendar2() {
+  const { startDate, endDate, setStartDate, setEndDate } = useDatePick();
 
-export default function calendar2() {
+  const handleDateChange = (newValue: any) => {
+    setStartDate(newValue[0]);
+    setEndDate(newValue[1]);
+    console.log("Selected dates: ", newValue); // newValue is an array with the start and end dates
+  };
   return (
     <>
       <div className="hidden w-full items-center rounded-lg border shadow-[0px_1px_3px_1px_rgba(0,0,0,0.1)] md:flex">
         <div className="mx-auto items-center p-1">
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <StaticDateRangePicker
+              value={[startDate, endDate]}
+              onChange={handleDateChange}
               disablePast
               slotProps={{
                 // shortcuts: {
@@ -56,9 +41,11 @@ export default function calendar2() {
         </div>
       </div>
 
-      <div className="rounded-lg border p-1 shadow-[0px_1px_3px_1px_rgba(0,0,0,0.1)] md:hidden">
+      <div className="w-[90Dvw] rounded-lg border p-1 shadow-[0px_1px_3px_1px_rgba(0,0,0,0.1)] md:hidden">
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <MobileDateRangePicker
+            value={[startDate, endDate]}
+            onChange={handleDateChange}
             slotProps={{
               shortcuts: {
                 items: shortcutsItems,
