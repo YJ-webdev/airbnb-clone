@@ -1,29 +1,26 @@
 "use client";
 
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import { Dayjs } from "dayjs";
+import dayjs from "dayjs";
 
 interface DatePickContextProps {
   startDate: Dayjs | null;
   endDate: Dayjs | null;
-  setStartDate: (startDate: Dayjs) => void;
-  setEndDate: (endDate: Dayjs) => void;
+  stayingNights: number;
+  setStartDate: (startDate: Dayjs | null) => void;
+  setEndDate: (endDate: Dayjs | null) => void;
 }
 
 const DatePickContext = createContext<DatePickContextProps>({
   startDate: null,
   endDate: null,
+  stayingNights: 0,
   setStartDate: () => {},
   setEndDate: () => {},
 });
 
-export const useDatePick = () => {
-  const context = useContext(DatePickContext);
-  if (!context) {
-    throw new Error("useDatePick must be used within a DatePickProvider");
-  }
-  return context;
-};
+export const useDatePick = () => useContext(DatePickContext);
 
 export const DatePickProvider = ({
   children,
@@ -32,10 +29,26 @@ export const DatePickProvider = ({
 }) => {
   const [startDate, setStartDate] = useState<Dayjs | null>(null);
   const [endDate, setEndDate] = useState<Dayjs | null>(null);
+  const [stayingNights, setStayingNights] = useState(1);
+
+  useEffect(() => {
+    if (startDate && endDate) {
+      const nights = dayjs(endDate).diff(dayjs(startDate), "day");
+      setStayingNights(nights);
+    } else {
+      setStayingNights(1);
+    }
+  }, [startDate, endDate]);
 
   return (
     <DatePickContext.Provider
-      value={{ startDate, endDate, setStartDate, setEndDate }}
+      value={{
+        startDate,
+        endDate,
+        stayingNights,
+        setStartDate,
+        setEndDate,
+      }}
     >
       {children}
     </DatePickContext.Provider>

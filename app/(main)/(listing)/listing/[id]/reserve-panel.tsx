@@ -9,6 +9,7 @@ import { Montserrat } from "next/font/google";
 import { useEffect, useState } from "react";
 import Calendar from "./calendar";
 import { AdultAndChildren } from "./adult-and-children";
+import { useDatePick } from "@/app/context/date-pick-context";
 
 interface ReservePanelProps {
   user?: UserWithRoleAndFavoriteIds;
@@ -33,6 +34,9 @@ export const ReservePanel = ({ data, user }: ReservePanelProps) => {
 
   const [optimisticFavorite, setOptimisticFavorite] = useState(favorite);
 
+  const { stayingNights } = useDatePick();
+  const totalPrice = stayingNights * data?.guestPrice!;
+
   return (
     <>
       <div className="sticky mb-10 mr-5 hidden h-full w-[30%] min-w-[300px] rounded-lg border bg-white p-6 shadow-[0px_1px_3px_1px_rgba(0,0,0,0.1)] lg:top-[155px] lg:flex lg:flex-col">
@@ -50,7 +54,7 @@ export const ReservePanel = ({ data, user }: ReservePanelProps) => {
             />
 
             <h3 className={`${montserrat.className} text-[22px] font-semibold`}>
-              ${data.guestPrice}{" "}
+              ${totalPrice}{" "}
               <span className="text-base font-medium">/ night</span>
             </h3>
             <div className="flex items-baseline justify-between gap-2">
@@ -81,7 +85,7 @@ export const ReservePanel = ({ data, user }: ReservePanelProps) => {
             <span
               className={`${montserrat.className} text-[22px] font-semibold`}
             >
-              ${data.guestPrice}
+              ${totalPrice}
             </span>{" "}
             / night
           </h3>

@@ -3,9 +3,9 @@
 import { UserWithRoleAndFavoriteIds } from "@/types";
 import { Listing } from "@prisma/client";
 import { Montserrat } from "next/font/google";
-import { useEffect, useState } from "react";
 import { SharedCounter } from "./shared-count";
 import { Counter } from "@/app/components/counter";
+import { useGuestCount } from "@/app/context/guest-count-context";
 
 interface ReservePanelProps {
   user?: UserWithRoleAndFavoriteIds;
@@ -18,17 +18,17 @@ const montserrat = Montserrat({
 });
 
 export const AdultAndChildren = ({ data, user }: ReservePanelProps) => {
-  const [count, setCount] = useState(0);
-  const [adultCount, setAdultCount] = useState(1);
-  const [childCount, setChildCount] = useState(0);
+  const {
+    adultCount,
+    childCount,
+    petCount,
+    totalGuests,
+    remainingGuests,
+    setAdultCount,
+    setChildCount,
+    setPetCount,
+  } = useGuestCount();
 
-  const total = adultCount + childCount;
-  const left = data?.guestCount! - total;
-  const [remaining, setRemaining] = useState(left);
-
-  useEffect(() => {
-    setRemaining(data?.guestCount! - total);
-  }, [adultCount, childCount, data?.guestCount, total]);
   return (
     <div className="mx-1 flex flex-col gap-4">
       <div className="flex items-center justify-between py-2">
@@ -40,7 +40,7 @@ export const AdultAndChildren = ({ data, user }: ReservePanelProps) => {
           count={adultCount}
           min={1}
           max={data?.guestCount!}
-          total={total}
+          total={totalGuests}
         />
       </div>
       <div className="flex items-center justify-between py-2">
@@ -52,7 +52,7 @@ export const AdultAndChildren = ({ data, user }: ReservePanelProps) => {
           count={childCount}
           min={0}
           max={data?.guestCount!}
-          total={total}
+          total={totalGuests}
         />
       </div>
 
@@ -61,10 +61,10 @@ export const AdultAndChildren = ({ data, user }: ReservePanelProps) => {
         <Counter
           small
           name="Pet"
-          setCount={setCount}
+          setCount={setPetCount}
           min={0}
           max={1}
-          initialCount={0}
+          initialCount={petCount}
         />
       </div>
     </div>

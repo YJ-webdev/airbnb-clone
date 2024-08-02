@@ -10,8 +10,8 @@ interface CounterProps {
   setCount: (value: number) => void;
   small?: boolean;
   initialCount?: number;
-  min?: number;
-  max?: number;
+  min: number;
+  max: number;
 }
 
 export const Counter = ({
@@ -22,19 +22,18 @@ export const Counter = ({
   min,
   max,
 }: CounterProps) => {
-  const [amount, setAmount] = useState(initialCount ?? 1);
+  let amount = initialCount ?? 1;
 
   const increase = () => {
-    if (amount < (max ?? 16)) {
-      setAmount(amount + 1);
+    if (amount < max) {
+      setCount(amount + 1);
     }
-    setCount(amount + 1);
   };
+
   const decrease = () => {
-    if (amount > (min ?? 0)) {
-      setAmount(amount - 1);
+    if (amount > (min || 0)) {
+      setCount(amount - 1);
     }
-    setCount(amount - 1);
   };
 
   return (

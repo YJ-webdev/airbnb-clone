@@ -3,7 +3,6 @@
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Minus, Plus } from "lucide-react";
-import { useState } from "react";
 
 interface SharedCounterProps {
   name: string;
@@ -21,13 +20,10 @@ export const SharedCounter = ({
   name,
   count,
   setCount,
-  initialCount,
   min,
   max,
   total,
 }: SharedCounterProps) => {
-  const [amount, setAmount] = useState(min);
-
   const increase = () => {
     if (total < max) {
       setCount(count + 1);
