@@ -19,7 +19,7 @@ const Navbar = async ({ width }: NavbarProps) => {
   const continueListingWithId = continueListing.bind(null, userId);
 
   return (
-    <div className="z-10 border-b bg-white py-4 shadow-sm">
+    <div className="sticky top-0 z-50 border-b bg-white py-4 shadow-sm">
       <nav
         className={cn(
           "mx-auto flex items-center justify-between gap-3 px-5 md:gap-0",

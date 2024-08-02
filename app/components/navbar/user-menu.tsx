@@ -43,12 +43,10 @@ export const UserMenu = ({ user }: UserMenuProps) => {
           {user ? (
             <>
               <DropdownMenuItem
+                asChild
                 className="cursor-pointer px-3 py-3 text-[15px] font-semibold"
-                onClick={() => {
-                  console.log(user);
-                }}
               >
-                Trips
+                <Link href="/reservations">Trips</Link>
               </DropdownMenuItem>
               <DropdownMenuItem
                 asChild

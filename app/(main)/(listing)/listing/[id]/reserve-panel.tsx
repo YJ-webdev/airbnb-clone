@@ -39,7 +39,7 @@ export const ReservePanel = ({ data, user }: ReservePanelProps) => {
 
   return (
     <>
-      <div className="sticky mb-10 mr-5 hidden h-full w-[30%] min-w-[300px] rounded-lg border bg-white p-6 shadow-[0px_1px_3px_1px_rgba(0,0,0,0.1)] lg:top-[155px] lg:flex lg:flex-col">
+      <div className="sticky mb-10 mr-5 mt-[48px] hidden h-full w-[30%] min-w-[300px] rounded-lg border bg-white p-6 shadow-[0px_1px_3px_1px_rgba(0,0,0,0.1)] lg:top-24 lg:flex lg:flex-col">
         <div className="flex h-full flex-col gap-4">
           <div className="flex-1 space-y-4">
             <FavoriteButton
