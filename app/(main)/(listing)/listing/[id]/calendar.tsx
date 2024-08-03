@@ -23,6 +23,7 @@ export default function Calendar() {
           value={[startDate, endDate]}
           onChange={handleDateChange}
           disablePast
+          // shouldDisableDate={}
           localeText={{ start: "Check-in", end: "Check-out" }}
         />
       </DemoContainer>

@@ -159,7 +159,7 @@ const AddressInput = ({
               id="postal_code-input"
               name="postalCode"
               type="text"
-              maxLength={6}
+              maxLength={10}
               value={postalCode}
               onChange={(e) => setPostalCode(e.target.value)}
               placeholder="Zip/Postal code"

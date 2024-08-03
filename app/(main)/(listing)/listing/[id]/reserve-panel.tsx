@@ -10,10 +10,15 @@ import { useEffect, useState } from "react";
 import Calendar from "./calendar";
 import { AdultAndChildren } from "./adult-and-children";
 import { useDatePick } from "@/app/context/date-pick-context";
+import { toast } from "sonner";
+import Link from "next/link";
+
+import { useRouter } from "next/navigation";
 
 interface ReservePanelProps {
   user?: UserWithRoleAndFavoriteIds;
   data: Listing;
+  params: { id: string };
 }
 
 const montserrat = Montserrat({
@@ -21,7 +26,7 @@ const montserrat = Montserrat({
   weight: ["400", "500", "600", "700"],
 });
 
-export const ReservePanel = ({ data, user }: ReservePanelProps) => {
+export const ReservePanel = ({ data, user, params }: ReservePanelProps) => {
   const { favoriteIds } = useFavorites();
   const isFavorite = favoriteIds.includes(data.id);
 
@@ -34,8 +39,30 @@ export const ReservePanel = ({ data, user }: ReservePanelProps) => {
 
   const [optimisticFavorite, setOptimisticFavorite] = useState(favorite);
 
-  const { stayingNights } = useDatePick();
+  const router = useRouter();
+
+  const { startDate, endDate, stayingNights } = useDatePick();
   const totalPrice = stayingNights * data?.guestPrice!;
+
+  const LoginToast = () => (
+    <div>
+      Please login to book a reservation.{" "}
+      <Link href="/login" className="underline">
+        Login
+      </Link>
+    </div>
+  );
+
+  const handleLinkClick = (
+    user: UserWithRoleAndFavoriteIds | undefined,
+    params: { id: string },
+  ) => {
+    if (!user) {
+      toast(<LoginToast />);
+    } else {
+      router.push(`/listing/${params.id}/request-to-book`);
+    }
+  };
 
   return (
     <>
@@ -66,7 +93,8 @@ export const ReservePanel = ({ data, user }: ReservePanelProps) => {
 
           <div className="flex flex-col items-center justify-center">
             <button
-              type="submit"
+              type="button"
+              onClick={() => handleLinkClick(user, params)}
               className="my-1 h-14 w-full rounded-lg bg-gradient-to-r from-rose-500 to-[#e3326d] px-5 py-3 font-semibold text-white"
             >
               Reserve
@@ -104,7 +132,8 @@ export const ReservePanel = ({ data, user }: ReservePanelProps) => {
         </div>
 
         <button
-          type="submit"
+          type="button"
+          onClick={() => handleLinkClick(user, params)}
           className="rounded-full bg-gradient-to-r from-rose-500 to-[#e3326d] px-5 py-3 font-semibold text-white"
         >
           Reserve

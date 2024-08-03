@@ -9,6 +9,10 @@ export async function createReserevation(formData: FormData) {
   const startDate = formData.get("startDate") as string;
   const endDate = formData.get("endDate") as string;
   const totalPrice = formData.get("totalPrice") as string;
+  const adultCount = formData.get("adultCount") as string;
+  const childCount = formData.get("childCount") as string;
+  const petCount = formData.get("petCount") as string;
+  const stayingNights = formData.get("stayingNights") as string;
 
   const data = await prisma.reservation.create({
     data: {
@@ -17,6 +21,10 @@ export async function createReserevation(formData: FormData) {
       startDate: startDate,
       endDate: endDate,
       totalPrice: Number(totalPrice),
+      adults: Number(adultCount),
+      children: Number(childCount),
+      pets: Number(petCount),
+      stayingNights: Number(stayingNights),
     },
   });
 

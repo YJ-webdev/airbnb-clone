@@ -29,6 +29,7 @@ export default function Calendar2() {
               value={[startDate, endDate]}
               onChange={handleDateChange}
               disablePast
+              // shouldDisableDate={}
               slotProps={{
                 // shortcuts: {
                 //   items: shortcutsItems,
@@ -46,6 +47,8 @@ export default function Calendar2() {
           <MobileDateRangePicker
             value={[startDate, endDate]}
             onChange={handleDateChange}
+            disablePast
+            // shouldDisableDate={}
             slotProps={{
               shortcuts: {
                 items: shortcutsItems,

@@ -66,7 +66,7 @@ export async function continueListing(userId: string) {
   });
 
   if (!userWithListings) {
-    return redirect("/");
+    return redirect("/become-a-host");
   }
 
   const latestListing = await prisma.listing.findFirst({

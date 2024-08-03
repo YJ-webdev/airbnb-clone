@@ -25,7 +25,7 @@ export const FloorFrom = ({
   initialBedCount,
   initialBathroomCount,
 }: FloorFromProps) => {
-  const [dataLogged, setDataLogged] = useState(false);
+  const [dataLogged, setDataLogged] = useState(true);
   const [guestCount, setGuestCount] = useState(initialGuestCount);
   const [roomCount, setRoomCount] = useState(initialRoomCount);
   const [bedCount, setBedCount] = useState(initialBedCount);
@@ -36,18 +36,8 @@ export const FloorFrom = ({
   const { progress, setProgress } = useProgress();
 
   useEffect(() => {
-    if (
-      guestCount !== undefined &&
-      guestCount > 0 &&
-      bathroomCount !== undefined &&
-      bathroomCount > 0
-    ) {
-      setDataLogged(true);
-    } else {
-      setDataLogged(false);
-    }
     setProgress(28);
-  }, [setProgress, guestCount, bathroomCount]);
+  }, [setProgress]);
 
   return (
     <form action={createFloorPlanWithId}>

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Nunito } from "next/font/google";
 import "./globals.css";
+import { Toaster } from "@/components/ui/sonner";
 
 import getSession from "./lib/get-session";
 import { FavoritesProvider } from "./context/favorite-context";
@@ -28,6 +29,7 @@ export default async function RootLayout({
         <FavoritesProvider initialFavoriteIds={initialFavoriteIds}>
           <ProgressProvider>
             <main className="flex-1">{children}</main>
+            <Toaster />
           </ProgressProvider>
         </FavoritesProvider>
       </body>

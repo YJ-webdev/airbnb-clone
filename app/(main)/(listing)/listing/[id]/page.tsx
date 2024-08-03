@@ -26,7 +26,7 @@ export default async function ListingPage({
   return (
     <DatePickProvider>
       <GuestCountProvider maxGuests={data.guestCount!}>
-        <ListingContent data={data} user={user} />
+        <ListingContent data={data} user={user} params={params} />
       </GuestCountProvider>
     </DatePickProvider>
   );

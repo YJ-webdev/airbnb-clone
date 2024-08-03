@@ -131,12 +131,16 @@ model Listing {
 }
 
 model Reservation {
-  id         String   @id @default(cuid())
-  userId     String
-  listingId  String
-  startDate  DateTime
-  endDate    DateTime
-  totalPrice Int
+  id            String   @id @default(cuid())
+  userId        String
+  listingId     String
+  startDate     DateTime
+  endDate       DateTime
+  stayingNights Int
+  totalPrice    Int
+  adults        Int?
+  children      Int?
+  pets          Int?
 
   createdAt DateTime @default(now())
 

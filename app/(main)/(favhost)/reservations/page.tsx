@@ -14,7 +14,7 @@ export default async function ReservationsPage() {
       userId: user.id,
     },
     orderBy: {
-      startDate: "asc",
+      createdAt: "asc",
     },
   });
 
@@ -26,7 +26,11 @@ export default async function ReservationsPage() {
       </div>
       <div>
         {data.map((item) => (
-          <div key={item.id}>{item.id}</div>
+          <div key={item.id}>
+            id: {item.id} adults: {item.adults} children: {item.children} pets:{" "}
+            {item.pets} totalPrice: {item.totalPrice} stayingNights:{" "}
+            {item.stayingNights}
+          </div>
         ))}
       </div>
     </div>
