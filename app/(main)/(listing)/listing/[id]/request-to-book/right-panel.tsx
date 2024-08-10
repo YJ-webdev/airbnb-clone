@@ -26,9 +26,9 @@ export const RightPanel = ({
           alt="listing image"
           width={200}
           height={200}
-          className="mt-5 rounded-lg md:mt-0"
+          className="mr-2 mt-5 flex-1 md:mr-5 md:mt-0"
         />
-        <div>
+        <div className="flex-1">
           <h2>{data.title}</h2>
           <p className="text-sm">
             {data.state && `${data.state},`} {data.country}

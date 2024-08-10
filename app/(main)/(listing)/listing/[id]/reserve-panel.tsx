@@ -49,17 +49,6 @@ export const ReservePanel = ({ data, user, params }: ReservePanelProps) => {
   const startDateString = startDate?.format("MMM-DD");
   const endDateString = endDate?.format("MMM-DD");
 
-  const startMonth = startDate?.format("MMM");
-  const endMonth = endDate?.format("MMM");
-
-  let formattedDate;
-
-  if (startMonth === endMonth) {
-    formattedDate = `${startMonth} ${startDate?.format("DD")} - ${endDate?.format("DD")}`;
-  } else {
-    formattedDate = `${startDateString} - ${endDateString}`;
-  }
-
   const LoginToast = () => (
     <div>
       Please login to book a reservation.{" "}
@@ -98,7 +87,9 @@ export const ReservePanel = ({ data, user, params }: ReservePanelProps) => {
 
             <h3 className={`${montserrat.className} text-[22px] font-semibold`}>
               ${totalPrice}{" "}
-              <span className="text-base font-medium">/ night</span>
+              <span className="text-base font-medium">
+                / {stayingNights === 1 ? "night" : `${stayingNights} nights`}
+              </span>
             </h3>
             <div className="flex items-baseline justify-between gap-2">
               <Calendar />
@@ -112,9 +103,9 @@ export const ReservePanel = ({ data, user, params }: ReservePanelProps) => {
               href={{
                 pathname: `/listing/${params.id}/request-to-book`,
                 query: {
-                  stayingDate: formattedDate,
+                  startDate: startDateString,
+                  endDate: endDateString,
                   stayingNights,
-                  totalPrice,
                   adultCount,
                   childCount,
                   petCount,

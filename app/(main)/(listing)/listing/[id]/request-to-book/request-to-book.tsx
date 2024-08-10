@@ -20,6 +20,7 @@ import { useRouter } from "next/navigation";
 import { PAYMENT_METHODS } from "@/app/lib/payment-method";
 import { Country } from "country-state-city";
 import { SubmitButton } from "@/app/components/form/submit-button";
+import dayjs from "dayjs";
 
 export default function RequestToBook({
   data,
@@ -39,7 +40,20 @@ export default function RequestToBook({
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  const stayingDate = searchParams.get("stayingDate");
+  const startDate = dayjs(searchParams.get("startDate"));
+  const endDate = dayjs(searchParams.get("endDate"));
+
+  const startMonth = startDate.format("MMM");
+  const endMonth = endDate.format("MMM");
+
+  let formattedDate;
+
+  if (startMonth === endMonth) {
+    formattedDate = `${startMonth} ${startDate.format("DD")} - ${endDate.format("DD")}`;
+  } else {
+    formattedDate = `${startMonth} ${startDate.format("DD")} - ${endMonth} ${endDate.format("DD")}`;
+  }
+
   const adultCount = Number(searchParams.get("adultCount"));
   const childCount = Number(searchParams.get("childCount"));
   const petCount = Number(searchParams.get("petCount"));
@@ -93,7 +107,7 @@ export default function RequestToBook({
 
             <div className="flex items-center justify-between gap-2">
               <p>Dates</p>
-              <p className="underline">{stayingDate}</p>
+              <p className="underline">{formattedDate}</p>
             </div>
 
             <div className="flex items-center justify-between gap-2">
