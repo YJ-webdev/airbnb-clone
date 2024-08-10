@@ -46,8 +46,19 @@ export const ReservePanel = ({ data, user, params }: ReservePanelProps) => {
   const { startDate, endDate, stayingNights } = useDatePick();
   const totalPrice = stayingNights * data?.guestPrice!;
 
-  const startDateString = startDate?.format("MM-DD");
-  const endDateString = endDate?.format("MM-DD");
+  const startDateString = startDate?.format("MMM-DD");
+  const endDateString = endDate?.format("MMM-DD");
+
+  const startMonth = startDate?.format("MMM");
+  const endMonth = endDate?.format("MMM");
+
+  let formattedDate;
+
+  if (startMonth === endMonth) {
+    formattedDate = `${startMonth} ${startDate?.format("DD")} - ${endDate?.format("DD")}`;
+  } else {
+    formattedDate = `${startDateString} - ${endDateString}`;
+  }
 
   const LoginToast = () => (
     <div>
@@ -101,8 +112,7 @@ export const ReservePanel = ({ data, user, params }: ReservePanelProps) => {
               href={{
                 pathname: `/listing/${params.id}/request-to-book`,
                 query: {
-                  startDate: startDateString,
-                  endDate: endDateString,
+                  stayingDate: formattedDate,
                   stayingNights,
                   totalPrice,
                   adultCount,

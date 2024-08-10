@@ -18,6 +18,7 @@ interface InputProps {
   disabled?: boolean;
   className?: string;
   placeholder?: string;
+  required?: boolean;
 }
 
 const FormInput = React.forwardRef<HTMLInputElement, InputProps>(
@@ -35,6 +36,7 @@ const FormInput = React.forwardRef<HTMLInputElement, InputProps>(
       name,
       className,
       placeholder,
+      required,
     },
     ref,
   ) => {
@@ -56,6 +58,7 @@ const FormInput = React.forwardRef<HTMLInputElement, InputProps>(
           type={type}
           disabled={disabled}
           autoComplete="off"
+          required={required}
           className={cn(
             "text-md peer w-full rounded-lg border border-zinc-400 bg-white px-4 pb-2 pl-4 pt-5 font-semibold text-zinc-900 transition focus:border-zinc-700 disabled:cursor-not-allowed disabled:opacity-70",
             className,

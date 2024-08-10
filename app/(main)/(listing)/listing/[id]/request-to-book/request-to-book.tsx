@@ -39,8 +39,7 @@ export default function RequestToBook({
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  const startDateString = searchParams.get("startDate");
-  const endDateString = searchParams.get("endDate");
+  const stayingDate = searchParams.get("stayingDate");
   const adultCount = Number(searchParams.get("adultCount"));
   const childCount = Number(searchParams.get("childCount"));
   const petCount = Number(searchParams.get("petCount"));
@@ -80,28 +79,26 @@ export default function RequestToBook({
     <div className="container mt-5 flex max-w-[1280px] flex-col">
       <div className="flex items-center gap-2">
         <button onClick={handleGoBack}>
-          <ChevronLeft className="h-8 w-8 rounded-full p-2 hover:bg-zinc-500/10" />
+          <ChevronLeft className="h-8 w-8 rounded-full bg-zinc-500/10 p-2 hover:bg-zinc-500/10 md:bg-white" />
         </button>
         <h1 className="text-xl font-semibold">Confirm and pay</h1>
       </div>
 
-      <div className="mb-5 mt-2 flex flex-col md:w-full md:flex-row-reverse md:gap-5 lg:gap-10">
+      <div className="mb-5 mt-2 flex flex-col md:w-full md:flex-row-reverse md:gap-7 lg:gap-12">
         <RightPanel data={data} />
         <div className="mb-10 flex flex-col gap-7 md:flex-1 md:p-5">
           {/* your trip */}
-          <div className="flex flex-col gap-2">
+          <div className="mt-7 flex flex-col gap-2 md:mt-0">
             <h2 className="mb-2 text-lg font-semibold">Your Trip</h2>
 
             <div className="flex items-center justify-between gap-2">
               <p>Dates</p>
-              <p>
-                {startDateString} ~ {endDateString}
-              </p>
+              <p className="underline">{stayingDate}</p>
             </div>
 
             <div className="flex items-center justify-between gap-2">
               <p>Guests</p>
-              <p>{adultCount === 1 ? "1 adult" : `${adultCount} Adults`}</p>
+              <p>{adultCount === 1 ? "1 Adult" : `${adultCount} Adults`}</p>
             </div>
             {childCount === 0 ? (
               ""
@@ -172,6 +169,7 @@ export default function RequestToBook({
                   placeholder="**** **** **** ****"
                   className="h-14 rounded-b-none rounded-t-lg border-zinc-300 border-b-white"
                   type="number"
+                  required
                 />
                 <div className="flex">
                   <FormInput
@@ -182,6 +180,7 @@ export default function RequestToBook({
                     onChange={handleExpiryDateInputChange}
                     className="h-14 rounded-t-none rounded-br-none border-zinc-300 border-r-white"
                     type="number"
+                    required
                   />
                   <FormInput
                     label="CVV"
@@ -191,6 +190,7 @@ export default function RequestToBook({
                     className="h-14 rounded-t-none rounded-bl-none border-zinc-300"
                     placeholder="***"
                     type="password"
+                    required
                   />
                 </div>
               </div>
@@ -200,6 +200,7 @@ export default function RequestToBook({
                 value={zipcode}
                 onChange={handleZipcodeInputChange}
                 className="h-14 border-zinc-300"
+                required
               />
               <Select>
                 <SelectTrigger className="h-14 w-full rounded-lg border border-zinc-300 pl-5 text-base">
