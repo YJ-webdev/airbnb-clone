@@ -21,6 +21,7 @@ import { PAYMENT_METHODS } from "@/app/lib/payment-method";
 import { Country } from "country-state-city";
 import { SubmitButton } from "@/app/components/form/submit-button";
 import dayjs from "dayjs";
+import DateRangePickerWithButtonField from "./customized-date-picker";
 
 export default function RequestToBook({
   data,
@@ -107,7 +108,11 @@ export default function RequestToBook({
 
             <div className="flex items-center justify-between gap-2">
               <p>Dates</p>
-              <p className="underline">{formattedDate}</p>
+
+              <DateRangePickerWithButtonField
+                startDate={startDate}
+                endDate={endDate}
+              />
             </div>
 
             <div className="flex items-center justify-between gap-2">
