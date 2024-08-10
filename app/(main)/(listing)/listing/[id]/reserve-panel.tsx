@@ -46,8 +46,8 @@ export const ReservePanel = ({ data, user, params }: ReservePanelProps) => {
   const { startDate, endDate, stayingNights } = useDatePick();
   const totalPrice = stayingNights * data?.guestPrice!;
 
-  const startDateString = startDate?.format("MMM-DD");
-  const endDateString = endDate?.format("MMM-DD");
+  const startDateString = startDate?.format("MMM-DD-YYYY");
+  const endDateString = endDate?.format("MMM-DD-YYYY");
 
   const LoginToast = () => (
     <div>
@@ -105,7 +105,6 @@ export const ReservePanel = ({ data, user, params }: ReservePanelProps) => {
                 query: {
                   startDate: startDateString,
                   endDate: endDateString,
-                  stayingNights,
                   adultCount,
                   childCount,
                   petCount,

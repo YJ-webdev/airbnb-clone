@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Dayjs } from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import useForkRef from "@mui/utils/useForkRef";
 import { DateRange, FieldType } from "@mui/x-date-pickers-pro/models";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -9,7 +9,7 @@ import {
   DateRangePickerProps,
 } from "@mui/x-date-pickers-pro/DateRangePicker";
 import { SingleInputDateRangeFieldProps } from "@mui/x-date-pickers-pro/SingleInputDateRangeField";
-import { Label } from "@radix-ui/react-label";
+import { DemoItem, DemoContainer } from "@mui/x-date-pickers/internals/demo";
 
 interface DateRangeButtonFieldProps
   extends SingleInputDateRangeFieldProps<Dayjs> {
@@ -25,7 +25,6 @@ const DateRangeButtonField = React.forwardRef(
   (props: DateRangeButtonFieldProps, ref: React.Ref<HTMLElement>) => {
     const {
       setOpen,
-      open,
       label,
       id,
       disabled,
@@ -43,7 +42,6 @@ const DateRangeButtonField = React.forwardRef(
         aria-label={ariaLabel}
         onClick={() => {
           setOpen?.((prev) => !prev);
-          console.log(label);
         }}
       >
         <p className="underline">{label}</p>
@@ -75,13 +73,19 @@ const ButtonDateRangePicker = React.forwardRef(
   },
 );
 
-export default function DateRangePickerWithButtonField({
-  startDate,
-  endDate,
-}: {
+interface DateRangePickerWithButtonFieldProps {
   startDate: Dayjs;
   endDate: Dayjs;
-}) {
+  setStartDate: React.Dispatch<React.SetStateAction<Dayjs>>;
+  setEndDate: React.Dispatch<React.SetStateAction<Dayjs>>;
+}
+
+export default function ResponsiveDateRangePickers({
+  startDate,
+  endDate,
+  setStartDate,
+  setEndDate,
+}: DateRangePickerWithButtonFieldProps) {
   const [value, setValue] = React.useState<DateRange<Dayjs>>([
     startDate,
     endDate,
@@ -94,20 +98,22 @@ export default function DateRangePickerWithButtonField({
     const startDateFormatted = start?.format("MMM DD");
     const endDateFormatted = end?.format("DD");
 
-    // Check if start and end dates are in the same month and year
-    if (start?.isSame(end, "month")) {
+    if (startMonth === endMonth) {
       return `${startDateFormatted} - ${endDateFormatted}`;
     } else {
       return `${startDateFormatted} - ${endMonth} ${endDateFormatted}`;
     }
   };
-
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <ButtonDateRangePicker
         label={getFormattedDateRange(value[0], value[1])}
         value={value}
-        onChange={(newValue) => setValue(newValue)}
+        onChange={(newValue) => {
+          setValue(newValue);
+          setStartDate(dayjs(newValue[0]));
+          setEndDate(dayjs(newValue[1]));
+        }}
       />
     </LocalizationProvider>
   );

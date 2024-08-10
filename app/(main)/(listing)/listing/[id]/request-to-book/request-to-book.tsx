@@ -14,14 +14,14 @@ import {
 } from "@/components/ui/select";
 import { PiCreditCardLight } from "react-icons/pi";
 import { FormInput } from "@/app/components/form/form-input";
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { RightPanel } from "./right-panel";
 import { useRouter } from "next/navigation";
 import { PAYMENT_METHODS } from "@/app/lib/payment-method";
-import { Country } from "country-state-city";
+import { Country, ICountry } from "country-state-city";
 import { SubmitButton } from "@/app/components/form/submit-button";
 import dayjs from "dayjs";
-import DateRangePickerWithButtonField from "./customized-date-picker";
+import ResponsiveDateRangePickers from "./responsive-date-picker";
 
 export default function RequestToBook({
   data,
@@ -41,33 +41,37 @@ export default function RequestToBook({
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  const startDate = dayjs(searchParams.get("startDate"));
-  const endDate = dayjs(searchParams.get("endDate"));
+  const initialStartDate = dayjs(searchParams.get("startDate"));
+  const initialEndDate = dayjs(searchParams.get("endDate"));
+  const initialadultCount = Number(searchParams.get("adultCount"));
+  const initialchildCount = Number(searchParams.get("childCount"));
+  const initialpetCount = Number(searchParams.get("petCount"));
 
-  const startMonth = startDate.format("MMM");
-  const endMonth = endDate.format("MMM");
+  const [startDate, setStartDate] = useState(initialStartDate || null);
+  const [endDate, setEndDate] = useState(initialEndDate || null);
+  const [adultCount, setAdultCount] = useState(initialadultCount);
+  const [childCount, setChildCount] = useState(initialchildCount);
+  const [petCount, setPetCount] = useState(initialpetCount);
 
-  let formattedDate;
-
-  if (startMonth === endMonth) {
-    formattedDate = `${startMonth} ${startDate.format("DD")} - ${endDate.format("DD")}`;
-  } else {
-    formattedDate = `${startMonth} ${startDate.format("DD")} - ${endMonth} ${endDate.format("DD")}`;
-  }
-
-  const adultCount = Number(searchParams.get("adultCount"));
-  const childCount = Number(searchParams.get("childCount"));
-  const petCount = Number(searchParams.get("petCount"));
-
+  const [cardCompany, setCardCompany] = useState("");
   const [cardNumber, setCardNumber] = useState("");
   const [expiryDate, setExpiryDate] = useState("");
   const [cvv, setCvv] = useState("");
   const [zipcode, setZipcode] = useState("");
-  const [country, setCountry] = useState(countryData[0]);
+  const [country, setCountry] = useState<ICountry | null>(null);
   const [isPending, startTransition] = useTransition();
 
   const handleGoBack = () => {
     router.back();
+  };
+
+  const handleCardCompanyInputChange = (cardCompany: string) => {
+    setCardCompany(cardCompany);
+  };
+
+  const handleCountryInputChange = (value: string) => {
+    const selectedCountry = countryData.find((c) => c.isoCode === value);
+    setCountry(selectedCountry || null);
   };
 
   const handleCardNumberInputChange = (
@@ -100,7 +104,7 @@ export default function RequestToBook({
       </div>
 
       <div className="mb-5 mt-2 flex flex-col md:w-full md:flex-row-reverse md:gap-7 lg:gap-12">
-        <RightPanel data={data} />
+        <RightPanel data={data} startDate={startDate} endDate={endDate} />
         <div className="mb-10 flex flex-col gap-7 md:flex-1 md:p-5">
           {/* your trip */}
           <div className="mt-7 flex flex-col gap-2 md:mt-0">
@@ -109,9 +113,11 @@ export default function RequestToBook({
             <div className="flex items-center justify-between gap-2">
               <p>Dates</p>
 
-              <DateRangePickerWithButtonField
+              <ResponsiveDateRangePickers
                 startDate={startDate}
                 endDate={endDate}
+                setStartDate={setStartDate}
+                setEndDate={setEndDate}
               />
             </div>
 
@@ -148,7 +154,10 @@ export default function RequestToBook({
               />
             </div>
             <div className="flex flex-col gap-5">
-              <Select>
+              <Select
+                value={cardCompany}
+                onValueChange={handleCardCompanyInputChange}
+              >
                 <SelectTrigger className="h-14 w-full rounded-lg border border-zinc-300 pl-5 text-base">
                   <SelectValue
                     placeholder={
@@ -164,6 +173,7 @@ export default function RequestToBook({
                     <SelectItem
                       className="flex h-14 text-base"
                       value={paymentMethod.name}
+                      key={paymentMethod.name}
                     >
                       <div className="flex items-center gap-3">
                         <Image
@@ -221,7 +231,7 @@ export default function RequestToBook({
                 className="h-14 border-zinc-300"
                 required
               />
-              <Select>
+              <Select onValueChange={handleCountryInputChange}>
                 <SelectTrigger className="h-14 w-full rounded-lg border border-zinc-300 pl-5 text-base">
                   <SelectValue
                     placeholder={
@@ -232,8 +242,9 @@ export default function RequestToBook({
                 <SelectContent>
                   {countryData.map((country) => (
                     <SelectItem
+                      key={country.isoCode} // Use isoCode as the key
+                      value={country.isoCode} // Pass the isoCode as the value
                       className="flex text-base"
-                      value={country as any}
                     >
                       <div className="flex items-center gap-3">
                         <p>{country.name}</p>

@@ -3,23 +3,24 @@
 import { formatFloor } from "@/app/lib/format-money";
 import { GUEST_SERVICE_FEE } from "@/app/lib/rates";
 import { Listing } from "@prisma/client";
+import { Dayjs } from "dayjs";
 import Image from "next/image";
-import { useSearchParams } from "next/navigation";
 
-export const RightPanel = ({
-  data,
-}: {
+interface RightPanelProps {
   data: Listing & {
     user: {
       name: string | null; // 'name' can be 'null' if not set
     };
   };
-}) => {
-  const searchParams = useSearchParams();
-  const stayingNights = Number(searchParams.get("stayingNights"));
+  startDate: Dayjs | null;
+  endDate: Dayjs | null;
+}
+
+export const RightPanel = ({ data, startDate, endDate }: RightPanelProps) => {
+  const stayingNights = endDate?.diff(startDate, "day") || 1;
 
   return (
-    <div className="flex h-fit flex-col gap-7 rounded-lg border-zinc-300 md:sticky md:top-28 md:mb-14 md:flex-1 md:border md:p-7 lg:p-10">
+    <div className="mt-5 flex h-fit flex-col gap-7 rounded-lg border-zinc-300 md:sticky md:top-24 md:mb-14 md:mt-0 md:flex-1 md:border md:p-7 lg:p-10">
       <div className="flex items-center gap-2">
         <Image
           src={data.imageSrc[0]}
