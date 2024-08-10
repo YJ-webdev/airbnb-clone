@@ -8,7 +8,16 @@ export default async function RequestToBookPage({
 }: {
   params: { id: string };
 }) {
-  const data = await prisma.listing.findUnique({ where: { id: params.id } });
+  const data = await prisma.listing.findUnique({
+    where: { id: params.id }, // Replace 'listingId' with your actual listing ID
+    include: {
+      user: {
+        select: {
+          name: true, // Include only the 'name' field of the user
+        },
+      },
+    },
+  });
   const session = await getSession();
   const user = session?.user;
 

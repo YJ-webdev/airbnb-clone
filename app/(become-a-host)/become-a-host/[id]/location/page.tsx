@@ -22,11 +22,11 @@ export default async function LocationPage({
       <LocationForm
         params={params}
         userId={user.id as string}
-        initialCountry={listingData?.country || undefined}
-        initialState={listingData?.state || undefined}
-        initialCity={listingData?.city || undefined}
-        initialStreet={listingData?.locationValue || undefined}
-        initialPostalCode={listingData?.postalCode || undefined}
+        initialCountry={listingData?.country || ""}
+        initialState={listingData?.state || ""}
+        initialCity={listingData?.city || ""}
+        initialStreet={listingData?.locationValue || ""}
+        initialPostalCode={listingData?.postalCode || ""}
         initialLat={listingData?.lat || undefined}
         initialLng={listingData?.lng || undefined}
       />

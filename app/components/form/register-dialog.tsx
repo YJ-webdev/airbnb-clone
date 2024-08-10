@@ -23,8 +23,9 @@ import {
   DialogHeader,
 } from "@/components/ui/dialog";
 import { register } from "@/app/actions/register";
-import { LoginButton } from "./login-button";
+
 import { Register, RegisterSchema } from "@/schema/auth";
+import { SubmitButton } from "./submit-button";
 
 export const RegisterDialog = () => {
   const [error, setError] = useState<string | undefined>("");
@@ -123,7 +124,7 @@ export const RegisterDialog = () => {
             <FormError message={error} />
             <FormSuccess message={success} />
 
-            <LoginButton isPending={isPending} label="Sign up" />
+            <SubmitButton isPending={isPending} label="Sign up" />
             <p className="text-center text-sm hover:underline">
               Log in with your account.
             </p>

@@ -33,12 +33,14 @@ export const LocationForm = ({
 }: LocationFormProps) => {
   const [dataLogged, setDataLogged] = useState(false);
   const [street, setStreet] = useState(initialStreet || "");
-  const [country, setCountry] = useState<string | undefined>(initialCountry);
-  const [city, setCity] = useState(initialCity || "");
-  const [state, setState] = useState<string | undefined>(initialState);
+  const [country, setCountry] = useState(initialCountry);
+  const [city, setCity] = useState(initialCity);
+  const [state, setState] = useState(initialState);
   const [postalCode, setPostalCode] = useState(initialPostalCode || "");
   const [lat, setLat] = useState<number>(initialLat || 0);
   const [lng, setLng] = useState<number>(initialLng || 0);
+
+  const fullAddress = `${street || ""} ${city || ""} ${state || ""} ${country || ""}`;
 
   const createLocationWithId = createLocation.bind(null, userId);
   const { progress, setProgress } = useProgress();
@@ -51,40 +53,53 @@ export const LocationForm = ({
   } | null>(initialMarkerLocation);
 
   // Memorized handleAddressSubmit function
-  const handleAddressSubmit = useCallback(async (address: string) => {
-    setStreet(address);
-    setProgress(43);
+  const handleAddressSubmit = useCallback(
+    async (address: string) => {
+      const axios = require("axios");
+      if (address !== initialStreet) {
+        try {
+          const response = await axios.get(
+            `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${process.env.NEXT_PUBLIC_GOOGLE_GEOCODING_API_KEY}`,
+          );
 
-    const axios = require("axios");
-    if (address !== initialStreet) {
-      try {
-        const response = await axios.get(
-          `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${process.env.NEXT_PUBLIC_GOOGLE_GEOCODING_API_KEY}`,
-        );
+          console.log("Geocoding Response:", response.data);
 
-        console.log("Geocoding Response:", response.data);
-
-        if (response.data.status === "OK" && response.data.results.length > 0) {
-          const { lat, lng } = response.data.results[0].geometry.location;
-          setMapLocation({ lat, lng });
-          setLat(lat);
-          setLng(lng);
-        } else if (response.data.status === "ZERO_RESULTS") {
-          setMapLocation(null);
-        } else {
+          if (
+            response.data.status === "OK" &&
+            response.data.results.length > 0
+          ) {
+            const { lat, lng } = response.data.results[0].geometry.location;
+            setMapLocation({ lat, lng });
+            setLat(lat);
+            setLng(lng);
+          } else if (response.data.status === "ZERO_RESULTS") {
+            setMapLocation(null);
+          } else {
+            setMapLocation(null);
+          }
+        } catch (error) {
+          console.error("Error fetching geocoding data:", error);
           setMapLocation(null);
         }
-      } catch (error) {
-        console.error("Error fetching geocoding data:", error);
-        setMapLocation(null);
       }
-    }
-  }, []);
+    },
+    [initialStreet],
+  );
 
   // Effect to trigger handleAddressSubmit when formedAddress changes
   useEffect(() => {
-    handleAddressSubmit(street);
-  }, [street, handleAddressSubmit]);
+    handleAddressSubmit(fullAddress);
+  }, [fullAddress, handleAddressSubmit]);
+
+  useEffect(() => {
+    setProgress(43);
+  }, [setProgress]);
+
+  useEffect(() => {
+    if (street && country && postalCode) {
+      setDataLogged(true);
+    } else setDataLogged(false);
+  }, [street, country, postalCode, setDataLogged]);
 
   return (
     <form action={createLocationWithId} className="mb-28">

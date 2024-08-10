@@ -3,15 +3,11 @@
 import { ReservePanel } from "./reserve-panel";
 import { ListingMap } from "./listing-map";
 import { PreviewImages } from "@/app/components/preview-images";
-
 import { SocialShare } from "@/app/components/social-share";
 import Calendar2 from "./calendar-expanded";
 import { AdultAndChildren } from "./adult-and-children";
-import { useDatePick } from "@/app/context/date-pick-context";
-import { createReserevation } from "@/app/actions/reservations";
 import { Listing } from "@prisma/client";
 import { UserWithRoleAndFavoriteIds } from "@/types";
-import { useGuestCount } from "@/app/context/guest-count-context";
 
 interface ListingContentProps {
   data: Listing;
@@ -20,11 +16,6 @@ interface ListingContentProps {
 }
 
 export const ListingContent = ({ data, user, params }: ListingContentProps) => {
-  const { startDate, endDate, stayingNights } = useDatePick();
-  const { adultCount, childCount, petCount } = useGuestCount();
-
-  const totalPrice = stayingNights * data?.guestPrice!;
-
   return (
     <div className="mx-auto mt-6 flex max-w-7xl">
       <div className="mb-10 flex flex-1 flex-col gap-5 px-5 lg:min-w-[700px]">

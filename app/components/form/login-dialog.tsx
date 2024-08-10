@@ -24,8 +24,9 @@ import { login } from "@/app/actions/login";
 import { cn } from "@/lib/utils";
 import { FormSuccess } from "./form-success";
 import { FormInput } from "./form-input";
-import { LoginButton } from "./login-button";
+
 import { Login, LoginSchema } from "@/schema/auth";
+import { SubmitButton } from "./submit-button";
 
 interface LoginDialogProps {
   urlError?: string;
@@ -121,7 +122,7 @@ export const LoginDialog = ({ urlError, title }: LoginDialogProps) => {
             <FormError message={error || urlError} />
             <FormSuccess message={success} />
 
-            <LoginButton isPending={isPending} label="Log in" />
+            <SubmitButton isPending={isPending} label="Log in" />
             <p className="text-center text-sm hover:underline">
               You don&apos;t have an account?
             </p>

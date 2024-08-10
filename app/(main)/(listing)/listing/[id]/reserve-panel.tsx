@@ -14,6 +14,7 @@ import { toast } from "sonner";
 import Link from "next/link";
 
 import { useRouter } from "next/navigation";
+import { useGuestCount } from "@/app/context/guest-count-context";
 
 interface ReservePanelProps {
   user?: UserWithRoleAndFavoriteIds;
@@ -41,8 +42,12 @@ export const ReservePanel = ({ data, user, params }: ReservePanelProps) => {
 
   const router = useRouter();
 
+  const { adultCount, childCount, petCount } = useGuestCount();
   const { startDate, endDate, stayingNights } = useDatePick();
   const totalPrice = stayingNights * data?.guestPrice!;
+
+  const startDateString = startDate?.format("MM-DD");
+  const endDateString = endDate?.format("MM-DD");
 
   const LoginToast = () => (
     <div>
@@ -92,13 +97,23 @@ export const ReservePanel = ({ data, user, params }: ReservePanelProps) => {
           </div>
 
           <div className="flex flex-col items-center justify-center">
-            <button
-              type="button"
-              onClick={() => handleLinkClick(user, params)}
-              className="my-1 h-14 w-full rounded-lg bg-gradient-to-r from-rose-500 to-[#e3326d] px-5 py-3 font-semibold text-white"
+            <Link
+              href={{
+                pathname: `/listing/${params.id}/request-to-book`,
+                query: {
+                  startDate: startDateString,
+                  endDate: endDateString,
+                  stayingNights,
+                  totalPrice,
+                  adultCount,
+                  childCount,
+                  petCount,
+                },
+              }}
+              className="my-1 flex h-14 w-full items-center justify-center rounded-lg bg-gradient-to-r from-rose-500 to-[#e3326d] px-5 py-3 font-semibold text-white"
             >
               Reserve
-            </button>
+            </Link>
           </div>
 
           <div className="mx-auto flex items-center">
@@ -131,13 +146,23 @@ export const ReservePanel = ({ data, user, params }: ReservePanelProps) => {
           />
         </div>
 
-        <button
-          type="button"
-          onClick={() => handleLinkClick(user, params)}
+        <Link
+          href={{
+            pathname: `/listing/${params.id}/request-to-book`,
+            query: {
+              startDate: startDateString,
+              endDate: endDateString,
+              stayingNights,
+              totalPrice,
+              adultCount,
+              childCount,
+              petCount,
+            },
+          }}
           className="rounded-full bg-gradient-to-r from-rose-500 to-[#e3326d] px-5 py-3 font-semibold text-white"
         >
           Reserve
-        </button>
+        </Link>
       </div>
     </>
   );

@@ -171,3 +171,16 @@ img {
   background-color: black;
   transition: width 0.4s ease-in; /* Adjust duration and easing as needed */
 }
+
+.custom-bullet li {
+  position: relative;
+  padding-left: 1em; /* Adjust as needed */
+}
+.custom-bullet li::before {
+  content: "∙"; /* Unicode bullet character */
+  position: absolute;
+  left: 0;
+  font-size: 1.25em; /* Adjust size here */
+  color: currentColor; /* Ensures it inherits text color */
+  line-height: 1.2; /* Adjust as needed */
+}
