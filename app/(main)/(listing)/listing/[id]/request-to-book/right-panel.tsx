@@ -12,13 +12,16 @@ interface RightPanelProps {
       name: string | null; // 'name' can be 'null' if not set
     };
   };
-  startDate: Dayjs | null;
-  endDate: Dayjs | null;
+
+  amount: string;
+  stayingNights: number;
 }
 
-export const RightPanel = ({ data, startDate, endDate }: RightPanelProps) => {
-  const stayingNights = endDate?.diff(startDate, "day") || 1;
-
+export const RightPanel = ({
+  data,
+  stayingNights,
+  amount,
+}: RightPanelProps) => {
   return (
     <div className="mt-5 flex h-fit flex-col gap-7 rounded-lg border-zinc-300 md:sticky md:top-24 md:mb-14 md:mt-0 md:flex-1 md:border md:p-7 lg:p-10">
       <div className="flex items-center gap-2">
@@ -60,13 +63,7 @@ export const RightPanel = ({ data, startDate, endDate }: RightPanelProps) => {
         </div>
         <div className="flex items-center justify-between gap-2">
           <p className="font-semibold">Total Price(USD)</p>
-          <p className="text-lg font-semibold">
-            $
-            {formatFloor(
-              data.enteredPrice! * stayingNights +
-                data.enteredPrice! * stayingNights * GUEST_SERVICE_FEE,
-            )}
-          </p>
+          <p className="text-lg font-semibold">${amount}</p>
         </div>
       </div>
       <hr className="hidden md:block" />

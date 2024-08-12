@@ -15,6 +15,8 @@ import Link from "next/link";
 
 import { useRouter } from "next/navigation";
 import { useGuestCount } from "@/app/context/guest-count-context";
+import { formatFloor } from "@/app/lib/format-money";
+import { GUEST_SERVICE_FEE } from "@/app/lib/rates";
 
 interface ReservePanelProps {
   user?: UserWithRoleAndFavoriteIds;
@@ -44,7 +46,10 @@ export const ReservePanel = ({ data, user, params }: ReservePanelProps) => {
 
   const { adultCount, childCount, petCount } = useGuestCount();
   const { startDate, endDate, stayingNights } = useDatePick();
-  const totalPrice = stayingNights * data?.guestPrice!;
+  const totalPrice = formatFloor(
+    data.enteredPrice! * stayingNights +
+      data.enteredPrice! * stayingNights * GUEST_SERVICE_FEE,
+  );
 
   const startDateString = startDate?.format("MMM-DD-YYYY");
   const endDateString = endDate?.format("MMM-DD-YYYY");

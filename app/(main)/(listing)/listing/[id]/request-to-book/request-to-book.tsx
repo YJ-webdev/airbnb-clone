@@ -3,25 +3,22 @@
 import { UserWithRoleAndFavoriteIds } from "@/types";
 import { Listing } from "@prisma/client";
 import { ChevronLeft } from "lucide-react";
-import Image from "next/image";
 import { useSearchParams } from "next/navigation";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { PiCreditCardLight } from "react-icons/pi";
-import { FormInput } from "@/app/components/form/form-input";
-import { useEffect, useState, useTransition } from "react";
+import { useEffect, useState } from "react";
 import { RightPanel } from "./right-panel";
 import { useRouter } from "next/navigation";
-import { PAYMENT_METHODS } from "@/app/lib/payment-method";
-import { Country, ICountry } from "country-state-city";
-import { SubmitButton } from "@/app/components/form/submit-button";
 import dayjs from "dayjs";
 import ResponsiveDateRangePickers from "./responsive-date-picker";
+import { CheckoutForm } from "./checkout-form";
+
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+import { formatFloor } from "@/app/lib/format-money";
+import { GUEST_SERVICE_FEE } from "@/app/lib/rates";
+
+const stripePromise = loadStripe(
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!,
+);
 
 export default function RequestToBook({
   data,
@@ -36,7 +33,7 @@ export default function RequestToBook({
 }) {
   if (!user) console.log("login");
 
-  let countryData = Country.getAllCountries();
+  const [clientSecret, setClientSecret] = useState("");
 
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -53,45 +50,42 @@ export default function RequestToBook({
   const [childCount, setChildCount] = useState(initialchildCount);
   const [petCount, setPetCount] = useState(initialpetCount);
 
-  const [cardCompany, setCardCompany] = useState("");
-  const [cardNumber, setCardNumber] = useState("");
-  const [expiryDate, setExpiryDate] = useState("");
-  const [cvv, setCvv] = useState("");
-  const [zipcode, setZipcode] = useState("");
-  const [country, setCountry] = useState<ICountry | null>(null);
-  const [isPending, startTransition] = useTransition();
+  const stayingNights = endDate?.diff(startDate, "day") || 1;
+  const amount = formatFloor(
+    data.enteredPrice! * stayingNights +
+      data.enteredPrice! * stayingNights * GUEST_SERVICE_FEE,
+  );
 
   const handleGoBack = () => {
     router.back();
   };
 
-  const handleCardCompanyInputChange = (cardCompany: string) => {
-    setCardCompany(cardCompany);
+  useEffect(() => {
+    fetch("/api/create-payment-intent", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ amount: amount }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.clientSecret) {
+          setClientSecret(data.clientSecret);
+        } else {
+          console.error("Failed to retrieve client secret");
+        }
+      })
+      .catch((error) => {
+        console.error("Error creating payment intent:", error);
+      });
+  }, [amount]);
+
+  const appearance = {
+    theme: "stripe" as const,
   };
 
-  const handleCountryInputChange = (value: string) => {
-    const selectedCountry = countryData.find((c) => c.isoCode === value);
-    setCountry(selectedCountry || null);
-  };
-
-  const handleCardNumberInputChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    setCardNumber(e.target.value);
-  };
-
-  const handleExpiryDateInputChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    setExpiryDate(e.target.value);
-  };
-
-  const handleCvvInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCvv(e.target.value);
-  };
-
-  const handleZipcodeInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setZipcode(e.target.value);
+  const options = {
+    clientSecret,
+    appearance,
   };
 
   return (
@@ -104,7 +98,7 @@ export default function RequestToBook({
       </div>
 
       <div className="mb-5 mt-2 flex flex-col md:w-full md:flex-row-reverse md:gap-7 lg:gap-12">
-        <RightPanel data={data} startDate={startDate} endDate={endDate} />
+        <RightPanel data={data} amount={amount} stayingNights={stayingNights} />
         <div className="mb-10 flex flex-col gap-7 md:flex-1 md:p-5">
           {/* your trip */}
           <div className="mt-7 flex flex-col gap-2 md:mt-0">
@@ -142,144 +136,13 @@ export default function RequestToBook({
           </div>
           <hr />
           {/* pay with */}
-          <div className="flex flex-col gap-2">
-            <div className="mb-2 flex items-center justify-between gap-2">
-              <h2 className="text-lg font-semibold">Pay with</h2>
-              <Image
-                src="/images/pay-with.png"
-                alt="card"
-                width={300}
-                height={300}
-                className="h-6 w-auto object-contain"
-              />
-            </div>
-            <div className="flex flex-col gap-5">
-              <Select
-                value={cardCompany}
-                onValueChange={handleCardCompanyInputChange}
-              >
-                <SelectTrigger className="h-14 w-full rounded-lg border border-zinc-300 pl-5 text-base">
-                  <SelectValue
-                    placeholder={
-                      <div className="flex items-center gap-2">
-                        <PiCreditCardLight className="h-6 w-6 text-zinc-500" />
-                        <p className="text-zinc-500">Credit or Debit Card</p>
-                      </div>
-                    }
-                  />
-                </SelectTrigger>
-                <SelectContent>
-                  {PAYMENT_METHODS.map((paymentMethod) => (
-                    <SelectItem
-                      className="flex h-14 text-base"
-                      value={paymentMethod.name}
-                      key={paymentMethod.name}
-                    >
-                      <div className="flex items-center gap-3">
-                        <Image
-                          src={paymentMethod.icon}
-                          alt={paymentMethod.name}
-                          width={40}
-                          height={40}
-                          className="h-auto w-6 object-contain text-zinc-500"
-                        />
-                        <p>{paymentMethod.name}</p>
-                      </div>
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <div className="flex flex-col">
-                <FormInput
-                  label="Card Number"
-                  value={cardNumber}
-                  id="cardNumber"
-                  onChange={handleCardNumberInputChange}
-                  placeholder="**** **** **** ****"
-                  className="h-14 rounded-b-none rounded-t-lg border-zinc-300 border-b-white"
-                  type="number"
-                  required
-                />
-                <div className="flex">
-                  <FormInput
-                    label="Expiry Date"
-                    id="expiryDate"
-                    value={expiryDate}
-                    placeholder="MM/YY"
-                    onChange={handleExpiryDateInputChange}
-                    className="h-14 rounded-t-none rounded-br-none border-zinc-300 border-r-white"
-                    type="number"
-                    required
-                  />
-                  <FormInput
-                    label="CVV"
-                    id="cvv"
-                    value={cvv}
-                    onChange={handleCvvInputChange}
-                    className="h-14 rounded-t-none rounded-bl-none border-zinc-300"
-                    placeholder="***"
-                    type="password"
-                    required
-                  />
-                </div>
-              </div>
-              <FormInput
-                label="Zipcode"
-                id="zipcode"
-                value={zipcode}
-                onChange={handleZipcodeInputChange}
-                className="h-14 border-zinc-300"
-                required
-              />
-              <Select onValueChange={handleCountryInputChange}>
-                <SelectTrigger className="h-14 w-full rounded-lg border border-zinc-300 pl-5 text-base">
-                  <SelectValue
-                    placeholder={
-                      <p className="text-zinc-500">Country / region</p>
-                    }
-                  />
-                </SelectTrigger>
-                <SelectContent>
-                  {countryData.map((country) => (
-                    <SelectItem
-                      key={country.isoCode} // Use isoCode as the key
-                      value={country.isoCode} // Pass the isoCode as the value
-                      className="flex text-base"
-                    >
-                      <div className="flex items-center gap-3">
-                        <p>{country.name}</p>
-                      </div>
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-          <hr />
-          {/* ground rules */}
-          <div className="mb-5 flex flex-col gap-2">
-            <h2 className="mb-2 text-lg font-semibold">Ground rules</h2>{" "}
-            <p>
-              We ask every guest to remember a few simple things about what
-              makes a great guest.
-            </p>
-            <ul className="custom-bullet pl-5">
-              <li>Follow the house rules</li>
-              <li>Treat your Host's home like your own</li>
-            </ul>
-          </div>
-          <hr />
-          <p className="pb-5 text-sm">
-            By selecting the button below, I agree to the Host's House Rules,
-            Ground rules for guests, Airbnb's Rebooking and Refund Policy, and
-            that Airbnb can charge my payment method if I'm responsible for
-            damage.
-          </p>
-          <SubmitButton
-            isPending={isPending}
-            label="Confirm and Pay"
-            className="h-14"
-          ></SubmitButton>
+          {clientSecret ? (
+            <Elements options={options} stripe={stripePromise}>
+              <CheckoutForm />
+            </Elements>
+          ) : (
+            <p>Loading payment details...</p>
+          )}
         </div>
       </div>
     </div>
