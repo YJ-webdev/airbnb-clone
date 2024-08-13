@@ -1,13 +1,6 @@
 "use client";
 
-import {
-  Bed,
-  ChevronLeft,
-  ChevronRight,
-  Edit,
-  UserCheck,
-  UserIcon,
-} from "lucide-react";
+import { Bed, ChevronLeft, ChevronRight, Edit, UserIcon } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { dummyImages } from "../data/dummy-images";
@@ -17,9 +10,6 @@ import Link from "next/link";
 import { FavoriteButton } from "./favorite-button";
 import { useFavorites } from "../context/favorite-context";
 import { UserWithRoleAndFavoriteIds } from "@/types";
-import { IoBedSharp } from "react-icons/io5";
-import { MdPerson } from "react-icons/md";
-// import { EditButton } from "./become-a-host/edit-button";
 
 interface LisitngCardProps {
   data: Listing;

@@ -24,7 +24,7 @@ export const ListingContent = ({ data, user, params }: ListingContentProps) => {
         </h1>
         <div className="relative flex w-[89Dvw] md:w-full">
           <div className="flex w-full flex-col gap-10">
-            <PreviewImages data={data} />
+            <PreviewImages data={data} className="h-[55vh]" />
             <div className="w-full space-y-2">
               <div className="flex flex-col-reverse items-center justify-between gap-5 sm:flex-row">
                 <h2 className="text-[19px] font-semibold md:text-[20px]">

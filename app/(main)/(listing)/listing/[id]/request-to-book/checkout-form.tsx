@@ -8,6 +8,7 @@ import {
 import { useStripe, useElements } from "@stripe/react-stripe-js";
 
 import React, { useMemo, useState } from "react";
+import { redirect } from "next/navigation";
 import Image from "next/image";
 import { Country, ICountry } from "country-state-city";
 import { cn } from "@/lib/utils";
@@ -24,14 +25,37 @@ import { PAYMENT_METHODS } from "@/app/lib/payment-method";
 import { FormInput } from "@/app/components/form/form-input";
 import { SubmitButton } from "@/app/components/form/submit-button";
 import { GroundRules } from "./ground-rules";
+import { createReserevation } from "@/app/actions/reservations";
+import { Dayjs } from "dayjs";
+import { Listing } from "@prisma/client";
+
+interface CheckoutFormProps {
+  clientSecret: string;
+  user: UserWithRoleAndFavoriteIds;
+  startDate: Dayjs;
+  endDate: Dayjs;
+  adults: number;
+  stayingNights: number;
+  pets?: number;
+  childCount?: number;
+  data: Listing & {
+    user: {
+      name: string | null; // 'name' can be 'null' if not set
+    };
+  };
+}
 
 export const CheckoutForm = ({
   clientSecret,
   user,
-}: {
-  clientSecret: string;
-  user: UserWithRoleAndFavoriteIds;
-}) => {
+  startDate,
+  endDate,
+  adults,
+  data,
+  stayingNights,
+  pets,
+  childCount,
+}: CheckoutFormProps) => {
   const countryData = useMemo(() => Country.getAllCountries(), []);
 
   const stripe = useStripe();
@@ -106,8 +130,27 @@ export const CheckoutForm = ({
       setIsProcessing(false);
       setMessage(error.message);
     } else if (paymentIntent.status === "succeeded") {
-      console.log("Payment succeeded!", paymentIntent);
-      setMessage("Payment succeeded!");
+      // Create a FormData object
+      const formData = new FormData();
+
+      // Populate the FormData with necessary fields
+      formData.append("userId", user?.id!);
+      formData.append("listingId", data.id);
+      formData.append("startDate", startDate.toISOString());
+      formData.append("endDate", endDate.toISOString());
+      formData.append("totalPrice", paymentIntent.amount.toString());
+      formData.append("adultCount", adults.toString());
+      formData.append("childCount", childCount?.toString() || "0");
+      formData.append("petCount", pets?.toString() || "0");
+      formData.append("stayingNights", stayingNights.toString());
+
+      try {
+        await createReserevation(formData);
+        redirect("/trips");
+      } catch (error) {
+        console.error("Failed to create reservation:", error);
+        setMessage("Reservation creation failed. Please contact support.");
+      }
     } else {
       console.log("Payment status:", paymentIntent.status);
     }
@@ -312,9 +355,16 @@ export const CheckoutForm = ({
       <SubmitButton
         isPending={isProcessing}
         label="Confirm and Pay"
-        className="h-14"
+        className="mb-5 h-14"
       ></SubmitButton>
-      {message && <div id="payment-message">{message}</div>}
+      {message && (
+        <div
+          id="payment-message"
+          className="w-full text-center text-sm text-zinc-500"
+        >
+          {message}
+        </div>
+      )}
     </form>
   );
 };

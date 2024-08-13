@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export const SecureLeaflet = () => {
   return (
-    <div className="hidden rounded-lg border border-zinc-200 p-6 md:block md:w-1/3">
+    <div className="hidden rounded-lg border border-zinc-200 p-6 md:block md:w-2/5">
       <div className="flex flex-col gap-7">
         <div className="flex flex-col gap-4">
           <Image

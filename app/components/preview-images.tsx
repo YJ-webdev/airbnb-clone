@@ -6,8 +6,15 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 import ImageModal from "./image-modal";
+import { cn } from "@/lib/utils";
 
-export const PreviewImages = ({ data }: { data?: Listing }) => {
+export const PreviewImages = ({
+  data,
+  className,
+}: {
+  data?: Listing;
+  className?: string;
+}) => {
   const [modalIndex, setModalIndex] = useState<number | null>(null);
   const [index, setIndex] = useState(0);
 
@@ -42,7 +49,12 @@ export const PreviewImages = ({ data }: { data?: Listing }) => {
   };
 
   return (
-    <div className="group relative h-[55vh] w-full overflow-hidden rounded-lg transition-all">
+    <div
+      className={cn(
+        "group relative h-full w-full overflow-hidden rounded-lg transition-all",
+        className,
+      )}
+    >
       <div
         onClick={(event) => {
           event.stopPropagation();

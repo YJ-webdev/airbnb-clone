@@ -139,7 +139,17 @@ export default function RequestToBook({
           {/* pay with */}
           {clientSecret ? (
             <Elements options={options} stripe={stripePromise}>
-              <CheckoutForm user={user} clientSecret={clientSecret} />
+              <CheckoutForm
+                user={user}
+                startDate={startDate}
+                endDate={endDate}
+                clientSecret={clientSecret}
+                adults={adultCount}
+                data={data}
+                stayingNights={stayingNights}
+                pets={petCount}
+                childCount={childCount}
+              />
             </Elements>
           ) : (
             <p>Loading payment details...</p>

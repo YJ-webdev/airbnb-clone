@@ -18,6 +18,16 @@ const nextConfig = {
         protocol: "https", // Use HTTPS protocol.
         port: "", // Default port (443 for HTTPS).
       },
+      {
+        hostname: "lh3.googleusercontent.com",
+        protocol: "https",
+        port: "",
+      },
+      {
+        hostname: "avatars.githubusercontent.com",
+        protocol: "https",
+        port: "",
+      },
     ],
   },
 };
