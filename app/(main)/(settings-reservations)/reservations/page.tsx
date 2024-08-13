@@ -1,7 +1,17 @@
 import { PreviewImages } from "@/app/components/preview-images";
 import prisma from "@/app/lib/db";
 import getSession from "@/app/lib/get-session";
-import { Scroll } from "lucide-react";
+import {
+  Badge,
+  BadgeCheck,
+  Calendar,
+  CreditCard,
+  Dog,
+  MapPinned,
+  Scroll,
+  User,
+  Users,
+} from "lucide-react";
 import Image from "next/image";
 
 export default async function ReservationsPage() {
@@ -54,24 +64,40 @@ export default async function ReservationsPage() {
               <div className="h-[250px] w-full md:h-full md:flex-1">
                 <PreviewImages />
               </div>
-              <div className="flex h-full flex-1 flex-col items-stretch gap-1">
-                <p className="text-end font-semibold">Paid</p>
+              <div className="flex h-full flex-1 flex-col gap-1">
+                <p className="flex items-center gap-2 self-end font-semibold">
+                  <BadgeCheck
+                    strokeWidth={1.5}
+                    className="h-5 w-5 text-lime-600"
+                  />{" "}
+                  Paid
+                </p>
+
                 <div className="flex items-center justify-between gap-2">
-                  <p>Date Reserved</p>{" "}
+                  <p className="flex items-center gap-2">
+                    <Calendar strokeWidth={1.5} className="h-5 w-5" />
+                    Date Reserved
+                  </p>{" "}
                   <p>
                     {item.startDate.toLocaleDateString()} -{" "}
                     {item.endDate.toLocaleDateString()}
                   </p>
                 </div>
                 <div className="items-baselinegap-2 flex justify-between">
-                  <p>Destination</p>
+                  <p className="flex items-center gap-2">
+                    <MapPinned strokeWidth={1.5} className="h-5 w-5" />
+                    Destination
+                  </p>
                   <p>
                     {item.listing.state && `${item.listing.state}, `}
                     {item.listing.country}
                   </p>
                 </div>
                 <div className="flex flex-grow items-start justify-between gap-2">
-                  <p>People</p>
+                  <p className="flex items-center gap-2">
+                    <Users strokeWidth={1.5} className="h-5 w-5" />
+                    People
+                  </p>
                   <div className="flex flex-col gap-1 text-right">
                     <p>
                       {item.adults === 1 ? "1 Adult" : `${item.adults} Adults`}
@@ -86,28 +112,24 @@ export default async function ReservationsPage() {
                           : `${item.children} Children`}
                       </p>
                     )}
-
-                    {item.pets === 0 ? (
-                      ""
-                    ) : (
-                      <p>{item.pets === 1 ? "1 Pet" : `${item.pets} Pets`}</p>
-                    )}
                   </div>
                 </div>
-
-                <div className="mb-2 flex items-baseline justify-between gap-2">
-                  <p>Hosted by</p>
-                  <div className="flex items-baseline gap-2">
-                    <p>{item.listing.user.name}</p>
-
-                    <Image
-                      src={item.listing.user.image as string}
-                      alt="Host Picture"
-                      width={50}
-                      height={50}
-                      className="h-10 w-10 translate-y-2 rounded-full object-cover"
-                    />
+                {item.pets === 0 ? (
+                  ""
+                ) : (
+                  <div className="flex items-center justify-between gap-2">
+                    <p className="flex items-center gap-2">
+                      <Dog strokeWidth={1.5} className="h-5 w-5" /> Pet
+                    </p>{" "}
+                    {item.pets === 1 ? "1 Pet" : `${item.pets} Pets`}
                   </div>
+                )}
+
+                <div className="mb-2 flex items-center justify-between gap-2">
+                  <p className="flex items-center gap-2">
+                    <User strokeWidth={1.5} className="h-5 w-5" /> Hosted by
+                  </p>
+                  <p>{item.listing.user.name}</p>
                 </div>
               </div>
             </div>
