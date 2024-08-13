@@ -185,3 +185,41 @@ img {
   color: currentColor; /* Ensures it inherits text color */
   line-height: 1.2; /* Adjust as needed */
 }
+
+.card-label {
+  position: absolute;
+  left: 1rem; /* 16px */
+  top: 1.25rem; /* 20px */
+  transform-origin: 0%;
+  transform: translateY(-1.25rem) scale(0.75);
+  color: #6b7280; /* Adjust based on your theme */
+}
+
+.card-input {
+  height: 3.5rem; /* 56px */
+  width: 100%;
+  border-color: #d1d5db; /* zinc-300 color */
+  padding-left: 1rem; /* 16px */
+  padding-right: 1rem; /* 16px */
+  padding-bottom: 0.5rem; /* 8px */
+  padding-top: 1.5rem; /* 24px */
+}
+
+.outline-customized {
+  outline-style: solid; /* Equivalent to the outline property in Tailwind */
+  outline-width: 2px; /* Outline width set to 2px */
+  outline-offset: -2px; /* Negative offset of 2px */
+  outline-color: black; /* Outline color set to black */
+}
+
+.card-input-invalid {
+  border-color: #fed7d7; /* Equivalent to border-red-200 */
+  background-color: #fef2f2; /* Equivalent to bg-rose-50 */
+}
+
+.outline-customized-invalid {
+  outline-style: solid; /* Default outline style */
+  outline-width: 2px; /* Outline width set to 2px */
+  outline-offset: -2px; /* Negative offset of 2px */
+  outline-color: #f43f5e; /* Outline color set to red-500 */
+}

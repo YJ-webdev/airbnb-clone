@@ -1,4 +1,17 @@
+"use client";
+
+import {
+  CardNumberElement,
+  CardExpiryElement,
+  CardCvcElement,
+} from "@stripe/react-stripe-js";
+import { useStripe, useElements } from "@stripe/react-stripe-js";
+
+import React, { useMemo, useState } from "react";
 import Image from "next/image";
+import { Country, ICountry } from "country-state-city";
+import { cn } from "@/lib/utils";
+import { UserWithRoleAndFavoriteIds } from "@/types";
 import {
   Select,
   SelectContent,
@@ -7,117 +20,101 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { PiCreditCardLight } from "react-icons/pi";
-import { FormInput } from "@/app/components/form/form-input";
 import { PAYMENT_METHODS } from "@/app/lib/payment-method";
-import { GroundRules } from "./ground-rules";
+import { FormInput } from "@/app/components/form/form-input";
 import { SubmitButton } from "@/app/components/form/submit-button";
-import React, { useEffect, useState, useTransition } from "react";
-import { Country, ICountry } from "country-state-city";
+import { GroundRules } from "./ground-rules";
 
-import { useStripe, useElements } from "@stripe/react-stripe-js";
-import {
-  CardCvcInput,
-  CardExpiryInput,
-  CardNumberInput,
-} from "./stripe-elements";
-
-export const CheckoutForm = () => {
-  let countryData = Country.getAllCountries();
+export const CheckoutForm = ({
+  clientSecret,
+  user,
+}: {
+  clientSecret: string;
+  user: UserWithRoleAndFavoriteIds;
+}) => {
+  const countryData = useMemo(() => Country.getAllCountries(), []);
 
   const stripe = useStripe();
   const elements = useElements();
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const [cardCompany, setCardCompany] = useState("");
   const [zipcode, setZipcode] = useState("");
   const [country, setCountry] = useState<ICountry | null>(null);
-  const [isPending, startTransition] = useTransition();
+  const [message, setMessage] = useState<string | null | undefined>(null);
+
+  const [isFocused, setIsFocused] = useState(false);
+  const [isCardElementFocused, setIsCardElementFocused] = useState(false);
+  const [isExpiryDateFocused, setIsExpiryDateFocused] = useState(false);
+  const [isCvcFocused, setIsCvcFocused] = useState(false);
+  const [isCardElementInvalid, setIsCardElementInvalid] = useState(false);
+  const [isExpiryDateInvalid, setIsExpiryDateInvalid] = useState(false);
+  const [isCvcInvalid, setIsCvcInvalid] = useState(false);
 
   const handleCardCompanyInputChange = (cardCompany: string) => {
     setCardCompany(cardCompany);
   };
-
   const handleCountryInputChange = (value: string) => {
     const selectedCountry = countryData.find((c) => c.isoCode === value);
     setCountry(selectedCountry || null);
   };
-
   const handleZipcodeInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setZipcode(e.target.value);
   };
 
-  const [message, setMessage] = useState<string | null | undefined>(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const stripeElementStyle = {
+    base: {
+      color: "#000000",
+      fontSize: "16px",
+      fontFamily: "Nunito",
+      "::placeholder": {
+        color: "#71717a",
+      },
+    },
+    invalid: {
+      color: "#000000",
+      iconColor: "#000000",
+    },
+    complete: {
+      color: "#000000",
+    },
+  };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
 
     if (!stripe || !elements) {
-      // Stripe.js hasn't yet loaded.
-      // Make sure to disable form submission until Stripe.js has loaded.
       return;
     }
 
-    setIsLoading(true);
+    setIsProcessing(true);
 
-    const { error } = await stripe.confirmPayment({
-      elements,
-      confirmParams: {
-        // Make sure to change this to your payment completion page
-        return_url: "http://localhost:3000/reservation-success",
+    const { error, paymentIntent } = await stripe.confirmCardPayment(
+      clientSecret,
+      {
+        payment_method: {
+          card: elements.getElement(CardNumberElement)!,
+          billing_details: {
+            name: user.name,
+            email: user.email,
+          },
+        },
       },
-    });
-
-    // This point will only be reached if there is an immediate error when
-    // confirming the payment. Otherwise, your customer will be redirected to
-    // your `return_url`. For some payment methods like iDEAL, your customer will
-    // be redirected to an intermediate site first to authorize the payment, then
-    // redirected to the `return_url`.
-    if (error.type === "card_error" || error.type === "validation_error") {
-      setMessage(error.message);
-    } else {
-      setMessage("An unexpected error occurred.");
-    }
-
-    setIsLoading(false);
-  };
-
-  const paymentElementOptions = {
-    layout: "tabs",
-  };
-
-  useEffect(() => {
-    if (!stripe) {
-      return;
-    }
-
-    const clientSecret = new URLSearchParams(window.location.search).get(
-      "payment_intent_client_secret",
     );
 
-    if (!clientSecret) {
-      return;
+    if (error) {
+      setIsProcessing(false);
+      setMessage(error.message);
+    } else if (paymentIntent.status === "succeeded") {
+      console.log("Payment succeeded!", paymentIntent);
+      setMessage("Payment succeeded!");
+    } else {
+      console.log("Payment status:", paymentIntent.status);
     }
-
-    stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
-      switch (paymentIntent?.status) {
-        case "succeeded":
-          setMessage("Payment succeeded!");
-          break;
-        case "processing":
-          setMessage("Your payment is processing.");
-          break;
-        case "requires_payment_method":
-          setMessage("Your payment was not successful, please try again.");
-          break;
-        default:
-          setMessage("Something went wrong.");
-          break;
-      }
-    });
-  }, [stripe]);
+  };
 
   return (
-    <form id="payment-form" onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit}>
       <div className="mb-7 flex flex-col gap-2">
         <div className="mb-2 flex items-center justify-between gap-2">
           <h2 className="text-lg font-semibold">Pay with</h2>
@@ -165,15 +162,119 @@ export const CheckoutForm = () => {
               ))}
             </SelectContent>
           </Select>
+
           <div className="flex flex-col">
-            <CardNumberInput id="cardNumber" label="Card Number" />
-            <div className="flex">
-              <CardExpiryInput
-                id="expiryDate"
-                label="Expiry Date"
-                className="rounded-br-none"
+            <div className="relative w-full">
+              <CardNumberElement
+                id="cardNumber"
+                onBlur={() => {
+                  setIsFocused(false);
+                  setIsCardElementFocused(false);
+                }}
+                onFocus={() => {
+                  setIsFocused(true);
+                  setIsCardElementFocused(true);
+                }}
+                onChange={(event) => {
+                  setIsCardElementInvalid(!!event.error);
+                }}
+                options={{
+                  style: stripeElementStyle,
+                  placeholder: "0000 0000 0000 0000",
+                }}
+                className={cn("card-input rounded-t-lg border", {
+                  "outline-customized":
+                    isCardElementFocused && !isCardElementInvalid,
+                  "card-input-invalid":
+                    !isCardElementFocused && isCardElementInvalid && !isFocused,
+                  "outline-customized-invalid":
+                    isCardElementFocused && isCardElementInvalid,
+                })}
               />
-              <CardCvcInput id="cvc" label="CVC" className="rounded-bl-none" />
+
+              <label
+                htmlFor="cardNumber"
+                className={cn("card-label", {
+                  "!font-bold !text-rose-500": isCardElementInvalid,
+                })}
+              >
+                Card Number
+              </label>
+            </div>
+
+            <div className="flex">
+              <div className="relative w-full">
+                <CardExpiryElement
+                  id="expiryDate"
+                  onBlur={() => {
+                    setIsFocused(false);
+                    setIsExpiryDateFocused(false);
+                  }}
+                  onFocus={() => {
+                    setIsFocused(true);
+                    setIsExpiryDateFocused(true);
+                  }}
+                  onChange={(event) => {
+                    setIsExpiryDateInvalid(!!event.error);
+                  }}
+                  options={{ style: stripeElementStyle }}
+                  className={cn(
+                    "card-input rounded-bl-lg border-b border-l border-r",
+                    {
+                      "outline-customized":
+                        isExpiryDateFocused && !isExpiryDateInvalid,
+                      "card-input-invalid":
+                        !isExpiryDateFocused &&
+                        isExpiryDateInvalid &&
+                        !isFocused,
+                      "outline-customized-invalid":
+                        isExpiryDateFocused && isExpiryDateInvalid,
+                    },
+                  )}
+                />
+
+                <label
+                  htmlFor="expiryDate"
+                  className={cn("card-label", {
+                    "!font-bold !text-rose-500": isExpiryDateInvalid,
+                  })}
+                >
+                  Expiry Date
+                </label>
+              </div>
+
+              <div className="relative w-full">
+                <CardCvcElement
+                  id="cvc"
+                  onBlur={() => {
+                    setIsFocused(false);
+                    setIsCvcFocused(false);
+                  }}
+                  onFocus={() => {
+                    setIsFocused(true);
+                    setIsCvcFocused(true);
+                  }}
+                  onChange={(event) => {
+                    setIsCvcInvalid(!!event.error);
+                  }}
+                  options={{ style: stripeElementStyle, placeholder: "123" }}
+                  className={cn("card-input rounded-br-lg border-b border-r", {
+                    "outline-customized": isCvcFocused && !isCvcInvalid,
+                    "card-input-invalid":
+                      !isCvcFocused && isCvcInvalid && !isFocused,
+                    "outline-customized-invalid": isCvcFocused && isCvcInvalid,
+                  })}
+                />
+
+                <label
+                  htmlFor="cvc"
+                  className={cn("card-label", {
+                    "!font-bold !text-rose-500": isCvcInvalid,
+                  })}
+                >
+                  CVC
+                </label>
+              </div>
             </div>
           </div>
           <FormInput
@@ -183,6 +284,7 @@ export const CheckoutForm = () => {
             onChange={handleZipcodeInputChange}
             className="h-14 border-zinc-300"
           />
+
           <Select onValueChange={handleCountryInputChange}>
             <SelectTrigger className="h-14 w-full rounded-lg border border-zinc-300 pl-4 text-base">
               <SelectValue
@@ -208,7 +310,7 @@ export const CheckoutForm = () => {
       <hr />
       <GroundRules />
       <SubmitButton
-        isPending={isPending}
+        isPending={isProcessing}
         label="Confirm and Pay"
         className="h-14"
       ></SubmitButton>

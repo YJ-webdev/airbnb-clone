@@ -40,15 +40,12 @@ export default function RequestToBook({
 
   const initialStartDate = dayjs(searchParams.get("startDate"));
   const initialEndDate = dayjs(searchParams.get("endDate"));
-  const initialadultCount = Number(searchParams.get("adultCount"));
-  const initialchildCount = Number(searchParams.get("childCount"));
-  const initialpetCount = Number(searchParams.get("petCount"));
+  const adultCount = Number(searchParams.get("adultCount"));
+  const childCount = Number(searchParams.get("childCount"));
+  const petCount = Number(searchParams.get("petCount"));
 
   const [startDate, setStartDate] = useState(initialStartDate || null);
   const [endDate, setEndDate] = useState(initialEndDate || null);
-  const [adultCount, setAdultCount] = useState(initialadultCount);
-  const [childCount, setChildCount] = useState(initialchildCount);
-  const [petCount, setPetCount] = useState(initialpetCount);
 
   const stayingNights = endDate?.diff(startDate, "day") || 1;
   const amount = formatFloor(
@@ -79,13 +76,17 @@ export default function RequestToBook({
       });
   }, [amount]);
 
-  const appearance = {
-    theme: "stripe" as const,
-  };
-
   const options = {
     clientSecret,
-    appearance,
+    appearance: {
+      theme: "stripe" as const,
+    },
+    fonts: [
+      {
+        cssSrc:
+          "https://fonts.googleapis.com/css2?family=Nunito:wght@500&display=swap",
+      },
+    ],
   };
 
   return (
@@ -138,7 +139,7 @@ export default function RequestToBook({
           {/* pay with */}
           {clientSecret ? (
             <Elements options={options} stripe={stripePromise}>
-              <CheckoutForm />
+              <CheckoutForm user={user} clientSecret={clientSecret} />
             </Elements>
           ) : (
             <p>Loading payment details...</p>
