@@ -37,7 +37,7 @@ export default async function FavoritePage() {
           </div>
         </div>
       ) : (
-        <div className="grid gap-7 pb-10 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-7 pb-20 md:grid-cols-2 lg:grid-cols-3">
           {favorites.map((item: Listing) => (
             <ListingCard key={item.id} data={item} user={user} />
           ))}

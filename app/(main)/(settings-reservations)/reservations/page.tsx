@@ -55,7 +55,7 @@ export default async function ReservationsPage() {
           </div>
         </div>
       ) : (
-        <div className="mb-10 flex flex-col gap-7">
+        <div className="flex flex-col gap-7 pb-20">
           {data.map((item) => (
             <div
               key={item.id}
@@ -64,66 +64,70 @@ export default async function ReservationsPage() {
               <div className="h-[250px] w-full md:h-full md:flex-1">
                 <PreviewImages />
               </div>
-              <div className="flex h-full flex-1 flex-col gap-1">
-                <p className="flex items-center gap-2 self-end font-semibold">
-                  <BadgeCheck
-                    strokeWidth={1.5}
-                    className="h-5 w-5 text-lime-600"
-                  />{" "}
-                  Paid
-                </p>
+              <div className="flex h-full flex-1 flex-col md:gap-1">
+                <div className="flex flex-grow flex-col gap-2">
+                  <p className="flex items-center gap-2 self-end font-semibold">
+                    <BadgeCheck
+                      strokeWidth={1.5}
+                      className="h-5 w-5 text-lime-600"
+                    />{" "}
+                    Paid
+                  </p>
 
-                <div className="flex items-center justify-between gap-2">
-                  <p className="flex items-center gap-2">
-                    <Calendar strokeWidth={1.5} className="h-5 w-5" />
-                    Date Reserved
-                  </p>{" "}
-                  <p>
-                    {item.startDate.toLocaleDateString()} -{" "}
-                    {item.endDate.toLocaleDateString()}
-                  </p>
-                </div>
-                <div className="items-baselinegap-2 flex justify-between">
-                  <p className="flex items-center gap-2">
-                    <MapPinned strokeWidth={1.5} className="h-5 w-5" />
-                    Destination
-                  </p>
-                  <p>
-                    {item.listing.state && `${item.listing.state}, `}
-                    {item.listing.country}
-                  </p>
-                </div>
-                <div className="flex flex-grow items-start justify-between gap-2">
-                  <p className="flex items-center gap-2">
-                    <Users strokeWidth={1.5} className="h-5 w-5" />
-                    People
-                  </p>
-                  <div className="flex flex-col gap-1 text-right">
+                  <div className="flex items-center justify-between gap-2">
+                    <p className="flex items-center gap-2">
+                      <Calendar strokeWidth={1.5} className="h-5 w-5" />
+                      Date Reserved
+                    </p>{" "}
                     <p>
-                      {item.adults === 1 ? "1 Adult" : `${item.adults} Adults`}
+                      {item.startDate.toLocaleDateString()} -{" "}
+                      {item.endDate.toLocaleDateString()}
                     </p>
+                  </div>
+                  <div className="items-baselinegap-2 flex justify-between">
+                    <p className="flex items-center gap-2">
+                      <MapPinned strokeWidth={1.5} className="h-5 w-5" />
+                      Destination
+                    </p>
+                    <p>
+                      {item.listing.state && `${item.listing.state}, `}
+                      {item.listing.country}
+                    </p>
+                  </div>
+                  <div className="flex items-start justify-between gap-2">
+                    <p className="flex items-center gap-2">
+                      <Users strokeWidth={1.5} className="h-5 w-5" />
+                      People
+                    </p>
+                    <div className="flex flex-col gap-1 text-right">
+                      <p>
+                        {item.adults === 1
+                          ? "1 Adult"
+                          : `${item.adults} Adults`}
+                      </p>
 
-                    {item.children === 0 ? (
+                      {item.children !== 0 && (
+                        <p>
+                          {item.children === 1
+                            ? "1 Child"
+                            : `${item.children} Children`}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between gap-2">
+                    {item.pets === 0 ? (
                       ""
                     ) : (
-                      <p>
-                        {item.children === 1
-                          ? "1 Child"
-                          : `${item.children} Children`}
-                      </p>
+                      <>
+                        <p className="flex items-center gap-2">
+                          <Dog strokeWidth={1.5} className="h-5 w-5" /> Pet
+                        </p>
+                        {item.pets === 1 ? "1 Pet" : `${item.pets} Pets`}
+                      </>
                     )}
                   </div>
                 </div>
-                {item.pets === 0 ? (
-                  ""
-                ) : (
-                  <div className="flex items-center justify-between gap-2">
-                    <p className="flex items-center gap-2">
-                      <Dog strokeWidth={1.5} className="h-5 w-5" /> Pet
-                    </p>{" "}
-                    {item.pets === 1 ? "1 Pet" : `${item.pets} Pets`}
-                  </div>
-                )}
 
                 <div className="mb-2 flex items-center justify-between gap-2">
                   <p className="flex items-center gap-2">

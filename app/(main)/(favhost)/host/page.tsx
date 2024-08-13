@@ -62,7 +62,7 @@ export default async function HostPage() {
           good! You can edit anytime.
         </p>
       </header>
-      <div className="mb-28 grid grid-cols-1 justify-center gap-5 sm:grid-cols-2 md:grid-cols-2 md:gap-7 lg:grid-cols-3">
+      <div className="grid grid-cols-1 justify-center gap-5 pb-20 sm:grid-cols-2 md:grid-cols-2 md:gap-7 lg:grid-cols-3">
         {data.map((item: any) => (
           <ListingCard key={item.id!} data={item} isHost={true} user={user} />
         ))}
