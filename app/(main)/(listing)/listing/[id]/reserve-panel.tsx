@@ -6,7 +6,7 @@ import { useFavorites } from "@/app/context/favorite-context";
 import { UserWithRoleAndFavoriteIds } from "@/types";
 import { Listing } from "@prisma/client";
 import { Montserrat } from "next/font/google";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Calendar from "./calendar";
 import { AdultAndChildren } from "./adult-and-children";
 import { useDatePick } from "@/app/context/date-pick-context";
@@ -22,6 +22,7 @@ interface ReservePanelProps {
   user?: UserWithRoleAndFavoriteIds;
   data: Listing;
   params: { id: string };
+  calendarRef: React.RefObject<HTMLDivElement>;
 }
 
 const montserrat = Montserrat({
@@ -29,11 +30,17 @@ const montserrat = Montserrat({
   weight: ["400", "500", "600", "700"],
 });
 
-export const ReservePanel = ({ data, user, params }: ReservePanelProps) => {
+export const ReservePanel = ({
+  calendarRef,
+  data,
+  user,
+  params,
+}: ReservePanelProps) => {
   const { favoriteIds } = useFavorites();
   const isFavorite = favoriteIds.includes(data.id);
 
   const [favorite, setFavorite] = useState(isFavorite);
+  const [message, setMessage] = useState<string | null>(null);
   const fillColor = "fill-zinc-500/50";
 
   useEffect(() => {
@@ -74,6 +81,18 @@ export const ReservePanel = ({ data, user, params }: ReservePanelProps) => {
     }
   };
 
+  const onReserveClick = () => {
+    setMessage("Please select a date");
+
+    if (calendarRef.current) {
+      calendarRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+
+    setTimeout(() => {
+      setMessage("");
+    }, 1000);
+  };
+
   return (
     <>
       <div className="sticky mb-10 mr-5 mt-[48px] hidden h-full w-[30%] min-w-[300px] rounded-lg border bg-white p-6 shadow-[0px_1px_3px_1px_rgba(0,0,0,0.1)] lg:top-24 lg:flex lg:flex-col">
@@ -104,21 +123,36 @@ export const ReservePanel = ({ data, user, params }: ReservePanelProps) => {
           </div>
 
           <div className="flex flex-col items-center justify-center">
-            <Link
-              href={{
-                pathname: `/listing/${params.id}/request-to-book`,
-                query: {
-                  startDate: startDateString,
-                  endDate: endDateString,
-                  adultCount,
-                  childCount,
-                  petCount,
-                },
-              }}
-              className="my-1 flex h-14 w-full items-center justify-center rounded-lg bg-gradient-to-r from-rose-500 to-[#e3326d] px-5 py-3 font-semibold text-white"
-            >
-              Reserve
-            </Link>
+            {startDate && endDate ? (
+              <Link
+                href={{
+                  pathname: `/listing/${params.id}/request-to-book`,
+                  query: {
+                    startDate: startDateString,
+                    endDate: endDateString,
+                    adultCount,
+                    childCount,
+                    petCount,
+                  },
+                }}
+                className="my-1 flex h-14 w-full items-center justify-center rounded-lg bg-gradient-to-r from-rose-500 to-[#e3326d] px-5 py-3 font-semibold text-white"
+              >
+                Reserve
+              </Link>
+            ) : (
+              <div className="relative w-full">
+                <p className="absolute -top-5 right-1/2 translate-x-1/2 text-sm">
+                  {message ?? ""}
+                </p>
+                <button
+                  onClick={onReserveClick}
+                  type="button"
+                  className="my-1 flex h-14 w-full items-center justify-center rounded-lg bg-gradient-to-r from-rose-500 to-[#e3326d] px-5 py-3 font-semibold text-white"
+                >
+                  Select Date
+                </button>
+              </div>
+            )}{" "}
           </div>
 
           <div className="mx-auto flex items-center">
@@ -127,47 +161,66 @@ export const ReservePanel = ({ data, user, params }: ReservePanelProps) => {
         </div>
       </div>
 
-      <div className="fixed bottom-0 flex h-[80px] w-full items-center justify-between border-t bg-white p-6 lg:hidden">
-        <div className="flex items-center gap-2">
-          <h3>
-            <span
-              className={`${montserrat.className} text-[22px] font-semibold`}
+      <div className="fixed bottom-0 z-20 flex h-[80px] w-full items-center justify-between border-t bg-white p-6 lg:hidden">
+        <div className="relative flex w-full items-center justify-between">
+          <div className="flex items-center gap-2">
+            <h3>
+              <span
+                className={`${montserrat.className} text-[22px] font-semibold`}
+              >
+                ${totalPrice}
+              </span>{" "}
+              / night
+            </h3>
+
+            <FavoriteButton
+              data={data}
+              user={user}
+              position=""
+              isFavorite={isFavorite}
+              favorite={favorite}
+              setFavorite={setFavorite}
+              optimisticFavorite={optimisticFavorite}
+              setOptimisticFavorite={setOptimisticFavorite}
+              fillColor={fillColor}
+            />
+          </div>
+
+          {startDate && endDate ? (
+            <Link
+              href={{
+                pathname: `/listing/${params.id}/request-to-book`,
+                query: {
+                  startDate: startDateString,
+                  endDate: endDateString,
+                  stayingNights,
+                  totalPrice,
+                  adultCount,
+                  childCount,
+                  petCount,
+                },
+              }}
+              className="rounded-full bg-gradient-to-r from-rose-500 to-[#e3326d] px-5 py-3 font-semibold text-white"
             >
-              ${totalPrice}
-            </span>{" "}
-            / night
-          </h3>
-
-          <FavoriteButton
-            data={data}
-            user={user}
-            position=""
-            isFavorite={isFavorite}
-            favorite={favorite}
-            setFavorite={setFavorite}
-            optimisticFavorite={optimisticFavorite}
-            setOptimisticFavorite={setOptimisticFavorite}
-            fillColor={fillColor}
-          />
+              Reserve
+            </Link>
+          ) : (
+            <>
+              <button
+                onClick={onReserveClick}
+                type="button"
+                className="rounded-full bg-gradient-to-r from-rose-500 to-[#e3326d] px-5 py-3 font-semibold text-white"
+              >
+                Select Date
+              </button>
+              {message && (
+                <p className="absolute -top-16 right-1/2 z-10 translate-x-1/2 rounded-full bg-white p-3 text-sm">
+                  {message}
+                </p>
+              )}
+            </>
+          )}
         </div>
-
-        <Link
-          href={{
-            pathname: `/listing/${params.id}/request-to-book`,
-            query: {
-              startDate: startDateString,
-              endDate: endDateString,
-              stayingNights,
-              totalPrice,
-              adultCount,
-              childCount,
-              petCount,
-            },
-          }}
-          className="rounded-full bg-gradient-to-r from-rose-500 to-[#e3326d] px-5 py-3 font-semibold text-white"
-        >
-          Reserve
-        </Link>
       </div>
     </>
   );

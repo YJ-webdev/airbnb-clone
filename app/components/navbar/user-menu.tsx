@@ -66,8 +66,14 @@ export const UserMenu = ({ user }: UserMenuProps) => {
                 asChild
                 className="cursor-pointer px-3 py-3 text-[15px] font-light"
               >
-                <Link href="/settings">Account settings</Link>
+                <Link href="/about">About this site</Link>
               </DropdownMenuItem>
+              {/* <DropdownMenuItem
+                asChild
+                className="cursor-pointer px-3 py-3 text-[15px] font-light"
+              >
+                <Link href="/settings">Account settings</Link>
+              </DropdownMenuItem> */}
               <DropdownMenuSeparator />
               <DropdownMenuSeparator />
               <DropdownMenuItem

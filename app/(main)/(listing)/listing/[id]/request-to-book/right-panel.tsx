@@ -1,5 +1,6 @@
 "use client";
 
+import { dummyImages } from "@/app/data/dummy-images";
 import { formatFloor } from "@/app/lib/format-money";
 import { GUEST_SERVICE_FEE } from "@/app/lib/rates";
 import { Listing } from "@prisma/client";
@@ -25,13 +26,14 @@ export const RightPanel = ({
   return (
     <div className="mt-5 flex h-fit flex-col gap-7 rounded-lg border-zinc-300 md:sticky md:top-24 md:mb-14 md:mt-0 md:flex-1 md:border md:p-7 lg:p-10">
       <div className="flex items-center gap-2">
-        <Image
-          src={data.imageSrc[0]}
-          alt="listing image"
-          width={200}
-          height={200}
-          className="mr-2 mt-5 flex-1 md:mr-5 md:mt-0"
-        />
+        <div className="mr-2 mt-5 flex-1 md:mr-5 md:mt-0">
+          <Image
+            src={dummyImages[0]}
+            alt="listing image"
+            width={500}
+            height={500}
+          />
+        </div>
         <div className="flex-1">
           <h2>{data.title}</h2>
           <p className="text-sm">

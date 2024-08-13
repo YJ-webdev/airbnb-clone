@@ -8,6 +8,7 @@ import Calendar2 from "./calendar-expanded";
 import { AdultAndChildren } from "./adult-and-children";
 import { Listing } from "@prisma/client";
 import { UserWithRoleAndFavoriteIds } from "@/types";
+import React, { useRef, useState } from "react";
 
 interface ListingContentProps {
   data: Listing;
@@ -16,6 +17,8 @@ interface ListingContentProps {
 }
 
 export const ListingContent = ({ data, user, params }: ListingContentProps) => {
+  const calendarRef = useRef(null);
+
   return (
     <div className="mx-auto mt-6 flex max-w-7xl">
       <div className="mb-10 flex flex-1 flex-col gap-5 px-5 lg:min-w-[700px]">
@@ -52,11 +55,10 @@ export const ListingContent = ({ data, user, params }: ListingContentProps) => {
               </h3>
               <ListingMap lat={data?.lat!} lng={data?.lng!} />
             </div>
-            <div className="flex flex-col space-y-3">
+            <div ref={calendarRef} className="flex flex-col space-y-3">
               <h3 className="text-[19px] font-semibold md:text-[20px]">
                 Pick Your Stay Dates
               </h3>
-
               <Calendar2 />
             </div>
             <div className="mb-16 flex flex-col space-y-3 lg:mb-0 lg:hidden">
@@ -71,7 +73,12 @@ export const ListingContent = ({ data, user, params }: ListingContentProps) => {
         </div>
       </div>
 
-      <ReservePanel data={data} user={user} params={params} />
+      <ReservePanel
+        calendarRef={calendarRef}
+        data={data}
+        user={user}
+        params={params}
+      />
     </div>
   );
 };

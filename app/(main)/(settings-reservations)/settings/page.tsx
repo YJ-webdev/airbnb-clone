@@ -22,7 +22,7 @@ export default async function SettingsPage() {
     <div className="container mb-28 mt-10 flex max-w-[1280px] sm:min-h-[60vh]">
       <div className="flex w-full flex-col">
         <header className="mb-8 flex flex-col items-baseline justify-center">
-          <h1 className="text-xl font-semibold">Settings</h1>
+          <h1 className="text-2xl font-semibold">Settings</h1>
           <p>
             Your name, profile image and contact information will be shown to
             guests.

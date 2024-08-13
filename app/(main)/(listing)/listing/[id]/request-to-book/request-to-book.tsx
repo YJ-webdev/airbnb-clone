@@ -15,6 +15,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import { formatFloor } from "@/app/lib/format-money";
 import { GUEST_SERVICE_FEE } from "@/app/lib/rates";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!,
@@ -152,7 +153,24 @@ export default function RequestToBook({
               />
             </Elements>
           ) : (
-            <p>Loading payment details...</p>
+            <div className="mb-7 flex flex-col gap-2">
+              <div className="mb-2 flex items-center justify-between gap-2">
+                <Skeleton className="h-6 w-48" />{" "}
+                <Skeleton className="h-6 w-48" />{" "}
+              </div>
+              <div className="flex flex-col gap-5">
+                <Skeleton className="h-14 w-full" />{" "}
+                <div className="flex flex-col">
+                  <Skeleton className="relative h-14 w-full rounded-t-lg" />{" "}
+                  <div className="flex">
+                    <Skeleton className="relative h-14 w-full rounded-bl-lg" />{" "}
+                    <Skeleton className="relative h-14 w-full rounded-br-lg" />{" "}
+                  </div>
+                </div>
+                <Skeleton className="h-14" />
+                <Skeleton className="h-14 w-full" />
+              </div>
+            </div>
           )}
         </div>
       </div>

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Nunito } from "next/font/google";
+import { Nunito, Nunito_Sans } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 
@@ -7,7 +7,7 @@ import getSession from "./lib/get-session";
 import { FavoritesProvider } from "./context/favorite-context";
 import { ProgressProvider } from "./context/progress-context";
 
-const font = Nunito({ subsets: ["latin"] });
+const font = Nunito_Sans({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Airbnb",

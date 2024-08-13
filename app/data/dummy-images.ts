@@ -1,5 +1,7 @@
 export const dummyImages = [
-  "https://media.cntraveler.com/photos/59efa0c2ae4bf22242a1f7c8/16:9/w_1920%2Cc_limit/Exterior1-PrincedeGalles-Paris-CRHotel.jpg",
+  "https://media.cntraveler.com/photos/66ba2c6a5d0693dd3eeb672d/master/w_1920%2Cc_limit/strPMIXRcl.1421561.jpg",
+  "https://media.cntraveler.com/photos/66a12c55995f9946359458a2/master/w_1920%2Cc_limit/Ikos-Porto-Petro-Deluxe-Three-Bedroom-Bungalow-Suite-Private-Pool--june23-pr-global.jpg",
+  "https://media.cntraveler.com/photos/66a12c56a4b706b8c4369a02/master/w_1920%2Cc_limit/Cala%2520Domingos-july23-pr.jpeg",
   "https://media.cntraveler.com/photos/6697e6a5c217cff59703e583/16:9/w_1920,c_limit/Berkeley%20Denver_dsc_3292.jpg",
   "https://media.cntraveler.com/photos/5d6e22fb23390800088706dc/master/w_1920%2Cc_limit/00-venice-generator-2019-GenVen_C1_36-_RGB.jpg",
   "https://media.cntraveler.com/photos/668317de2e9e6c9cb1546fcc/master/w_1920%2Cc_limit/Henrietta%2520Suites_King%2520bedroom%25201%2520e.JPG",

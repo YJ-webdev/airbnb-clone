@@ -32,7 +32,7 @@ export default async function ReservationsPage() {
       },
     },
     orderBy: {
-      createdAt: "asc",
+      createdAt: "desc",
     },
   });
 
