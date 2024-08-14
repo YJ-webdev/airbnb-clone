@@ -1,5 +1,5 @@
 import Footer from "@/app/components/footer";
-import { Navbar } from "@/app/components/navbar/navbar";
+import { Navbar } from "@/app/components/navbar/Navbar";
 
 export default function HostLayout({
   children,
