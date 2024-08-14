@@ -21,7 +21,7 @@ export const UserAvatar = ({ user }: UserAvatarProps) => {
         )
       ) : (
         <>
-          <AvatarImage src="images/user.png" className="h-auto w-auto" />
+          <AvatarImage src="/images/user.png" className="h-auto w-auto" />
           <AvatarFallback>
             <Skeleton />
           </AvatarFallback>

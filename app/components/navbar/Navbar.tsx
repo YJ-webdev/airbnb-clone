@@ -12,7 +12,7 @@ type NavbarProps = {
   width?: string;
 };
 
-const Navbar = async ({ width }: NavbarProps) => {
+export const Navbar = async ({ width }: NavbarProps) => {
   const session = await getSession();
   const user = session?.user;
   const userId = user?.id as string;
@@ -55,5 +55,3 @@ const Navbar = async ({ width }: NavbarProps) => {
     </div>
   );
 };
-
-export default Navbar;

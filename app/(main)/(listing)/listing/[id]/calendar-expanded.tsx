@@ -17,8 +17,7 @@ export default function Calendar2() {
 
   const handleDateChange = (newValue: any) => {
     setStartDate(newValue[0]);
-    setEndDate(newValue[1]);
-    console.log("Selected dates: ", newValue); // newValue is an array with the start and end dates
+    setEndDate(newValue[1]); // newValue is an array with the start and end dates
   };
   return (
     <>

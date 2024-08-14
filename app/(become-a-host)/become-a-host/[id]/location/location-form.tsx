@@ -62,8 +62,6 @@ export const LocationForm = ({
             `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${process.env.NEXT_PUBLIC_GOOGLE_GEOCODING_API_KEY}`,
           );
 
-          console.log("Geocoding Response:", response.data);
-
           if (
             response.data.status === "OK" &&
             response.data.results.length > 0

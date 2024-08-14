@@ -44,7 +44,6 @@ const AddressMap = ({ location, setLat, setLng }: AddressMapProps) => {
       setMarkerLocation(newMarkerLocation);
       setLat(lat);
       setLng(lng);
-      console.log("Marker dragged to:", newMarkerLocation); // Log new position
     }
   };
 

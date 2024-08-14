@@ -1,5 +1,5 @@
 import Footer from "@/app/components/footer";
-import Navbar from "@/app/components/navbar/navbar";
+import { Navbar } from "@/app/components/navbar/navbar";
 
 export default function SettingsLayout({
   children,

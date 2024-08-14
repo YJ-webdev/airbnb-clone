@@ -108,7 +108,6 @@ const ImageUpload = ({ setDataLogged, setImageSrc }: ImageUploadProps) => {
       className={`relative ${index === 0 ? "col-span-2 h-[400px]" : "col-span-1 h-[200px]"}`}
       onClick={(event) => {
         event.stopPropagation();
-        console.log(file);
         openModal(index);
       }}
     >
