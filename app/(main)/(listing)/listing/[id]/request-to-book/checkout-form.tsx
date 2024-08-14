@@ -36,6 +36,7 @@ interface CheckoutFormProps {
   endDate: Dayjs;
   adults: number;
   stayingNights: number;
+  calendarRef: React.RefObject<HTMLDivElement>;
   pets?: number;
   childCount?: number;
   data: Listing & {
@@ -55,6 +56,7 @@ export const CheckoutForm = ({
   stayingNights,
   pets,
   childCount,
+  calendarRef,
 }: CheckoutFormProps) => {
   const countryData = useMemo(() => Country.getAllCountries(), []);
 
@@ -104,6 +106,11 @@ export const CheckoutForm = ({
     },
   };
 
+  const onClick = () => {
+    if (calendarRef.current) {
+      calendarRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -146,10 +153,8 @@ export const CheckoutForm = ({
 
       try {
         await createReserevation(formData);
-        redirect("/trips");
       } catch (error) {
-        console.error("Failed to create reservation:", error);
-        setMessage("Reservation creation failed. Please contact support.");
+        setMessage("Please contact support.");
       }
     } else {
       console.log("Payment status:", paymentIntent.status);
@@ -352,11 +357,21 @@ export const CheckoutForm = ({
       </div>
       <hr />
       <GroundRules />
-      <SubmitButton
-        isPending={isProcessing}
-        label="Confirm and Pay"
-        className="mb-5 h-14"
-      ></SubmitButton>
+      {startDate.isValid() && endDate.isValid() ? (
+        <SubmitButton
+          isPending={isProcessing}
+          label="Confirm and Pay"
+          className="mb-5 h-14"
+        ></SubmitButton>
+      ) : (
+        <SubmitButton
+          onClick={onClick}
+          type="button"
+          label="Select End Date"
+          className="mb-5 h-14"
+        ></SubmitButton>
+      )}
+
       {message && (
         <div
           id="payment-message"

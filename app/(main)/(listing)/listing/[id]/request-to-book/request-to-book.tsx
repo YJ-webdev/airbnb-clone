@@ -4,7 +4,7 @@ import { UserWithRoleAndFavoriteIds } from "@/types";
 import { Listing } from "@prisma/client";
 import { ChevronLeft } from "lucide-react";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { RightPanel } from "./right-panel";
 import { useRouter } from "next/navigation";
 import dayjs from "dayjs";
@@ -47,6 +47,8 @@ export default function RequestToBook({
 
   const [startDate, setStartDate] = useState(initialStartDate || null);
   const [endDate, setEndDate] = useState(initialEndDate || null);
+
+  const calendarRef = useRef<HTMLDivElement>(null);
 
   const stayingNights = endDate?.diff(startDate, "day") || 1;
   const amount = formatFloor(
@@ -96,7 +98,9 @@ export default function RequestToBook({
         <button onClick={handleGoBack}>
           <ChevronLeft className="h-8 w-8 rounded-full bg-zinc-500/10 p-2 hover:bg-zinc-500/10 md:bg-white" />
         </button>
-        <h1 className="text-xl font-semibold">Confirm and pay</h1>
+        <h1 ref={calendarRef} className="text-xl font-semibold">
+          Confirm and pay
+        </h1>
       </div>
 
       <div className="mb-5 mt-2 flex flex-col md:w-full md:flex-row-reverse md:gap-7 lg:gap-12">
@@ -141,6 +145,7 @@ export default function RequestToBook({
           {clientSecret ? (
             <Elements options={options} stripe={stripePromise}>
               <CheckoutForm
+                calendarRef={calendarRef}
                 user={user}
                 startDate={startDate}
                 endDate={endDate}

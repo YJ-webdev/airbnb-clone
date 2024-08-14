@@ -9,7 +9,6 @@ import {
   DateRangePickerProps,
 } from "@mui/x-date-pickers-pro/DateRangePicker";
 import { SingleInputDateRangeFieldProps } from "@mui/x-date-pickers-pro/SingleInputDateRangeField";
-import { Button } from "@mui/material";
 
 interface DateRangeButtonFieldProps
   extends SingleInputDateRangeFieldProps<Dayjs> {
@@ -118,6 +117,7 @@ export default function ResponsiveDateRangePickers({
           setValue(newValue);
           setStartDate(dayjs(newValue[0]));
           setEndDate(dayjs(newValue[1]));
+          console.log(startDate, endDate);
         }}
       />
     </LocalizationProvider>
