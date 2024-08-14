@@ -4,7 +4,7 @@ import prisma from "./lib/db";
 import { Listing } from "@prisma/client";
 import { FolderSearch } from "lucide-react";
 import getSession from "./lib/get-session";
-import Navbar from "./components/navbar/navbar";
+import { Navbar } from "./components/navbar/Navbar";
 
 export default async function Home({
   searchParams,

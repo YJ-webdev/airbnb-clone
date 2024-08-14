@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import dayjs, { Dayjs } from "dayjs";
 import useForkRef from "@mui/utils/useForkRef";
 import { DateRange, FieldType } from "@mui/x-date-pickers-pro/models";
@@ -9,7 +9,7 @@ import {
   DateRangePickerProps,
 } from "@mui/x-date-pickers-pro/DateRangePicker";
 import { SingleInputDateRangeFieldProps } from "@mui/x-date-pickers-pro/SingleInputDateRangeField";
-import { DemoItem, DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { Button } from "@mui/material";
 
 interface DateRangeButtonFieldProps
   extends SingleInputDateRangeFieldProps<Dayjs> {
@@ -17,9 +17,12 @@ interface DateRangeButtonFieldProps
   open?: boolean;
 }
 
-type DateRangeButtonFieldComponent = ((
-  props: DateRangeButtonFieldProps & React.RefAttributes<HTMLDivElement>,
-) => React.JSX.Element) & { fieldType?: FieldType };
+type DateRangeButtonFieldComponent = React.ForwardRefExoticComponent<
+  DateRangeButtonFieldProps & React.RefAttributes<HTMLDivElement>
+> & {
+  displayName?: string;
+  fieldType?: FieldType;
+};
 
 const DateRangeButtonField = React.forwardRef(
   (props: DateRangeButtonFieldProps, ref: React.Ref<HTMLElement>) => {
@@ -40,16 +43,16 @@ const DateRangeButtonField = React.forwardRef(
         disabled={disabled}
         ref={handleRef}
         aria-label={ariaLabel}
-        onClick={() => {
-          setOpen?.((prev) => !prev);
-        }}
+        onClick={() => setOpen?.((prev) => !prev)}
+        className="m-0 bg-white p-0 underline hover:bg-white active:bg-white"
       >
-        <p className="underline">{label}</p>
+        {label ? `${label}` : "Pick a date range"}
       </button>
     );
   },
 ) as DateRangeButtonFieldComponent;
 
+DateRangeButtonField.displayName = "DateRangeButtonField";
 DateRangeButtonField.fieldType = "single-input";
 
 const ButtonDateRangePicker = React.forwardRef(
@@ -62,7 +65,7 @@ const ButtonDateRangePicker = React.forwardRef(
     return (
       <DateRangePicker
         slots={{ field: DateRangeButtonField, ...props.slots }}
-        slotProps={{ field: { setOpen, open } as any }}
+        slotProps={{ field: { setOpen } as any }}
         ref={ref}
         {...props}
         open={open}
@@ -72,6 +75,8 @@ const ButtonDateRangePicker = React.forwardRef(
     );
   },
 );
+
+ButtonDateRangePicker.displayName = "ButtonDateRangePicker";
 
 interface DateRangePickerWithButtonFieldProps {
   startDate: Dayjs;

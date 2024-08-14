@@ -1,10 +1,10 @@
 import { cn } from "@/lib/utils";
 import getSession from "@/app/lib/get-session";
 
-import { Logo } from "./logo";
+import { Logo } from "./Logo";
 import { LoginDialog } from "../form/login-dialog";
 import { UserMenu } from "./user-menu";
-import { Search } from "./search";
+import { Search } from "./Search";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { continueListing } from "@/app/actions/create-listing";
 
