@@ -20,8 +20,8 @@ export const ListingContent = ({ data, user, params }: ListingContentProps) => {
   const calendarRef = useRef(null);
 
   return (
-    <div className="mx-auto mt-6 flex max-w-7xl">
-      <div className="mb-10 flex flex-1 flex-col gap-5 px-5 lg:min-w-[700px]">
+    <div className="flex">
+      <div className="mb-10 flex flex-1 flex-col gap-5 lg:min-w-[700px]">
         <h1 className="-mb-1 text-xl font-semibold tracking-tight md:tracking-normal lg:text-2xl">
           {data.title}
         </h1>

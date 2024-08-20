@@ -7,7 +7,7 @@ export default async function BecomeAHostPage() {
   const user = session?.user;
 
   if (!user || !user.id) {
-    return redirect("/login");
+    return redirect("/");
   }
 
   return (

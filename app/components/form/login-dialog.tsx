@@ -27,13 +27,20 @@ import { FormInput } from "./form-input";
 
 import { Login, LoginSchema } from "@/schema/auth";
 import { SubmitButton } from "./submit-button";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 interface LoginDialogProps {
   urlError?: string;
   title?: string;
+  subTitle?: string;
 }
 
-export const LoginDialog = ({ urlError, title }: LoginDialogProps) => {
+export const LoginDialog = ({
+  urlError,
+  title,
+  subTitle,
+}: LoginDialogProps) => {
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
   const [isPending, startTransition] = useTransition();
@@ -46,6 +53,8 @@ export const LoginDialog = ({ urlError, title }: LoginDialogProps) => {
     },
   });
 
+  const router = useRouter();
+
   const onSubmit = (values: Login) => {
     setError("");
     setSuccess("");
@@ -54,10 +63,6 @@ export const LoginDialog = ({ urlError, title }: LoginDialogProps) => {
       login(values).then((data) => {
         setError(data?.error);
         setSuccess(data?.success);
-
-        // if (!data?.error) {
-        //   window.location.reload();
-        // }
       });
     });
   };
@@ -67,14 +72,14 @@ export const LoginDialog = ({ urlError, title }: LoginDialogProps) => {
       <DialogHeader
         className={cn(
           "sticky top-0 -mb-4 border-b-[1px] px-6 pb-6 pt-6 text-center",
-          title && "mt-5 border-none",
+          title && "border-none",
         )}
       >
         <DialogTitle className="text-center">
           {title ?? "Welcome back!"}
         </DialogTitle>
         <DialogDescription className="text-center">
-          {title ? "please try again" : "Log in with your account"}
+          {subTitle ?? "Log in with your account"}
         </DialogDescription>
       </DialogHeader>
       <ScrollArea className="flex-1 overflow-auto p-6">
@@ -123,6 +128,7 @@ export const LoginDialog = ({ urlError, title }: LoginDialogProps) => {
             <FormSuccess message={success} />
 
             <SubmitButton isPending={isPending} label="Log in" />
+
             <p className="text-center text-sm hover:underline">
               You don&apos;t have an account?
             </p>

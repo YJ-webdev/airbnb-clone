@@ -3,7 +3,7 @@
 import { UserWithRoleAndFavoriteIds } from "@/types";
 import { Listing } from "@prisma/client";
 import { ChevronLeft } from "lucide-react";
-import { useSearchParams } from "next/navigation";
+import { redirect, useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { RightPanel } from "./right-panel";
 import { useRouter } from "next/navigation";
@@ -32,7 +32,7 @@ export default function RequestToBook({
   };
   user: UserWithRoleAndFavoriteIds;
 }) {
-  if (!user) console.log("login");
+  if (!user) redirect("/");
 
   const [clientSecret, setClientSecret] = useState("");
 

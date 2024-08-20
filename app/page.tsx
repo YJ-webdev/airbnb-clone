@@ -2,9 +2,10 @@ import { Filter } from "./components/navbar/filter";
 import { ListingCard } from "./components/listing-card";
 import prisma from "./lib/db";
 import { Listing } from "@prisma/client";
-import { FolderSearch } from "lucide-react";
+import { FolderSearch, Scroll } from "lucide-react";
 import getSession from "./lib/get-session";
 import { Navbar } from "./components/navbar/Navbar";
+import Footer from "./components/footer";
 
 export default async function Home({
   searchParams,
@@ -32,19 +33,16 @@ export default async function Home({
         <Filter />
 
         {listings.length === 0 ? (
-          <div className="flex h-full w-full flex-col items-center justify-center">
-            <div className="absolute top-1/2 flex -translate-y-1/2 flex-col space-y-8">
-              <FolderSearch strokeWidth={1.5} size={36} className="mx-auto" />
-              <div className="flex flex-col space-y-2 text-center">
-                <h1 className="text-2xl font-semibold">No listings yet.</h1>
-                <p className="text-foreground/50">
-                  Please try searching for a city or other category.
-                </p>
-              </div>
+          <div className="mb-5 flex h-[70vh] w-full flex-1 items-center justify-center rounded-lg bg-zinc-50 text-center">
+            <div className="flex flex-col items-center justify-center gap-2">
+              <Scroll strokeWidth={1.5} size={24} />
+              <p className="text-lg font-semibold">
+                No listings for this category.
+              </p>
             </div>
           </div>
         ) : (
-          <div className="mb-28 grid grid-cols-1 justify-between gap-5 sm:grid-cols-2 md:gap-6 lg:grid-cols-3 xl:grid-cols-4">
+          <div className="mb-20 grid grid-cols-1 justify-between gap-5 sm:grid-cols-2 md:gap-6 lg:grid-cols-3 xl:grid-cols-4">
             {listings.map((item) => (
               <ListingCard
                 key={item.id!}
@@ -56,6 +54,7 @@ export default async function Home({
           </div>
         )}
       </div>
+      <Footer />
     </>
   );
 }

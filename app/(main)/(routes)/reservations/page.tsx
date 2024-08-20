@@ -37,8 +37,8 @@ export default async function ReservationsPage() {
   });
 
   return (
-    <div className="container mt-10 min-h-[80vh] max-w-[1280px]">
-      <header className="mb-8 flex flex-col items-baseline justify-center">
+    <>
+      <header className="flex flex-col items-baseline justify-center">
         <h1 className="text-2xl font-semibold">
           {data.length === 0
             ? "You have no reservations"
@@ -48,14 +48,14 @@ export default async function ReservationsPage() {
       </header>
 
       {data.length === 0 ? (
-        <div className="flex h-[70vh] w-full items-center justify-center rounded-lg bg-zinc-50 text-center">
-          <div className="flex flex-col items-center gap-2">
+        <div className="mb-5 flex w-full flex-1 items-center justify-center rounded-lg bg-zinc-50 text-center">
+          <div className="flex flex-col items-center justify-center gap-2">
             <Scroll strokeWidth={1.5} size={24} />
-            <p className="text-lg font-semibold">You have no reservations</p>
+            <p className="text-lg font-semibold">You have no reservations.</p>
           </div>
         </div>
       ) : (
-        <div className="flex flex-col gap-7 pb-20">
+        <div className="flex flex-1 flex-col gap-7 pb-20">
           {data.map((item) => (
             <div
               key={item.id}
@@ -140,6 +140,6 @@ export default async function ReservationsPage() {
           ))}{" "}
         </div>
       )}
-    </div>
+    </>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import { Width } from "./navbar/Navbar";
 
 interface FooterSectionProps {
   title: string;
@@ -59,17 +60,14 @@ const footerSections: FooterSectionData[] = [
   },
 ];
 
-type FooterProps = {
-  width?: string;
-};
-
-export default function Footer({ width }: FooterProps) {
+export default function Footer({ width }: Width) {
   return (
     <footer className="flex h-full border-t bg-zinc-200">
       <div
         className={cn(
           "mx-auto flex w-full max-w-[1400px] flex-col gap-y-4 text-left text-sm",
-          width ? `max-w-[1280px]` : "max-w-[1400px]",
+          width === "1280px" && "max-w-[1280px]",
+          width === "1100px" && "max-w-[1100px]",
         )}
       >
         <div className="mb-12 mt-8 flex w-full justify-start md:gap-20 lg:gap-44">

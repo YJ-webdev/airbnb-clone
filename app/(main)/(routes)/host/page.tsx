@@ -51,8 +51,8 @@ export default async function HostPage() {
   }
 
   return (
-    <div className="container relative mt-10">
-      <header className="mb-8 flex flex-col items-baseline justify-center">
+    <>
+      <header className="flex flex-col items-baseline justify-center">
         <h1 className="text-2xl font-semibold">
           Your listings
           <span>({data.length})</span>
@@ -69,7 +69,7 @@ export default async function HostPage() {
       </div>
       <form
         action={createNewListingWithId}
-        className="fixed right-[8px] top-[100px] z-20 lg:right-[5%]"
+        className="fixed right-[1%] top-[100px] z-20 lg:right-[8%]"
       >
         <button
           type="submit"
@@ -80,6 +80,6 @@ export default async function HostPage() {
             : "Create a new listing"}
         </button>
       </form>
-    </div>
+    </>
   );
 }

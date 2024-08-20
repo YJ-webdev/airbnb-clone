@@ -112,7 +112,7 @@ export async function updateCategory(userId: string, formData: FormData) {
   });
 
   if (!user) {
-    return redirect("/login");
+    return redirect("/");
   }
 
   const listing = await prisma.listing.update({
@@ -136,7 +136,7 @@ export async function createCategory(userId: string, formData: FormData) {
   });
 
   if (!user) {
-    return redirect("/login");
+    return redirect("/");
   }
 
   const listing = await prisma.listing.create({
@@ -162,7 +162,7 @@ export async function createFloorPlan(userId: string, formData: FormData) {
   });
 
   if (!user) {
-    return redirect("/login");
+    return redirect("/");
   }
 
   const data = await prisma.listing.update({
@@ -197,7 +197,7 @@ export async function createLocation(userId: string, formData: FormData) {
   });
 
   if (!user) {
-    return redirect("/login");
+    return redirect("/");
   }
 
   const data = await prisma.listing.update({
@@ -228,7 +228,7 @@ export async function createImages(userId: string, formData: FormData) {
   });
 
   if (!user) {
-    return redirect("/login");
+    return redirect("/");
   }
 
   const data = await prisma.listing.update({
@@ -254,7 +254,7 @@ export async function createDescription(userId: string, formData: FormData) {
   });
 
   if (!user) {
-    return redirect("/login");
+    return redirect("/");
   }
 
   const data = await prisma.listing.update({
@@ -281,7 +281,7 @@ export async function createPrice(userId: string, formData: FormData) {
   });
 
   if (!user) {
-    return redirect("/login");
+    return redirect("/");
   }
 
   const data = await prisma.listing.update({
@@ -306,7 +306,7 @@ export async function createApproval(userId: string, formData: FormData) {
   });
 
   if (!user) {
-    return redirect("/login");
+    return redirect("/");
   }
 
   const data = await prisma.listing.update({

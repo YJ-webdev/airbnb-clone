@@ -3,20 +3,21 @@
 import prisma from "../lib/db";
 import { UserWithRoleAndFavoriteIds } from "@/types";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 export async function updateFavorite(userId: string, listingId: string) {
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+    select: { favoriteIds: true },
+  });
+
+  if (!user) {
+    //TO-DO: open login modal
+    redirect("/");
+    return null; // Return null or some indicator of failure
+  }
+
   try {
-    const user = await prisma.user.findUnique({
-      where: { id: userId },
-      select: { favoriteIds: true },
-    });
-
-    if (!user) {
-      //TO-DO: open login modal
-      console.log("No user found");
-      return null; // Return null or some indicator of failure
-    }
-
     revalidatePath("/favorites");
 
     const updatedFavorites = user.favoriteIds.includes(listingId)

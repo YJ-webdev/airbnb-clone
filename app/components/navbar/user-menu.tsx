@@ -36,91 +36,81 @@ export const UserMenu = ({ user }: UserMenuProps) => {
             <UserAvatar user={user} />
           </div>
         </DropdownMenuTrigger>
-        <DropdownMenuContent
-          align="end"
-          className="top-12 w-60 space-y-0 overflow-hidden rounded-xl border-none py-1 shadow-[0_2px_10px_3px_rgba(0,0,0,0.05)]"
-        >
-          {user ? (
-            <>
-              <DropdownMenuItem
-                asChild
-                className="cursor-pointer px-3 py-3 text-[15px] font-semibold"
-              >
-                <Link href="/reservations">Trips</Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                asChild
-                className="cursor-pointer px-3 py-3 text-[15px] font-light"
-              >
-                <Link href="/favorite">Wishlists</Link>
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem className="cursor-pointer px-3 py-3 text-[15px] font-light">
-                <form action={continueListingWithId} className="w-full">
-                  <button type="submit" className="w-full text-start">
-                    Airbnb your home
-                  </button>
-                </form>
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                asChild
-                className="cursor-pointer px-3 py-3 text-[15px] font-light"
-              >
-                <Link href="/about">About this site</Link>
-              </DropdownMenuItem>
-              {/* <DropdownMenuItem
-                asChild
-                className="cursor-pointer px-3 py-3 text-[15px] font-light"
-              >
-                <Link href="/settings">Account settings</Link>
-              </DropdownMenuItem> */}
-              <DropdownMenuSeparator />
-              <DropdownMenuSeparator />
-              <DropdownMenuItem
-                className="cursor-pointer px-3 py-3 text-[15px] font-light"
-                onClick={() => signOut()}
-              >
-                Log out
-              </DropdownMenuItem>
-            </>
-          ) : (
-            <>
-              <Dialog>
-                <DialogTrigger asChild>
-                  <DropdownMenuItem
-                    onSelect={(e) => e.preventDefault()}
-                    className="cursor-pointer px-3 py-3 text-[15px] font-semibold"
-                  >
-                    Log in
-                  </DropdownMenuItem>
-                </DialogTrigger>
-                <DialogContent className="flex max-h-[75%] flex-col overflow-hidden p-0">
-                  <LoginDialog />
-                </DialogContent>
-              </Dialog>
-              <Dialog>
-                <DialogTrigger asChild>
-                  <DropdownMenuItem
-                    onSelect={(e) => e.preventDefault()}
-                    className="cursor-pointer px-3 py-3 text-[15px] font-light"
-                  >
-                    Sign Up
-                  </DropdownMenuItem>
-                </DialogTrigger>
-                <DialogContent className="flex max-h-[75%] flex-col overflow-hidden p-0">
-                  <RegisterDialog />
-                </DialogContent>
-              </Dialog>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem
-                onClick={() => {}}
-                className="cursor-pointer px-3 py-3 text-[15px] font-light"
-              >
-                Airbnb your home
-              </DropdownMenuItem>
-            </>
-          )}
-        </DropdownMenuContent>
+
+        {user ? (
+          <DropdownMenuContent
+            align="end"
+            className="top-12 w-60 space-y-0 overflow-hidden rounded-xl border-none py-1 shadow-[0_2px_10px_3px_rgba(0,0,0,0.05)]"
+          >
+            <DropdownMenuItem
+              asChild
+              className="cursor-pointer px-3 py-3 text-[15px] font-semibold"
+            >
+              <Link href="/reservations">Trips</Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              asChild
+              className="cursor-pointer px-3 py-3 text-[15px] font-light"
+            >
+              <Link href="/favorite">Wishlists</Link>
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem className="cursor-pointer px-3 py-3 text-[15px] font-light">
+              <form action={continueListingWithId} className="w-full">
+                <button type="submit" className="w-full text-start">
+                  Airbnb your home
+                </button>
+              </form>
+            </DropdownMenuItem>
+
+            <DropdownMenuItem
+              asChild
+              className="cursor-pointer px-3 py-3 text-[15px] font-light"
+            >
+              <Link href="/settings">Account settings</Link>
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuSeparator />
+            <DropdownMenuItem
+              className="cursor-pointer px-3 py-3 text-[15px] font-light"
+              onClick={() => signOut()}
+            >
+              Log out
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        ) : (
+          <DropdownMenuContent
+            align="end"
+            className="top-12 w-40 space-y-0 overflow-hidden rounded-xl border-none py-1 shadow-[0_2px_10px_3px_rgba(0,0,0,0.05)]"
+          >
+            <Dialog>
+              <DialogTrigger asChild>
+                <DropdownMenuItem
+                  onSelect={(e) => e.preventDefault()}
+                  className="cursor-pointer px-3 py-3 text-[15px] font-semibold"
+                >
+                  Log in
+                </DropdownMenuItem>
+              </DialogTrigger>
+              <DialogContent className="flex max-h-[75%] flex-col overflow-hidden p-0">
+                <LoginDialog />
+              </DialogContent>
+            </Dialog>
+            <Dialog>
+              <DialogTrigger asChild>
+                <DropdownMenuItem
+                  onSelect={(e) => e.preventDefault()}
+                  className="cursor-pointer px-3 py-3 text-[15px] font-light"
+                >
+                  Sign Up
+                </DropdownMenuItem>
+              </DialogTrigger>
+              <DialogContent className="flex max-h-[75%] flex-col overflow-hidden p-0">
+                <RegisterDialog />
+              </DialogContent>
+            </Dialog>
+          </DropdownMenuContent>
+        )}
       </DropdownMenu>
     </>
   );

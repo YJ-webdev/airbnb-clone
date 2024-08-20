@@ -21,6 +21,8 @@ import { FormButton } from "./form-button";
 import { UpdateProfile, UpdateProfileSchema } from "@/schema/profile";
 import { User } from "@prisma/client";
 import { UserWithRoleAndFavoriteIds } from "@/types";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { Pencil } from "lucide-react";
 
 interface PersonalInfoProps {
   user: UserWithRoleAndFavoriteIds;
@@ -57,35 +59,54 @@ export const PersonalForm = ({ user }: PersonalInfoProps) => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="relative flex w-full flex-col items-end gap-6"
+        className="relative flex w-full flex-col gap-6 md:w-3/5 md:flex-row"
       >
-        <FormField
-          control={form.control}
-          name="name"
-          render={({ field }) => (
-            <FormItem className="w-full">
-              <FormControl>
-                <FormInput {...field} id="name" label="Name" />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
+        <Avatar
+          onClick={() => {}}
+          className="group relative m-1 flex h-20 w-20 items-center justify-center self-center bg-zinc-200 transition-all duration-200 md:self-start"
+        >
+          {user.image ? (
+            <AvatarImage
+              src={user.image}
+              className="h-full w-full group-hover:brightness-[70%]"
+            />
+          ) : (
+            <div className="flex h-full w-full items-center justify-center transition-all duration-200 group-hover:opacity-50">
+              <span className="text-center text-lg font-medium text-white">
+                {user.email?.charAt(0).toUpperCase()}
+              </span>
+            </div>
           )}
-        />
+          <Pencil className="absolute z-10 h-6 w-6 text-white opacity-0 transition-all duration-200 group-hover:opacity-100" />
+        </Avatar>
+        <div className="flex flex-1 flex-col items-end gap-3">
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem className="w-full">
+                <FormControl>
+                  <FormInput {...field} id="name" label="Name" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem className="w-full">
-              <FormControl>
-                <FormInput {...field} id="email" label="Email" />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem className="w-full">
+                <FormControl>
+                  <FormInput {...field} id="email" label="Email" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        {/* <FormField
+          {/* <FormField
           control={form.control}
           name="phone"
           render={({ field }) => (
@@ -138,10 +159,11 @@ export const PersonalForm = ({ user }: PersonalInfoProps) => {
           )}
         /> */}
 
-        <FormButton disabled={isPending} />
-        <div className="absolute bottom-0 right-1/2 flex translate-x-1/2 items-center justify-center gap-x-2">
-          <FormError message={error || undefined} />
-          <FormSuccess message={success || undefined} />
+          <FormButton disabled={isPending} />
+          <div className="absolute bottom-0 right-1/2 flex translate-x-1/2 items-center justify-center gap-x-2">
+            <FormError message={error || undefined} />
+            <FormSuccess message={success || undefined} />
+          </div>
         </div>
       </form>
     </Form>

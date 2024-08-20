@@ -134,13 +134,7 @@ const ImageUpload = ({ setDataLogged, setImageSrc }: ImageUploadProps) => {
                 Make cover photo
               </DropdownMenuItem>
             )}
-            <DropdownMenuItem
-              className="cursor-pointer py-3 font-semibold"
-              onClick={(event) => event.stopPropagation()}
-            >
-              <Edit size={13} className="mr-2" />
-              Edit
-            </DropdownMenuItem>
+
             <DropdownMenuItem
               className="cursor-pointer py-3 font-semibold"
               onClick={(event) => removeFile(file, event)}

@@ -13,7 +13,7 @@ export default async function CategoryPage({
   const user = session?.user;
 
   if (!user || !user.id) {
-    return redirect("/login");
+    return redirect("/");
   }
 
   const { listingData } = await getListingData(params.id);

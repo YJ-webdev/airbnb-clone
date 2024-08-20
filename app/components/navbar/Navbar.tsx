@@ -8,11 +8,11 @@ import { Search } from "./Search";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { continueListing } from "@/app/actions/create-listing";
 
-type NavbarProps = {
-  width?: string;
+export type Width = {
+  width?: "1100px" | "1280px";
 };
 
-export const Navbar = async ({ width }: NavbarProps) => {
+export const Navbar = async ({ width }: Width) => {
   const session = await getSession();
   const user = session?.user;
   const userId = user?.id as string;
@@ -22,8 +22,9 @@ export const Navbar = async ({ width }: NavbarProps) => {
     <div className="sticky top-0 z-50 border-b bg-white py-4 shadow-sm">
       <nav
         className={cn(
-          "mx-auto flex items-center justify-between gap-3 px-5 md:gap-0",
-          width ? `max-w-[1280px]` : "max-w-[1400px]",
+          "mx-auto flex max-w-[1400px] items-center justify-between gap-3 px-5 md:gap-0",
+          width === "1280px" && `max-w-[1280px]`,
+          width === "1100px" && `max-w-[1100px]`,
         )}
       >
         <Logo />

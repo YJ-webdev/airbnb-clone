@@ -12,7 +12,7 @@ export default async function FloorPlanPage({
   const user = session?.user;
 
   if (!user) {
-    return redirect("/login");
+    return redirect("/");
   }
 
   const { listingData } = await getListingData(params.id);

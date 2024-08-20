@@ -26,8 +26,10 @@ import { register } from "@/app/actions/register";
 
 import { Register, RegisterSchema } from "@/schema/auth";
 import { SubmitButton } from "./submit-button";
+import { cn } from "@/lib/utils";
+import Link from "next/link";
 
-export const RegisterDialog = () => {
+export const RegisterDialog = ({ className }: { className?: string }) => {
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
   const [isPending, startTransition] = useTransition();
@@ -55,7 +57,12 @@ export const RegisterDialog = () => {
 
   return (
     <>
-      <DialogHeader className="sticky top-0 -mb-4 border-b-[1px] px-6 pb-6 pt-6 text-center">
+      <DialogHeader
+        className={cn(
+          "sticky top-0 -mb-4 border-b-[1px] px-6 pb-6 pt-6 text-center",
+          className,
+        )}
+      >
         <DialogTitle className="text-center">Welcome to Airbnb</DialogTitle>
         <DialogDescription className="text-center">
           Create your account
@@ -125,8 +132,9 @@ export const RegisterDialog = () => {
             <FormSuccess message={success} />
 
             <SubmitButton isPending={isPending} label="Sign up" />
+
             <p className="text-center text-sm hover:underline">
-              Log in with your account.
+              Already have an account?
             </p>
           </form>
         </Form>
