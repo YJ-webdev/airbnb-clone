@@ -6,9 +6,12 @@ import { LocalizationProvider } from "@mui/x-date-pickers-pro/LocalizationProvid
 import { AdapterDayjs } from "@mui/x-date-pickers-pro/AdapterDayjs";
 import { DateRangePicker } from "@mui/x-date-pickers-pro/DateRangePicker";
 import { useDatePick } from "@/app/context/date-pick-context";
+import dayjs from "dayjs";
 
 export default function Calendar() {
   const { startDate, endDate, setStartDate, setEndDate } = useDatePick();
+
+  const sixMonthsFromNow = dayjs().add(6, "month");
 
   const handleDateChange = (newValue: any) => {
     setStartDate(newValue[0]);
@@ -22,7 +25,9 @@ export default function Calendar() {
           value={[startDate, endDate]}
           onChange={handleDateChange}
           disablePast
-          // shouldDisableDate={}
+          shouldDisableDate={(date) =>
+            dayjs(date).isAfter(sixMonthsFromNow, "day")
+          }
           localeText={{ start: "Check-in", end: "Check-out" }}
         />
       </DemoContainer>

@@ -15,10 +15,13 @@ const shortcutsItems: PickersShortcutsItem<DateRange<Dayjs>>[] = [];
 export default function Calendar2() {
   const { startDate, endDate, setStartDate, setEndDate } = useDatePick();
 
+  const sixMonthsFromNow = dayjs().add(6, "month");
+
   const handleDateChange = (newValue: any) => {
     setStartDate(newValue[0]);
     setEndDate(newValue[1]); // newValue is an array with the start and end dates
   };
+
   return (
     <>
       <div className="hidden w-full items-center rounded-lg border shadow-[0px_1px_3px_1px_rgba(0,0,0,0.1)] md:flex">
@@ -28,7 +31,9 @@ export default function Calendar2() {
               value={[startDate, endDate]}
               onChange={handleDateChange}
               disablePast
-              // shouldDisableDate={}
+              shouldDisableDate={(date) =>
+                dayjs(date).isAfter(sixMonthsFromNow, "day")
+              }
               slotProps={{
                 // shortcuts: {
                 //   items: shortcutsItems,
@@ -47,7 +52,9 @@ export default function Calendar2() {
             value={[startDate, endDate]}
             onChange={handleDateChange}
             disablePast
-            // shouldDisableDate={}
+            shouldDisableDate={(date) =>
+              dayjs(date).isAfter(sixMonthsFromNow, "day")
+            }
             slotProps={{
               shortcuts: {
                 items: shortcutsItems,

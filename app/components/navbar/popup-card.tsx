@@ -31,7 +31,7 @@ export const RegionCard = ({ continent, setContinent }: RegionCardProps) => {
           key={c.name}
           onClick={() => setContinent(c.name)}
           className={cn(
-            "flex flex-col gap-2 rounded-lg p-3 hover:bg-zinc-200",
+            "flex cursor-pointer flex-col gap-2 rounded-lg p-3 hover:bg-zinc-200",
             continent === c.name && "bg-zinc-200",
           )}
         >
@@ -54,19 +54,22 @@ export const CalendarPopup = ({
   setCheckIn,
   setCheckOut,
 }: CalendarPopupProps) => {
+  const sixMonthsFromNow = dayjs().add(6, "month");
+
   return (
     <div className="mx-auto w-fit">
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DemoContainer components={["DateRangeCalendar"]}>
           <DateRangeCalendar
             disablePast
+            shouldDisableDate={(date) =>
+              dayjs(date).isAfter(sixMonthsFromNow, "day")
+            }
             onChange={(value) => {
               if (value) {
                 const [start, end] = value;
-                setCheckIn(
-                  start ? dayjs(start).format("YYYY-MM-DD") : undefined,
-                );
-                setCheckOut(end ? dayjs(end).format("YYYY-MM-DD") : undefined);
+                setCheckIn(start ? dayjs(start).format("MMM-DD") : undefined);
+                setCheckOut(end ? dayjs(end).format("MMM-DD") : undefined);
               }
             }}
           />
