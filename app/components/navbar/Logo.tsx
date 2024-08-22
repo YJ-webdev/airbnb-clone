@@ -24,7 +24,7 @@ export const Logo = () => {
           alt="Mobile Logo"
           height="200"
           width="200"
-          className="mobile-logo min-w-[44px] cursor-pointer lg:hidden"
+          className="mobile-logo mt-[1px] min-w-[44px] cursor-pointer lg:hidden"
         />
       </Link>
     </>
