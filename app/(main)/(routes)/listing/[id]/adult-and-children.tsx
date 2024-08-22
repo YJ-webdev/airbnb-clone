@@ -23,7 +23,6 @@ export const AdultAndChildren = ({ data, user }: ReservePanelProps) => {
     childCount,
     petCount,
     totalGuests,
-    remainingGuests,
     setAdultCount,
     setChildCount,
     setPetCount,

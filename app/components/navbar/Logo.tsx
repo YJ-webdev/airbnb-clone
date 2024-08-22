@@ -15,7 +15,7 @@ export const Logo = () => {
           height="100"
           width="100"
           priority={true}
-          className="desktop-logo mr-6 hidden cursor-pointer lg:block"
+          className="desktop-logo mr-6 mt-2 hidden cursor-pointer lg:block"
           style={{ height: "2rem" }}
         />
 
