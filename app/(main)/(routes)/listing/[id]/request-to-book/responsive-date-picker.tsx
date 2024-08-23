@@ -35,7 +35,6 @@ const DateRangeButtonField = React.forwardRef(
     } = props;
 
     const handleRef = useForkRef(ref, containerRef);
-
     return (
       <button
         id={id}
@@ -43,7 +42,7 @@ const DateRangeButtonField = React.forwardRef(
         ref={handleRef}
         aria-label={ariaLabel}
         onClick={() => setOpen?.((prev) => !prev)}
-        className="m-0 bg-white p-0 underline hover:bg-white active:bg-white"
+        className="m-0 w-fit bg-white p-0 underline outline-none hover:bg-white active:bg-white"
       >
         {label ? `${label}` : "Pick a date range"}
       </button>
@@ -111,13 +110,13 @@ export default function ResponsiveDateRangePickers({
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <ButtonDateRangePicker
+        disablePast
         label={getFormattedDateRange(value[0], value[1])}
         value={value}
         onChange={(newValue) => {
           setValue(newValue);
           setStartDate(dayjs(newValue[0]));
           setEndDate(dayjs(newValue[1]));
-          console.log(startDate, endDate);
         }}
       />
     </LocalizationProvider>

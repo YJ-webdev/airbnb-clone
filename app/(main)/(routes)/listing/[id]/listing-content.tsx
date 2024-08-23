@@ -21,11 +21,11 @@ export const ListingContent = ({ data, user, params }: ListingContentProps) => {
 
   return (
     <div className="flex">
-      <div className="mb-10 flex flex-1 flex-col gap-5 lg:min-w-[700px]">
+      <div className="mb-10 flex w-full flex-1 flex-col gap-5 lg:min-w-[700px]">
         <h1 className="-mb-1 text-xl font-semibold tracking-tight md:tracking-normal lg:text-2xl">
           {data.title}
         </h1>
-        <div className="relative flex w-[89Dvw] md:w-full">
+        <div className="relative flex md:w-full">
           <div className="flex w-full flex-col gap-10">
             <PreviewImages data={data} className="h-[55vh]" />
             <div className="w-full space-y-2">
@@ -55,8 +55,11 @@ export const ListingContent = ({ data, user, params }: ListingContentProps) => {
               </h3>
               <ListingMap lat={data?.lat!} lng={data?.lng!} />
             </div>
-            <div ref={calendarRef} className="flex flex-col space-y-3">
-              <h3 className="text-[19px] font-semibold md:text-[20px]">
+            <div className="flex flex-col space-y-3">
+              <h3
+                ref={calendarRef}
+                className="text-[19px] font-semibold md:text-[20px]"
+              >
                 Pick Your Stay Dates
               </h3>
               <Calendar2 />

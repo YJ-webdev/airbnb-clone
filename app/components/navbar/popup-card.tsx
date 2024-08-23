@@ -8,8 +8,9 @@ import { Counter } from "../counter";
 import { cn } from "@/lib/utils";
 import { Calendar } from "react-date-range";
 import dayjs from "dayjs";
+import { ClassNames } from "@emotion/react";
 
-const continents = [
+export const continents = [
   { name: "I'm flexible", img: "/images/continent/world-map.jpg" },
   { name: "Europe", img: "/images/continent/europe-map.webp" },
   { name: "Italy", img: "/images/continent/italy-map.webp" },
@@ -86,6 +87,7 @@ interface GuestsPopupProps {
   setAdults: (value: number) => void;
   setChildren: (value: number) => void;
   setPets: (value: number) => void;
+  className?: string;
 }
 
 export const GuestsPopup = ({
@@ -95,12 +97,13 @@ export const GuestsPopup = ({
   setAdults,
   setChildren,
   setPets,
+  className,
 }: GuestsPopupProps) => {
   return (
     <div className="flex flex-col gap-7 p-3">
       <div className="flex items-center justify-between gap-5">
         <div className="flex flex-col">
-          <p className="font-semibold">Adults</p>
+          <p className={cn("font-semibold", className)}>Adults</p>
           <p className="text-sm text-muted-foreground">Ages above 18</p>
         </div>
         <Counter
@@ -116,7 +119,7 @@ export const GuestsPopup = ({
       <div className="border-b"></div>
       <div className="flex items-center justify-between gap-5">
         <div className="flex flex-col">
-          <p className="font-semibold">Children</p>
+          <p className={cn("font-semibold", className)}>Children</p>
           <p className="text-sm text-muted-foreground">Ages below 18</p>
         </div>
         <Counter
@@ -132,7 +135,7 @@ export const GuestsPopup = ({
       <div className="border-b"></div>
       <div className="flex items-center justify-between gap-5">
         <div className="flex flex-col">
-          <p className="font-semibold">Pets</p>
+          <p className={cn("font-semibold", className)}>Pets</p>
           <p className="text-sm text-muted-foreground">
             Bringing a service animal?
           </p>

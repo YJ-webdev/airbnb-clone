@@ -16,6 +16,7 @@ import { SeaerchSettings } from "./search-settings";
 
 export const Search = () => {
   const [expanded, setExpanded] = useState(false);
+  const [inputValue, setInputValue] = useState<string | undefined>(undefined);
   const [continent, setContinent] = useState<string | undefined>(undefined);
   const [checkIn, setCheckIn] = useState<string | undefined>(undefined);
   const [checkOut, setCheckOut] = useState<string | undefined>(undefined);
@@ -44,14 +45,30 @@ export const Search = () => {
     setGuests(adults + childrenCount);
   }, [adults, childrenCount]);
 
+  useEffect(() => {
+    if (continent) {
+      setInputValue(continent);
+    }
+  }, [continent]);
+
+  useEffect(() => {
+    if (inputValue) {
+      // Add your custom logic here. For example:
+      console.log("Input value changed:", inputValue);
+      // You could also trigger other side effects or call a callback function here
+    }
+  }, [inputValue]);
+
+  const displayValue = continent || inputValue;
   return (
     <>
       <div className="flex w-full cursor-pointer items-center justify-between rounded-full border-[1px] py-2 shadow-sm transition hover:shadow-md sm:hidden">
         <input
-          className="ml-6 bg-none text-sm font-semibold placeholder-black outline-none"
+          className="ml-6 w-1/2 bg-none text-sm font-semibold placeholder-black outline-none"
           type="text"
           placeholder="Where"
         />
+
         <div className="flex">
           <Dialog>
             <DialogTrigger asChild>
@@ -59,7 +76,7 @@ export const Search = () => {
                 <Settings2 size={18} strokeWidth={1.5} className="m-2" />
               </div>
             </DialogTrigger>
-            <DialogContent>
+            <DialogContent className="min-h-[100vh] w-[100vw] p-5 outline-none">
               <SeaerchSettings />
             </DialogContent>
           </Dialog>
@@ -101,7 +118,7 @@ export const Search = () => {
             <div className="mt-[7px] cursor-default font-semibold">Stays</div>
             <div className="absolute right-1/2 top-16 h-16 translate-x-1/2 rounded-full border shadow-sm sm:w-[625px] md:-right-20 md:w-[750px] lg:right-1/2">
               <div className="relative flex h-full w-full items-center justify-between">
-                <HoverCard openDelay={0} closeDelay={0}>
+                <HoverCard openDelay={0} closeDelay={300}>
                   <div
                     className="group h-full w-48 md:w-56 md:flex-none"
                     onMouseEnter={() => handleMouseEnter(separatorRef1)}
@@ -110,17 +127,30 @@ export const Search = () => {
                     <HoverCardTrigger asChild>
                       <div className="flex h-full w-full cursor-pointer rounded-full px-5 text-sm group-hover:bg-zinc-100 md:px-8">
                         <div className="flex flex-col self-center">
-                          {continent ? (
+                          {inputValue?.trim() === "" || !inputValue ? (
                             <>
-                              <p className="text-muted-foreground">Where</p>
-                              <p className="font-semibold">{continent}</p>
+                              <p className="font-semibold">Where</p>
+                              <input
+                                type="text"
+                                onChange={(e) => setInputValue(e.target.value)}
+                                className="w-full bg-transparent text-sm placeholder-muted-foreground outline-none"
+                                placeholder="Anywhere or set region"
+                              />
                             </>
                           ) : (
                             <>
-                              <p className="font-semibold">Where</p>
-                              <p className="text-muted-foreground">
-                                Anywhere or set region
-                              </p>
+                              <p className="text-muted-foreground">Where</p>
+                              <input
+                                type="text"
+                                className={`w-full bg-transparent text-sm font-semibold placeholder-black outline-none ${
+                                  !displayValue
+                                    ? "placeholder-muted-foreground"
+                                    : ""
+                                }`}
+                                placeholder="City or Country"
+                                onChange={(e) => setInputValue(e.target.value)}
+                                value={inputValue}
+                              />
                             </>
                           )}
                         </div>
@@ -144,7 +174,7 @@ export const Search = () => {
                   className="hidden h-8 transform border-l sm:block"
                 />
 
-                <HoverCard openDelay={0} closeDelay={0}>
+                <HoverCard openDelay={0} closeDelay={300}>
                   <div
                     className="group hidden h-full flex-1 sm:block"
                     onMouseEnter={() => {
@@ -192,7 +222,7 @@ export const Search = () => {
                   className="hidden h-8 transform border-l sm:block"
                 />
 
-                <HoverCard openDelay={0} closeDelay={0}>
+                <HoverCard openDelay={0} closeDelay={200}>
                   <div
                     className="group hidden h-full flex-1 sm:block"
                     onMouseEnter={() => {
@@ -241,7 +271,7 @@ export const Search = () => {
                   className="hidden h-8 transform border-l sm:block"
                 />
 
-                <HoverCard openDelay={0} closeDelay={0}>
+                <HoverCard openDelay={200} closeDelay={300}>
                   <div
                     className="group hidden h-full w-52 sm:block md:w-56"
                     onMouseEnter={() => {

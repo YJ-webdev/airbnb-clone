@@ -3,7 +3,7 @@
 import { UserWithRoleAndFavoriteIds } from "@/types";
 import { Listing } from "@prisma/client";
 import { ChevronLeft } from "lucide-react";
-import { redirect, useSearchParams } from "next/navigation";
+import { redirect, usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { RightPanel } from "./right-panel";
 import { useRouter } from "next/navigation";
@@ -16,6 +16,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import { formatFloor } from "@/app/lib/format-money";
 import { GUEST_SERVICE_FEE } from "@/app/lib/rates";
 import { Skeleton } from "@/components/ui/skeleton";
+import Link from "next/link";
 
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!,
@@ -45,9 +46,10 @@ export default function RequestToBook({
   const childCount = Number(searchParams.get("childCount"));
   const petCount = Number(searchParams.get("petCount"));
 
-  const [startDate, setStartDate] = useState(initialStartDate || null);
-  const [endDate, setEndDate] = useState(initialEndDate || null);
+  const [startDate, setStartDate] = useState(initialStartDate);
+  const [endDate, setEndDate] = useState(initialEndDate);
 
+  const today = new Date();
   const calendarRef = useRef<HTMLDivElement>(null);
 
   const stayingNights = endDate?.diff(startDate, "day") || 1;
@@ -55,11 +57,6 @@ export default function RequestToBook({
     data.enteredPrice! * stayingNights +
       data.enteredPrice! * stayingNights * GUEST_SERVICE_FEE,
   );
-
-  const handleGoBack = () => {
-    router.back();
-  };
-
   useEffect(() => {
     fetch("/api/create-payment-intent", {
       method: "POST",
@@ -93,17 +90,17 @@ export default function RequestToBook({
   };
 
   return (
-    <div className="container mt-5 flex max-w-[1280px] flex-col">
+    <div className="flex max-w-[1280px] flex-col">
       <div className="flex items-center gap-2">
-        <button onClick={handleGoBack}>
+        <Link href={`/listing/${data.id}`} className="text-zinc-500">
           <ChevronLeft className="h-8 w-8 rounded-full bg-zinc-500/10 p-2 hover:bg-zinc-500/10 md:bg-white" />
-        </button>
+        </Link>
         <h1 ref={calendarRef} className="text-xl font-semibold">
           Confirm and pay
         </h1>
       </div>
 
-      <div className="mb-5 mt-2 flex flex-col md:w-full md:flex-row-reverse md:gap-7 lg:gap-12">
+      <div className="mt-2 flex flex-col md:w-full md:flex-row-reverse md:gap-7 lg:gap-12">
         <RightPanel data={data} amount={amount} stayingNights={stayingNights} />
         <div className="mb-10 flex flex-col gap-7 md:flex-1 md:p-5">
           {/* your trip */}

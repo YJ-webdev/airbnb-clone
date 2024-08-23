@@ -17,6 +17,8 @@ import { formatFloor } from "@/app/lib/format-money";
 import { GUEST_SERVICE_FEE } from "@/app/lib/rates";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { LoginDialog } from "@/app/components/form/login-dialog";
+import { cn } from "@/lib/utils";
+import { Loader2 } from "lucide-react";
 
 interface ReservePanelProps {
   user?: UserWithRoleAndFavoriteIds;
@@ -57,17 +59,28 @@ export const ReservePanel = ({
   const [optimisticFavorite, setOptimisticFavorite] = useState(favorite);
 
   const [message, setMessage] = useState<string | null>(null);
+  const [isPending, setIsPending] = useState(false);
 
-  const onReserveClick = () => {
+  const onSelectDateClick = () => {
     setMessage("Select both start and end date");
 
     if (calendarRef.current) {
-      calendarRef.current.scrollIntoView({ behavior: "smooth" });
+      // Get the element's position relative to the document
+      const elementTop =
+        calendarRef.current.getBoundingClientRect().top + window.pageYOffset;
+      const offset = -100; // Adjust this value as needed
+
+      // Smooth scroll to the desired position
+      window.scrollTo({ top: elementTop + offset, behavior: "smooth" });
     }
 
     setTimeout(() => {
       setMessage("");
     }, 3000);
+  };
+
+  const onReserveClick = () => {
+    setIsPending(true);
   };
 
   useEffect(() => {
@@ -128,7 +141,7 @@ export const ReservePanel = ({
                       {message ?? ""}
                     </p>
                     <button
-                      onClick={onReserveClick}
+                      onClick={onSelectDateClick}
                       type="button"
                       className="my-1 flex h-14 w-full items-center justify-center rounded-lg bg-gradient-to-r from-rose-500 to-[#e3326d] px-5 py-3 font-semibold text-white"
                     >
@@ -147,9 +160,22 @@ export const ReservePanel = ({
                         petCount,
                       },
                     }}
-                    className="my-1 flex h-14 w-full items-center justify-center rounded-lg bg-gradient-to-r from-rose-500 to-[#e3326d] px-5 py-3 font-semibold text-white"
+                    className={cn(
+                      "my-1 flex h-14 w-full items-center justify-center rounded-lg px-5 py-3 font-semibold text-white",
+                      isPending
+                        ? "cursor-not-allowed bg-rose-500/50"
+                        : "bg-gradient-to-r from-rose-500 to-[#e3326d]",
+                    )}
+                    onClick={onReserveClick}
                   >
-                    Reserve
+                    {isPending ? (
+                      <div className="flex items-center gap-2">
+                        <p>Please wait..</p>{" "}
+                        <Loader2 className="animate-spin" />
+                      </div>
+                    ) : (
+                      "Reserve"
+                    )}
                   </Link>
                 )}
               </>
@@ -205,14 +231,14 @@ export const ReservePanel = ({
               {(user.id && !startDate) || !endDate ? (
                 <>
                   <button
-                    onClick={onReserveClick}
+                    onClick={onSelectDateClick}
                     type="button"
                     className="rounded-full bg-gradient-to-r from-rose-500 to-[#e3326d] px-5 py-3 font-semibold text-white"
                   >
                     Select Date
                   </button>
                   {message && (
-                    <p className="absolute -top-16 right-1/2 z-10 w-fit translate-x-1/2 rounded-full bg-zinc-200 p-3 text-sm">
+                    <p className="absolute -top-16 right-1/2 z-10 line-clamp-1 w-2/3 translate-x-1/2 rounded-full bg-white p-3 text-center text-sm sm:w-1/2 md:w-fit">
                       {message}
                     </p>
                   )}
@@ -229,9 +255,21 @@ export const ReservePanel = ({
                       petCount,
                     },
                   }}
-                  className="rounded-full bg-gradient-to-r from-rose-500 to-[#e3326d] px-5 py-3 font-semibold text-white"
+                  className={cn(
+                    "w-fit rounded-full px-5 py-3 font-semibold text-white",
+                    isPending
+                      ? "cursor-not-allowed bg-rose-500/50"
+                      : "bg-gradient-to-r from-rose-500 to-[#e3326d]",
+                  )}
+                  onClick={onReserveClick}
                 >
-                  Reserve
+                  {isPending ? (
+                    <div className="flex items-center gap-2">
+                      <p>Please wait..</p> <Loader2 className="animate-spin" />
+                    </div>
+                  ) : (
+                    "Reserve"
+                  )}
                 </Link>
               )}
             </>
