@@ -128,9 +128,7 @@ export const SeaerchSettings = () => {
             <h3 className="text-lg font-semibold">Who&apos;s coming?</h3>
 
             {guests === 1 && pets === 0 ? (
-              <p className="line-clamp-1 text-sm text-muted-foreground">
-                Alone or add guest
-              </p>
+              <p className="line-clamp-1 text-sm">Alone</p>
             ) : (
               <p className="line-clamp-1 text-sm">
                 {guests === 1 ? `Guest 1` : `Guests ${guests}`}

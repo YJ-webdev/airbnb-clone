@@ -7,7 +7,7 @@ import Link from "next/link";
 
 export const Logo = () => {
   return (
-    <>
+    <div className="min-w-fit cursor-pointer place-self-start">
       <Link href="/">
         <Image
           src={DesktopLogo}
@@ -15,7 +15,7 @@ export const Logo = () => {
           height="100"
           width="100"
           priority={true}
-          className="desktop-logo mr-6 mt-2 hidden cursor-pointer lg:block"
+          className="desktop-logo mt-2 hidden lg:block xl:static"
           style={{ height: "2rem" }}
         />
 
@@ -24,9 +24,9 @@ export const Logo = () => {
           alt="Mobile Logo"
           height="200"
           width="200"
-          className="mobile-logo mt-[1px] min-w-[44px] cursor-pointer lg:hidden"
+          className="mobile-logo mt-[1px] min-w-[44px] lg:hidden"
         />
       </Link>
-    </>
+    </div>
   );
 };
