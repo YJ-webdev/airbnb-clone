@@ -19,7 +19,7 @@ export const Navbar = async ({ width }: Width) => {
   const continueListingWithId = continueListing.bind(null, userId);
 
   return (
-    <div className="sticky top-0 z-50 border-b bg-white py-4 shadow-sm">
+    <div className="sticky top-0 z-50 border-b bg-white py-4">
       <nav
         className={cn(
           "relative mx-auto flex max-w-[1400px] items-start justify-between gap-3 px-5 md:gap-0",

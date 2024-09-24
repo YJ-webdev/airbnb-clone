@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
 
 import {
   HoverCard,
@@ -15,10 +14,9 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Settings2 } from "lucide-react";
 import { SeaerchSettings } from "./search-settings";
 import { cn } from "@/lib/utils";
-import { set } from "date-fns";
 
 export const Search = () => {
-  const [expanded, setExpanded] = useState(true);
+  const [expanded, setExpanded] = useState(false);
   const [inputValue, setInputValue] = useState<string | undefined>(undefined);
   const [continent, setContinent] = useState<string | undefined>(undefined);
   const [checkIn, setCheckIn] = useState<string | undefined>(undefined);
@@ -76,7 +74,7 @@ export const Search = () => {
 
   const displayValue = continent || inputValue;
   return (
-    <div className="relative place-self-center self-center">
+    <>
       <div className="flex w-full cursor-pointer items-center justify-between self-center rounded-full border-[1px] py-2 shadow-sm transition hover:shadow-md sm:hidden">
         <input
           className="ml-6 w-1/2 bg-none text-sm font-semibold placeholder-black outline-none"
@@ -104,7 +102,7 @@ export const Search = () => {
       <form
         className={cn(
           "hidden self-center sm:block",
-          expanded ? "-ml-60 -mr-60 h-28 md:-ml-14 lg:-ml-60" : "h-full",
+          expanded ? "-ml-60 -mr-60 h-[115px] md:-ml-14 lg:-ml-60" : "h-auto",
         )}
       >
         <div className="relative h-full w-auto">
@@ -382,6 +380,6 @@ export const Search = () => {
           </div>
         </div>
       </form>
-    </div>
+    </>
   );
 };

@@ -28,10 +28,8 @@ export default async function Home({
 
   return (
     <>
-      <Navbar />
-      <div className="container">
-        <Filter />
-
+      <Navbar /> <Filter />
+      <div className="container mt-28">
         {listings.length === 0 ? (
           <div className="mb-5 flex h-[70vh] w-full flex-1 items-center justify-center rounded-lg bg-zinc-50 text-center">
             <div className="flex flex-col items-center justify-center gap-2">
