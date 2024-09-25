@@ -2,17 +2,14 @@ import { PreviewImages } from "@/app/components/preview-images";
 import prisma from "@/app/lib/db";
 import getSession from "@/app/lib/get-session";
 import {
-  Badge,
   BadgeCheck,
   Calendar,
-  CreditCard,
   Dog,
   MapPinned,
   Scroll,
   User,
   Users,
 } from "lucide-react";
-import Image from "next/image";
 
 export default async function ReservationsPage() {
   const session = await getSession();

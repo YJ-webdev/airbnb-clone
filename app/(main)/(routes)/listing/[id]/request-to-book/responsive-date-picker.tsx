@@ -9,6 +9,7 @@ import {
   DateRangePickerProps,
 } from "@mui/x-date-pickers-pro/DateRangePicker";
 import { SingleInputDateRangeFieldProps } from "@mui/x-date-pickers-pro/SingleInputDateRangeField";
+import { eachDayOfInterval } from "date-fns";
 
 interface DateRangeButtonFieldProps
   extends SingleInputDateRangeFieldProps<Dayjs> {
@@ -81,6 +82,7 @@ interface DateRangePickerWithButtonFieldProps {
   endDate: Dayjs;
   setStartDate: React.Dispatch<React.SetStateAction<Dayjs>>;
   setEndDate: React.Dispatch<React.SetStateAction<Dayjs>>;
+  reservation: { startDate: Date; endDate: Date }[];
 }
 
 export default function ResponsiveDateRangePickers({
@@ -88,11 +90,33 @@ export default function ResponsiveDateRangePickers({
   endDate,
   setStartDate,
   setEndDate,
+  reservation,
 }: DateRangePickerWithButtonFieldProps) {
   const [value, setValue] = React.useState<DateRange<Dayjs>>([
     startDate,
     endDate,
   ]);
+  const sixMonthsFromNow = dayjs().add(6, "month");
+
+  let disableDates: Date[] = [];
+
+  reservation?.forEach((reservationItem) => {
+    const dateRange = eachDayOfInterval({
+      start: new Date(reservationItem.startDate),
+      end: new Date(reservationItem.endDate),
+    });
+
+    disableDates = [...disableDates, ...dateRange];
+  });
+
+  const shouldDisableDate = (date: Dayjs) => {
+    const isDisabled = disableDates.some((disabledDate) =>
+      dayjs(disabledDate).isSame(date, "day"),
+    );
+    const isAfterSixMonths = dayjs(date).isAfter(sixMonthsFromNow, "day");
+
+    return isDisabled || isAfterSixMonths;
+  };
 
   const getFormattedDateRange = (start: Dayjs | null, end: Dayjs | null) => {
     if (start && !end) return start.format("MMM DD -");
@@ -118,6 +142,7 @@ export default function ResponsiveDateRangePickers({
           setStartDate(dayjs(newValue[0]));
           setEndDate(dayjs(newValue[1]));
         }}
+        shouldDisableDate={shouldDisableDate}
       />
     </LocalizationProvider>
   );

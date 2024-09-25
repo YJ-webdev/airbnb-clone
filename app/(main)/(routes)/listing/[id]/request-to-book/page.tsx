@@ -9,11 +9,17 @@ export default async function RequestToBookPage({
   params: { id: string };
 }) {
   const data = await prisma.listing.findUnique({
-    where: { id: params.id }, // Replace 'listingId' with your actual listing ID
+    where: { id: params.id },
     include: {
       user: {
         select: {
           name: true, // Include only the 'name' field of the user
+        },
+      },
+      reservations: {
+        select: {
+          startDate: true,
+          endDate: true,
         },
       },
     },

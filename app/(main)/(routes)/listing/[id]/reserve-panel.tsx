@@ -19,10 +19,11 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { LoginDialog } from "@/app/components/form/login-dialog";
 import { cn } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
+import { ListingWithReservations } from "./listing-content";
 
 interface ReservePanelProps {
   user?: UserWithRoleAndFavoriteIds;
-  data: Listing;
+  data: ListingWithReservations;
   params: { id: string };
   calendarRef: React.RefObject<HTMLDivElement>;
 }
@@ -110,7 +111,7 @@ export const ReservePanel = ({
               </span>
             </h3>
             <div className="flex items-baseline justify-between gap-2">
-              <Calendar />
+              <Calendar reservation={data.reservations} />
             </div>
 
             <AdultAndChildren data={data} user={user} />

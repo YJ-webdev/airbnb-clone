@@ -6,7 +6,17 @@ import { DatePickProvider } from "@/app/context/date-pick-context";
 import { GuestCountProvider } from "@/app/context/guest-count-context";
 
 async function getListing(id: string) {
-  const data = await prisma.listing.findUnique({ where: { id } });
+  const data = await prisma.listing.findUnique({
+    where: { id },
+    include: {
+      reservations: {
+        select: {
+          startDate: true,
+          endDate: true,
+        },
+      },
+    },
+  });
   return data;
 }
 

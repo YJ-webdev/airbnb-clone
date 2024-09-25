@@ -34,7 +34,7 @@ export const Search = () => {
 
   const handleScroll = () => {
     setScrollY(window.scrollY);
-    setExpanded(window.scrollY < 100); // Adjust div based on Y scroll position
+    setExpanded(window.scrollY < 10); // Adjust div based on Y scroll position
   };
 
   useEffect(() => {

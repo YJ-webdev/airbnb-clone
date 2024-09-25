@@ -10,8 +10,15 @@ import { Listing } from "@prisma/client";
 import { UserWithRoleAndFavoriteIds } from "@/types";
 import React, { useRef, useState } from "react";
 
+export interface ListingWithReservations extends Listing {
+  reservations: {
+    startDate: Date;
+    endDate: Date;
+  }[];
+}
+
 interface ListingContentProps {
-  data: Listing;
+  data: ListingWithReservations;
   user?: UserWithRoleAndFavoriteIds;
   params: { id: string };
 }
@@ -62,7 +69,7 @@ export const ListingContent = ({ data, user, params }: ListingContentProps) => {
               >
                 Pick Your Stay Dates
               </h3>
-              <Calendar2 />
+              <Calendar2 reservation={data.reservations} />
             </div>
             <div className="mb-16 flex flex-col space-y-3 lg:mb-0 lg:hidden">
               <h3 className="text-[19px] font-semibold md:text-[20px]">

@@ -17,6 +17,7 @@ import { formatFloor } from "@/app/lib/format-money";
 import { GUEST_SERVICE_FEE } from "@/app/lib/rates";
 import { Skeleton } from "@/components/ui/skeleton";
 import Link from "next/link";
+import { ListingWithReservations } from "../listing-content";
 
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!,
@@ -26,7 +27,7 @@ export default function RequestToBook({
   data,
   user,
 }: {
-  data: Listing & {
+  data: ListingWithReservations & {
     user: {
       name: string | null; // 'name' can be 'null' if not set
     };
@@ -115,6 +116,7 @@ export default function RequestToBook({
                 endDate={endDate}
                 setStartDate={setStartDate}
                 setEndDate={setEndDate}
+                reservation={data.reservations}
               />
             </div>
 

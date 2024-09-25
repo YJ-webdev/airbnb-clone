@@ -9,13 +9,38 @@ import { PickersShortcutsItem } from "@mui/x-date-pickers/PickersShortcuts";
 import { DateRange } from "@mui/x-date-pickers-pro/models";
 import { MobileDateRangePicker } from "@mui/x-date-pickers-pro/MobileDateRangePicker";
 import { useDatePick } from "@/app/context/date-pick-context";
+import { eachDayOfInterval } from "date-fns";
 
 const shortcutsItems: PickersShortcutsItem<DateRange<Dayjs>>[] = [];
 
-export default function Calendar2() {
+export default function Calendar2({
+  reservation,
+}: {
+  reservation: { startDate: Date; endDate: Date }[];
+}) {
   const { startDate, endDate, setStartDate, setEndDate } = useDatePick();
 
   const sixMonthsFromNow = dayjs().add(6, "month");
+
+  let disableDates: Date[] = [];
+
+  reservation?.forEach((reservationItem) => {
+    const dateRange = eachDayOfInterval({
+      start: new Date(reservationItem.startDate),
+      end: new Date(reservationItem.endDate),
+    });
+
+    disableDates = [...disableDates, ...dateRange];
+  });
+
+  const shouldDisableDate = (date: Dayjs) => {
+    const isDisabled = disableDates.some((disabledDate) =>
+      dayjs(disabledDate).isSame(date, "day"),
+    );
+    const isAfterSixMonths = dayjs(date).isAfter(sixMonthsFromNow, "day");
+
+    return isDisabled || isAfterSixMonths;
+  };
 
   const handleDateChange = (newValue: any) => {
     setStartDate(newValue[0]);
@@ -31,9 +56,7 @@ export default function Calendar2() {
               value={[startDate, endDate]}
               onChange={handleDateChange}
               disablePast
-              shouldDisableDate={(date) =>
-                dayjs(date).isAfter(sixMonthsFromNow, "day")
-              }
+              shouldDisableDate={shouldDisableDate}
               slotProps={{
                 // shortcuts: {
                 //   items: shortcutsItems,
