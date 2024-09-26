@@ -1,6 +1,5 @@
 "use client";
 
-import dayjs, { Dayjs } from "dayjs";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -17,30 +16,44 @@ import { continents, GuestsPopup } from "./popup-card";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { DateRangeCalendar } from "@mui/x-date-pickers-pro/DateRangeCalendar";
+import { useSearch } from "@/app/context/search-context";
+import dayjs from "dayjs";
 
-export const SeaerchSettings = () => {
-  const [inputValue, setInputValue] = useState<string | undefined>(undefined);
-  const [continent, setContinent] = useState<string | undefined>(undefined);
-  const [startDate, setStartDate] = useState<Dayjs | undefined>(undefined);
-  const [endDate, setEndDate] = useState<Dayjs | undefined>(undefined);
+export const SearchSettings = () => {
+  const {
+    inputValue,
+    setInputValue,
+    checkIn,
+    setCheckIn,
+    checkOut,
+    setCheckOut,
+    guests,
+    setGuests,
+  } = useSearch();
+
+  const [continent, setContinent] = useState("");
   const [adults, setAdults] = useState(1);
   const [childrenCount, setChildrenCount] = useState(0);
-  const [guests, setGuests] = useState<number>(1);
   const [pets, setPets] = useState(0);
+
+  const formattedCheckIn = checkIn ? dayjs(checkIn).format("MMM DD") : "";
+  const formattedCheckOut = checkOut ? dayjs(checkOut).format("MMM DD") : "";
 
   const [isPending, startTransition] = useTransition();
 
   const handleDateChange = (newValue: any) => {
-    setStartDate(newValue[0]);
-    setEndDate(newValue[1]); // newValue is an array with the start and end dates
+    setCheckIn(newValue[0]);
+    setCheckOut(newValue[1]);
   };
 
   useEffect(() => {
     setGuests(adults + childrenCount);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [adults, childrenCount]);
 
   useEffect(() => {
     setInputValue(continent);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [continent]);
   return (
     <form className="flex h-full w-full flex-col items-center justify-center">
@@ -100,9 +113,9 @@ export const SeaerchSettings = () => {
           <AccordionTrigger className="justyfy-between my-0 flex items-center py-0">
             <h3 className="text-lg font-semibold">When&apos;s your trip?</h3>{" "}
             <p className="text-sm">
-              {startDate && endDate ? (
+              {checkIn && checkOut ? (
                 <>
-                  {startDate.format("MMM-DD")} - {endDate.format("MMM-DD")}
+                  {formattedCheckIn} - {formattedCheckOut}
                 </>
               ) : (
                 <>I&apos;m flexible</>

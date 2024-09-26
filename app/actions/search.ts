@@ -1,6 +1,7 @@
 "use server";
 
 import prisma from "../lib/db";
+import { isBefore, isAfter } from "date-fns";
 
 export async function filterSearch(formData: FormData) {
   const destination = formData.get("destination") as string;
@@ -8,23 +9,49 @@ export async function filterSearch(formData: FormData) {
   const endDate = formData.get("endDate") as string;
   const guestCount = parseInt(formData.get("guestCount") as string, 10);
 
-  const data = await prisma.listing.findMany({
+  const start = startDate ? new Date(startDate) : null;
+  const end = endDate ? new Date(endDate) : null;
+
+  const listings = await prisma.listing.findMany({
     where: {
-      locationValue: {
-        contains: destination,
-      },
-      // availableDates: {
-      //   gte: startDate,
-      //   lte: endDate,
-      // },
+      OR: [
+        { country: destination },
+        { state: destination },
+        { city: destination },
+      ],
       guestCount: {
         gte: guestCount,
       },
     },
+    include: {
+      reservations: true,
+    },
     orderBy: {
-      guestPrice: "asc",
+      createdAt: "desc",
     },
   });
 
-  return data;
+  const filteredListings = listings.filter((listing) => {
+    if (start && end) {
+      const hasConflictingReservation = listing.reservations.some(
+        (reservation) => {
+          const reservationStart = new Date(reservation.startDate);
+          const reservationEnd = new Date(reservation.endDate);
+
+          return (
+            (isBefore(start, reservationEnd) &&
+              isAfter(start, reservationStart)) ||
+            (isBefore(end, reservationEnd) && isAfter(end, reservationStart)) ||
+            (isAfter(start, reservationStart) && isBefore(end, reservationEnd))
+          );
+        },
+      );
+
+      return !hasConflictingReservation;
+    }
+
+    return true;
+  });
+
+  return filteredListings;
 }

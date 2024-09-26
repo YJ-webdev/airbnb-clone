@@ -6,9 +6,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers-pro/AdapterDayjs";
 import { DateRangeCalendar } from "@mui/x-date-pickers-pro/DateRangeCalendar";
 import { Counter } from "../counter";
 import { cn } from "@/lib/utils";
-import { Calendar } from "react-date-range";
-import dayjs from "dayjs";
-import { ClassNames } from "@emotion/react";
+import dayjs, { Dayjs } from "dayjs";
 
 export const continents = [
   { name: "I'm flexible", img: "/images/continent/world-map.jpg" },
@@ -47,8 +45,8 @@ export const RegionCard = ({ continent, setContinent }: RegionCardProps) => {
 };
 
 interface CalendarPopupProps {
-  setCheckIn: (date: string | undefined) => void;
-  setCheckOut: (date: string | undefined) => void;
+  setCheckIn: (date: Dayjs) => void;
+  setCheckOut: (date: Dayjs) => void;
 }
 
 export const CalendarPopup = ({
@@ -69,8 +67,8 @@ export const CalendarPopup = ({
             onChange={(value) => {
               if (value) {
                 const [start, end] = value;
-                setCheckIn(start ? dayjs(start).format("MMM-DD") : undefined);
-                setCheckOut(end ? dayjs(end).format("MMM-DD") : undefined);
+                setCheckIn(start && dayjs(start).format("MMM-DD"));
+                setCheckOut(end && dayjs(end).format("MMM-DD"));
               }
             }}
           />

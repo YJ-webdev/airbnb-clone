@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useSearch } from "@/app/context/search-context";
 
 import {
   HoverCard,
@@ -12,19 +13,34 @@ import { CalendarPopup, GuestsPopup, RegionCard } from "./popup-card";
 
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Settings2 } from "lucide-react";
-import { SeaerchSettings } from "./search-settings";
+
 import { cn } from "@/lib/utils";
+import dayjs from "dayjs";
+import { SearchSettings } from "./search-settings";
+import { useRouter } from "next/navigation";
 
 export const Search = () => {
+  const {
+    inputValue,
+    setInputValue,
+    checkIn,
+    setCheckIn,
+    checkOut,
+    setCheckOut,
+    guests,
+    setGuests,
+  } = useSearch();
+
+  const [dialogOpen, setDialogOpen] = useState(false); // State to control dialog visibility
+
   const [expanded, setExpanded] = useState(false);
-  const [inputValue, setInputValue] = useState<string | undefined>(undefined);
   const [continent, setContinent] = useState<string | undefined>(undefined);
-  const [checkIn, setCheckIn] = useState<string | undefined>(undefined);
-  const [checkOut, setCheckOut] = useState<string | undefined>(undefined);
   const [adults, setAdults] = useState(1);
   const [childrenCount, setChildrenCount] = useState(0);
-  const [guests, setGuests] = useState<number>(1);
   const [pets, setPets] = useState(0);
+
+  const formattedCheckIn = checkIn ? dayjs(checkIn).format("MMM DD") : "";
+  const formattedCheckOut = checkOut ? dayjs(checkOut).format("MMM DD") : "";
 
   const separatorRef1 = useRef(null);
   const separatorRef2 = useRef(null);
@@ -32,15 +48,12 @@ export const Search = () => {
 
   const [scrollY, setScrollY] = useState(0);
 
+  const router = useRouter();
+
   const handleScroll = () => {
     setScrollY(window.scrollY);
     setExpanded(window.scrollY < 10); // Adjust div based on Y scroll position
   };
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   const handleMouseEnter = (ref: any) => {
     if (ref.current) {
@@ -54,28 +67,44 @@ export const Search = () => {
     }
   };
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setDialogOpen(false);
+
+    const queryParams = new URLSearchParams({
+      filter: inputValue,
+      startDate: formattedCheckIn,
+      endDate: formattedCheckOut,
+      guests: guests.toString(),
+    });
+
+    router.push(`/?${queryParams.toString()}`);
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   useEffect(() => {
     setGuests(adults + childrenCount);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [adults, childrenCount]);
 
   useEffect(() => {
     if (continent) {
       setInputValue(continent);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [continent]);
-
-  useEffect(() => {
-    if (inputValue) {
-      // Add your custom logic here. For example:
-      console.log("Input value changed:", inputValue);
-      // You could also trigger other side effects or call a callback function here
-    }
-  }, [inputValue]);
 
   const displayValue = continent || inputValue;
   return (
     <>
-      <div className="flex w-full cursor-pointer items-center justify-between self-center rounded-full border-[1px] py-2 shadow-sm transition hover:shadow-md sm:hidden">
+      <form
+        className="flex w-full cursor-pointer items-center justify-between self-center rounded-full border-[1px] py-2 shadow-sm transition hover:shadow-md sm:hidden"
+        onSubmit={handleSubmit}
+      >
         <input
           className="ml-6 w-1/2 bg-none text-sm font-semibold placeholder-black outline-none"
           type="text"
@@ -83,28 +112,37 @@ export const Search = () => {
         />
 
         <div className="flex">
-          <Dialog>
+          <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
             <DialogTrigger asChild>
               <div className="mx-2 rounded-full text-black outline-2">
                 <Settings2 size={18} strokeWidth={1.5} className="m-2" />
               </div>
             </DialogTrigger>
             <DialogContent className="min-h-[100vh] w-[100vw] p-5 outline-none">
-              <SeaerchSettings />
+              <SearchSettings />
             </DialogContent>
           </Dialog>
-          <div className="mr-2 rounded-full bg-rose-500 p-2 text-white">
+          <button
+            type="submit"
+            className="mr-2 rounded-full bg-rose-500 p-2 text-white"
+          >
             <BiSearch size={18} />
-          </div>
+          </button>
         </div>
-      </div>
+      </form>
 
       <form
         className={cn(
           "hidden self-center sm:block",
           expanded ? "-ml-60 -mr-60 h-[115px] md:-ml-14 lg:-ml-60" : "h-auto",
         )}
+        onSubmit={handleSubmit}
       >
+        {/* <input type="hidden" name="destination" value={inputValue} />
+        <input type="hidden" name="startDate" value={formattedCheckIn} />
+        <input type="hidden" name="endDate" value={formattedCheckOut} />
+        <input type="hidden" name="guestCount" value={guests} /> */}
+
         <div className="relative h-full w-auto">
           {expanded && (
             <div className="mb-6 mt-[10px] cursor-default text-center font-semibold transition-all duration-1000">
@@ -215,7 +253,9 @@ export const Search = () => {
                           {checkIn ? (
                             <>
                               <p className="text-muted-foreground">Check in</p>
-                              <p className="font-semibold">{checkIn}</p>
+                              <p className="font-semibold">
+                                {formattedCheckIn}
+                              </p>
                             </>
                           ) : (
                             <>
@@ -264,7 +304,9 @@ export const Search = () => {
                             <>
                               {" "}
                               <p className="text-muted-foreground">Check out</p>
-                              <p className="font-semibold">{checkOut}</p>
+                              <p className="font-semibold">
+                                {formattedCheckOut}
+                              </p>
                             </>
                           ) : (
                             <>
@@ -296,7 +338,9 @@ export const Search = () => {
                   className="hidden min-w-fit border-x px-6 text-start text-sm font-semibold sm:block"
                   onClick={() => setExpanded(true)}
                 >
-                  {checkIn && checkOut ? checkIn + " ~ " + checkOut : "Anyweek"}
+                  {checkIn && checkOut
+                    ? formattedCheckIn + " - " + formattedCheckOut
+                    : "Anyweek"}
                 </div>
               )}
 

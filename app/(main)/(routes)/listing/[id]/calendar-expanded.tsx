@@ -75,9 +75,7 @@ export default function Calendar2({
             value={[startDate, endDate]}
             onChange={handleDateChange}
             disablePast
-            shouldDisableDate={(date) =>
-              dayjs(date).isAfter(sixMonthsFromNow, "day")
-            }
+            shouldDisableDate={shouldDisableDate}
             slotProps={{
               shortcuts: {
                 items: shortcutsItems,

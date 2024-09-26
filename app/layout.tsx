@@ -7,6 +7,7 @@ import { Toaster } from "@/components/ui/toaster";
 import getSession from "./lib/get-session";
 import { FavoritesProvider } from "./context/favorite-context";
 import { ProgressProvider } from "./context/progress-context";
+import { SearchProvider } from "./context/search-context";
 
 const font = Nunito_Sans({ subsets: ["latin"] });
 
@@ -27,13 +28,15 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={`${font.className} flex min-h-screen flex-col`}>
-        <FavoritesProvider initialFavoriteIds={initialFavoriteIds}>
-          <ProgressProvider>
-            <main className="flex-1">{children}</main>
+        <SearchProvider>
+          <FavoritesProvider initialFavoriteIds={initialFavoriteIds}>
+            <ProgressProvider>
+              <main className="flex-1">{children}</main>
 
-            <Toaster />
-          </ProgressProvider>
-        </FavoritesProvider>
+              <Toaster />
+            </ProgressProvider>
+          </FavoritesProvider>
+        </SearchProvider>
       </body>
     </html>
   );
