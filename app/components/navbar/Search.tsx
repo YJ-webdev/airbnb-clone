@@ -72,7 +72,7 @@ export const Search = () => {
     setDialogOpen(false);
 
     const queryParams = new URLSearchParams({
-      filter: inputValue,
+      destination: inputValue,
       startDate: formattedCheckIn,
       endDate: formattedCheckOut,
       guests: guests.toString(),

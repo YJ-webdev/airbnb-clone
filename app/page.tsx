@@ -6,22 +6,40 @@ import { Scroll } from "lucide-react";
 import getSession from "./lib/get-session";
 import { Navbar } from "./components/navbar/Navbar";
 import Footer from "./components/footer";
+import { filterSearch } from "./actions/search";
 
 export default async function Home({
   searchParams,
 }: {
-  searchParams?: { filter: string };
+  searchParams?: {
+    destination?: string;
+    startDate?: string;
+    endDate?: string;
+    guests?: string;
+    filter?: string;
+  };
 }) {
-  const listings: Listing[] = await prisma.listing.findMany({
-    where: {
-      approved: true,
-      category: searchParams?.filter ?? undefined,
-    },
-  });
+  // const listings: Listing[] = await prisma.listing.findMany({
+  //   where: {
+  //     approved: true,
+  //     category: searchParams?.filter ?? undefined,
+  //   },
+  // });
 
-  if (!listings) {
-    return null;
-  }
+  // if (!listings) {
+  //   return null;
+  // }
+
+  const formData = new FormData();
+  if (searchParams?.destination)
+    formData.set("destination", searchParams.destination);
+  if (searchParams?.startDate)
+    formData.set("startDate", searchParams.startDate);
+  if (searchParams?.endDate) formData.set("endDate", searchParams.endDate);
+  if (searchParams?.guests) formData.set("guests", searchParams.guests);
+  if (searchParams?.filter) formData.set("filter", searchParams.filter);
+
+  const listings: Listing[] = await filterSearch(formData);
 
   const session = await getSession();
   const user = session?.user;

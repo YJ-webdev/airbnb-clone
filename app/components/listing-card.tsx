@@ -14,7 +14,13 @@ import { UserWithRoleAndFavoriteIds } from "@/types";
 interface LisitngCardProps {
   data: Listing;
   isHost?: boolean;
-  searchParams?: { filter: string };
+  searchParams?: {
+    destination?: string;
+    startDate?: string;
+    endDate?: string;
+    guests?: string;
+    filter?: string;
+  };
   user: UserWithRoleAndFavoriteIds;
 }
 
