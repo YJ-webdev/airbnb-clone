@@ -105,11 +105,24 @@ export const Search = () => {
         className="flex w-full cursor-pointer items-center justify-between self-center rounded-full border-[1px] py-2 shadow-sm transition hover:shadow-md sm:hidden"
         onSubmit={handleSubmit}
       >
-        <input
-          className="ml-6 w-1/2 bg-none text-sm font-semibold placeholder-black outline-none"
-          type="text"
-          placeholder="Where"
-        />
+        {inputValue?.trim() === "" || !inputValue ? (
+          <input
+            type="text"
+            onChange={(e) => setInputValue(e.target.value)}
+            className="ml-6 w-1/2 bg-none text-sm font-semibold capitalize placeholder-black outline-none"
+            placeholder="Where"
+          />
+        ) : (
+          <input
+            type="text"
+            className={`ml-6 w-1/2 bg-none text-sm font-semibold capitalize placeholder-black outline-none ${
+              !displayValue ? "placeholder-muted-foreground" : ""
+            }`}
+            placeholder="City or Country"
+            onChange={(e) => setInputValue(e.target.value)}
+            value={inputValue}
+          />
+        )}
 
         <div className="flex">
           <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
@@ -138,11 +151,6 @@ export const Search = () => {
         )}
         onSubmit={handleSubmit}
       >
-        {/* <input type="hidden" name="destination" value={inputValue} />
-        <input type="hidden" name="startDate" value={formattedCheckIn} />
-        <input type="hidden" name="endDate" value={formattedCheckOut} />
-        <input type="hidden" name="guestCount" value={guests} /> */}
-
         <div className="relative h-full w-auto">
           {expanded && (
             <div className="mb-6 mt-[10px] cursor-default text-center font-semibold transition-all duration-1000">
@@ -177,7 +185,7 @@ export const Search = () => {
                                   onChange={(e) =>
                                     setInputValue(e.target.value)
                                   }
-                                  className="w-full bg-transparent text-sm placeholder-muted-foreground outline-none"
+                                  className="w-full bg-transparent text-sm capitalize placeholder-muted-foreground outline-none"
                                   placeholder="Anywhere or set region"
                                 />
                               </>
@@ -186,7 +194,7 @@ export const Search = () => {
                                 <p className="text-muted-foreground">Where</p>
                                 <input
                                   type="text"
-                                  className={`w-full bg-transparent text-sm font-semibold placeholder-black outline-none ${
+                                  className={`w-full bg-transparent text-sm font-semibold capitalize placeholder-black outline-none ${
                                     !displayValue
                                       ? "placeholder-muted-foreground"
                                       : ""
@@ -222,7 +230,7 @@ export const Search = () => {
                 </>
               ) : (
                 <div
-                  className="min-w-fit px-6 text-start text-sm font-semibold"
+                  className="min-w-fit px-6 text-start text-sm font-semibold capitalize"
                   onClick={() => setExpanded(true)}
                 >
                   {inputValue?.trim() === "" || !inputValue

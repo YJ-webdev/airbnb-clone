@@ -19,17 +19,6 @@ export default async function Home({
     filter?: string;
   };
 }) {
-  // const listings: Listing[] = await prisma.listing.findMany({
-  //   where: {
-  //     approved: true,
-  //     category: searchParams?.filter ?? undefined,
-  //   },
-  // });
-
-  // if (!listings) {
-  //   return null;
-  // }
-
   const formData = new FormData();
   if (searchParams?.destination)
     formData.set("destination", searchParams.destination);
@@ -39,16 +28,20 @@ export default async function Home({
   if (searchParams?.guests) formData.set("guests", searchParams.guests);
   if (searchParams?.filter) formData.set("filter", searchParams.filter);
 
-  const listings: Listing[] = await filterSearch(formData);
-
   const session = await getSession();
   const user = session?.user;
+
+  const listings: Listing[] = await filterSearch(formData);
+
+  const categorizedListings = listings.filter((listing) =>
+    searchParams?.filter ? listing.category === searchParams.filter : true,
+  );
 
   return (
     <>
       <Navbar /> <Filter />
       <div className="container mt-28">
-        {listings.length === 0 ? (
+        {categorizedListings.length === 0 ? (
           <div className="mb-5 flex h-[70vh] w-full flex-1 items-center justify-center rounded-lg bg-zinc-50 text-center">
             <div className="flex flex-col items-center justify-center gap-2">
               <Scroll strokeWidth={1.5} size={24} />
@@ -59,7 +52,7 @@ export default async function Home({
           </div>
         ) : (
           <div className="mb-20 grid grid-cols-1 justify-between gap-5 sm:grid-cols-2 md:gap-6 lg:grid-cols-3 xl:grid-cols-4">
-            {listings.map((item) => (
+            {categorizedListings.map((item) => (
               <ListingCard
                 key={item.id!}
                 user={user!}
