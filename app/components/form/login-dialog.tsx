@@ -27,19 +27,19 @@ import { FormInput } from "./form-input";
 
 import { Login, LoginSchema } from "@/schema/auth";
 import { SubmitButton } from "./submit-button";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
 
 interface LoginDialogProps {
   urlError?: string;
   title?: string;
   subTitle?: string;
+  handleToggle: () => void;
 }
 
 export const LoginDialog = ({
   urlError,
   title,
   subTitle,
+  handleToggle,
 }: LoginDialogProps) => {
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
@@ -52,8 +52,6 @@ export const LoginDialog = ({
       password: "",
     },
   });
-
-  const router = useRouter();
 
   const onSubmit = (values: Login) => {
     setError("");
@@ -129,7 +127,10 @@ export const LoginDialog = ({
 
             <SubmitButton isPending={isPending} label="Log in" />
 
-            <p className="text-center text-sm hover:underline">
+            <p
+              className="text-center text-sm hover:underline"
+              onClick={handleToggle}
+            >
               You don&apos;t have an account?
             </p>
           </form>

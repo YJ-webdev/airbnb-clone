@@ -50,14 +50,22 @@ export default function RequestToBook({
   const [startDate, setStartDate] = useState(initialStartDate);
   const [endDate, setEndDate] = useState(initialEndDate);
 
-  const today = new Date();
   const calendarRef = useRef<HTMLDivElement>(null);
 
   const stayingNights = endDate?.diff(startDate, "day") || 1;
-  const amount = formatFloor(
-    data.enteredPrice! * stayingNights +
-      data.enteredPrice! * stayingNights * GUEST_SERVICE_FEE,
+  const amount =
+    Math.floor(
+      data.enteredPrice! * stayingNights +
+        data.enteredPrice! * stayingNights * GUEST_SERVICE_FEE,
+    ) * 100; // Convert to cents
+
+  const displayAmount = formatFloor(
+    Math.floor(
+      data.enteredPrice! * stayingNights +
+        data.enteredPrice! * stayingNights * GUEST_SERVICE_FEE,
+    ),
   );
+
   useEffect(() => {
     fetch("/api/create-payment-intent", {
       method: "POST",
@@ -102,7 +110,11 @@ export default function RequestToBook({
       </div>
 
       <div className="mt-2 flex flex-col md:w-full md:flex-row-reverse md:gap-7 lg:gap-12">
-        <RightPanel data={data} amount={amount} stayingNights={stayingNights} />
+        <RightPanel
+          data={data}
+          amount={displayAmount}
+          stayingNights={stayingNights}
+        />
         <div className="mb-10 flex flex-col gap-7 md:flex-1 md:p-5">
           {/* your trip */}
           <div className="mt-7 flex flex-col gap-2 md:mt-0">

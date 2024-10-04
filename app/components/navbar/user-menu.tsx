@@ -2,8 +2,6 @@
 
 import { signOut } from "next-auth/react";
 
-import { LoginDialog } from "../form/login-dialog";
-import { RegisterDialog } from "../form/register-dialog";
 import { UserAvatar } from "./user-avatar";
 
 import { AiOutlineMenu } from "react-icons/ai";
@@ -19,6 +17,7 @@ import Link from "next/link";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { continueListing } from "@/app/actions/create-listing";
 import { UserWithRoleAndFavoriteIds } from "@/types";
+import { AuthDialog } from "../form/auth-dialog";
 
 interface UserMenuProps {
   user?: UserWithRoleAndFavoriteIds;
@@ -93,7 +92,7 @@ export const UserMenu = ({ user }: UserMenuProps) => {
                 </DropdownMenuItem>
               </DialogTrigger>
               <DialogContent className="flex max-h-[75%] flex-col overflow-hidden p-0">
-                <LoginDialog />
+                <AuthDialog />
               </DialogContent>
             </Dialog>
             <Dialog>
@@ -106,7 +105,7 @@ export const UserMenu = ({ user }: UserMenuProps) => {
                 </DropdownMenuItem>
               </DialogTrigger>
               <DialogContent className="flex max-h-[75%] flex-col overflow-hidden p-0">
-                <RegisterDialog />
+                <AuthDialog />
               </DialogContent>
             </Dialog>
           </DropdownMenuContent>

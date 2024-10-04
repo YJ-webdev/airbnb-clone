@@ -27,9 +27,14 @@ import { register } from "@/app/actions/register";
 import { Register, RegisterSchema } from "@/schema/auth";
 import { SubmitButton } from "./submit-button";
 import { cn } from "@/lib/utils";
-import Link from "next/link";
 
-export const RegisterDialog = ({ className }: { className?: string }) => {
+export const RegisterDialog = ({
+  className,
+  handleToggle,
+}: {
+  className?: string;
+  handleToggle: () => void;
+}) => {
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
   const [isPending, startTransition] = useTransition();
@@ -133,7 +138,10 @@ export const RegisterDialog = ({ className }: { className?: string }) => {
 
             <SubmitButton isPending={isPending} label="Sign up" />
 
-            <p className="text-center text-sm hover:underline">
+            <p
+              className="text-center text-sm hover:underline"
+              onClick={handleToggle}
+            >
               Already have an account?
             </p>
           </form>

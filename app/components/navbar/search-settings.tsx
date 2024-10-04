@@ -66,7 +66,7 @@ export const SearchSettings = () => {
         <AccordionItem value="item-1 h-full">
           <AccordionTrigger className="justyfy-between flex items-center">
             <h3 className="text-lg font-semibold"> Where to?</h3>
-            <p className="text-sm">
+            <p className="text-sm capitalize">
               {inputValue === undefined ||
               inputValue === "I'm flexible" ||
               inputValue?.trim() === ""

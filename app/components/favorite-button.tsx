@@ -8,8 +8,9 @@ import { UserWithRoleAndFavoriteIds } from "@/types";
 import { useToast } from "@/components/ui/use-toast";
 import { ToastLogin } from "./toast-login";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { LoginDialog } from "./form/login-dialog";
+
 import { useState } from "react";
+import { AuthDialog } from "./form/auth-dialog";
 
 interface FavoriteButtonProps {
   data: Listing;
@@ -89,7 +90,7 @@ export const FavoriteButton = ({
           <span style={{ display: "none" }} />
         </DialogTrigger>
         <DialogContent className="flex max-h-[75%] flex-col overflow-hidden p-0">
-          <LoginDialog />
+          <AuthDialog />
         </DialogContent>
       </Dialog>
     </>

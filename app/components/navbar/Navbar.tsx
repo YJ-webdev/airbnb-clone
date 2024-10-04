@@ -2,11 +2,11 @@ import { cn } from "@/lib/utils";
 import getSession from "@/app/lib/get-session";
 
 import { Logo } from "./Logo";
-import { LoginDialog } from "../form/login-dialog";
 import { UserMenu } from "./user-menu";
 import { Search } from "./Search";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { continueListing } from "@/app/actions/create-listing";
+import { AuthDialog } from "../form/auth-dialog";
 
 export type Width = {
   width?: "1100px" | "1280px";
@@ -45,7 +45,7 @@ export const Navbar = async ({ width }: Width) => {
                 Airbnb your home
               </DialogTrigger>
               <DialogContent className="flex max-h-[75%] flex-col overflow-hidden p-0">
-                <LoginDialog />
+                <AuthDialog />
               </DialogContent>
             </Dialog>
           )}

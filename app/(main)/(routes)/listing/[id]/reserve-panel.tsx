@@ -4,7 +4,6 @@ import { FavoriteButton } from "@/app/components/favorite-button";
 import { SocialShare } from "@/app/components/social-share";
 import { useFavorites } from "@/app/context/favorite-context";
 import { UserWithRoleAndFavoriteIds } from "@/types";
-import { Listing } from "@prisma/client";
 import { Montserrat } from "next/font/google";
 import { useEffect, useState, useRef } from "react";
 import Calendar from "./calendar";
@@ -16,10 +15,11 @@ import { useGuestCount } from "@/app/context/guest-count-context";
 import { formatFloor } from "@/app/lib/format-money";
 import { GUEST_SERVICE_FEE } from "@/app/lib/rates";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { LoginDialog } from "@/app/components/form/login-dialog";
+
 import { cn } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
 import { ListingWithReservations } from "./listing-content";
+import { AuthDialog } from "@/app/components/form/auth-dialog";
 
 interface ReservePanelProps {
   user?: UserWithRoleAndFavoriteIds;
@@ -130,7 +130,7 @@ export const ReservePanel = ({
                     </button>
                   </DialogTrigger>
                   <DialogContent className="flex max-h-[75%] flex-col overflow-hidden p-0">
-                    <LoginDialog />
+                    <AuthDialog />
                   </DialogContent>
                 </Dialog>
               </>
@@ -224,7 +224,7 @@ export const ReservePanel = ({
                 </button>
               </DialogTrigger>
               <DialogContent className="flex max-h-[75%] flex-col overflow-hidden p-0">
-                <LoginDialog />
+                <AuthDialog />
               </DialogContent>
             </Dialog>
           ) : (
