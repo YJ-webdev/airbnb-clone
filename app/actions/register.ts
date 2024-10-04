@@ -7,6 +7,7 @@ import prisma from "@/app/lib/db";
 import { getUserByEmail } from "@/data/user";
 import { generateVerificationToken } from "@/lib/tokens";
 import { Register, RegisterSchema } from "@/schema/auth";
+import { sendVerificationEmail } from "@/lib/send";
 
 export const register = async (values: Register) => {
   const validatedfields = RegisterSchema.safeParse(values);
@@ -33,6 +34,7 @@ export const register = async (values: Register) => {
   });
 
   const verificationToken = await generateVerificationToken(email);
+  await sendVerificationEmail(verificationToken.email, verificationToken.token);
 
   return { success: "Confirmation email sent!" };
 };

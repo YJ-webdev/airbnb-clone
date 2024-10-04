@@ -15,6 +15,7 @@ export const login = async (values: Login) => {
     return { error: "Invalid fields" };
   }
   const { email, password } = validatedfields.data;
+
   const existingUser = await getUserByEmail(email);
 
   if (!existingUser || !existingUser.email || !existingUser.hashedPassword) {
