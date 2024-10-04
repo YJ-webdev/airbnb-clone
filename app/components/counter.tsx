@@ -10,14 +10,14 @@ interface CounterProps {
   setCount: (value: number) => void;
   small?: boolean;
   initialCount?: number;
-  min: number;
+  min?: number;
   max?: number;
 }
 
 export const Counter = ({
-  small,
   name,
   setCount,
+  small,
   initialCount,
   min,
   max,

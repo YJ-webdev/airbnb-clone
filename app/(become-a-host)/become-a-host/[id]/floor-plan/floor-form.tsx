@@ -81,6 +81,7 @@ export const FloorFrom = ({
                 name="roomCount"
                 setCount={setRoomCount}
                 initialCount={initialRoomCount}
+                min={0}
               />
             </div>
           </div>
