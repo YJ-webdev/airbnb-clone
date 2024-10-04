@@ -71,12 +71,28 @@ export const Search = () => {
     e.preventDefault();
     setDialogOpen(false);
 
-    const queryParams = new URLSearchParams({
-      destination: inputValue,
-      startDate: formattedCheckIn,
-      endDate: formattedCheckOut,
-      guests: guests.toString(),
-    });
+    const destination =
+      inputValue === "I'm flexible" || inputValue.trim() === ""
+        ? null
+        : inputValue;
+
+    const queryParams = new URLSearchParams();
+
+    if (destination) {
+      queryParams.set("destination", destination);
+    }
+
+    if (formattedCheckIn) {
+      queryParams.set("startDate", formattedCheckIn);
+    }
+
+    if (formattedCheckOut) {
+      queryParams.set("endDate", formattedCheckOut);
+    }
+
+    if (guests > 1) {
+      queryParams.set("guests", guests.toString());
+    }
 
     router.push(`/?${queryParams.toString()}`);
   };

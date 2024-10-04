@@ -1,6 +1,5 @@
 import { Filter } from "./components/navbar/filter";
 import { ListingCard } from "./components/listing-card";
-import prisma from "./lib/db";
 import { Listing } from "@prisma/client";
 import { Scroll } from "lucide-react";
 import getSession from "./lib/get-session";
