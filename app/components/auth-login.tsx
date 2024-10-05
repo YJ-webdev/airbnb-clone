@@ -1,47 +1,32 @@
 "use client";
 
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-
-import { useState, useTransition } from "react";
-import { FormError } from "./form-error";
-import { Social } from "./social";
-
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { TriangleAlert } from "lucide-react";
+import { login } from "@/app/actions/login";
+import { FormError } from "@/app/components/form/form-error";
+import { FormInput } from "@/app/components/form/form-input";
+import { FormSuccess } from "@/app/components/form/form-success";
+import { Social } from "@/app/components/form/social";
+import { SubmitButton } from "@/app/components/form/submit-button";
 import {
-  Form,
   FormControl,
   FormField,
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import {
-  DialogTitle,
-  DialogDescription,
-  DialogHeader,
-  DialogContent,
-} from "@/components/ui/dialog";
-import { login } from "@/app/actions/login";
 import { cn } from "@/lib/utils";
-import { FormSuccess } from "./form-success";
-import { FormInput } from "./form-input";
-
 import { Login, LoginSchema } from "@/schema/auth";
-import { SubmitButton } from "./submit-button";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useSearchParams } from "next/navigation";
+import React, { useState, useTransition } from "react";
+import { useForm, FormProvider } from "react-hook-form";
 
-interface LoginDialogProps {
-  urlError?: string;
-  title?: string;
-  subTitle?: string;
-  onOpenRegister: () => void;
-}
+export default function AuthLogin() {
+  const searchParams = useSearchParams();
+  const urlError =
+    searchParams.get("error") === "OAuthAccountNotLinked"
+      ? "Email already in use with a different provider."
+      : "";
 
-export const LoginDialog = ({
-  urlError,
-  title,
-  subTitle,
-  onOpenRegister,
-}: LoginDialogProps) => {
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
   const [isPending, startTransition] = useTransition();
@@ -67,22 +52,25 @@ export const LoginDialog = ({
   };
 
   return (
-    <DialogContent className="flex max-h-[75%] flex-col overflow-hidden p-0">
-      <DialogHeader
-        className={cn(
-          "sticky top-0 -mb-4 border-b-[1px] px-6 pb-6 pt-6 text-center",
-          title && "border-none",
-        )}
-      >
-        <DialogTitle className="text-center">
-          {title ?? "Welcome back!"}
-        </DialogTitle>
-        <DialogDescription className="text-center">
-          {subTitle ?? "Log in with your account"}
-        </DialogDescription>
-      </DialogHeader>
-      <ScrollArea className="flex-1 overflow-auto p-6">
-        <Form {...form}>
+    <div className="mx-auto mb-20 mt-10 flex max-w-[480px] flex-col overflow-hidden p-0">
+      <div className="flex max-h-[75%] flex-col overflow-hidden p-0">
+        <div
+          className={cn(
+            "sticky top-0 space-y-3 border-b-[1px] px-6 pb-6 pt-6 text-center",
+            "mb-2 border-none",
+          )}
+        >
+          <div className="flex items-center justify-center gap-2">
+            <h2 className="relative text-center text-lg font-semibold">
+              <TriangleAlert className="absolute -left-8 top-1 h-5 w-5" />
+              Something went wrong
+            </h2>
+          </div>
+          <p className="text-center text-sm">Log in with your account</p>
+        </div>
+
+        {/* Wrapping all form fields within the FormProvider */}
+        <FormProvider {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <div className="space-y-4">
               <FormField
@@ -123,21 +111,15 @@ export const LoginDialog = ({
                 )}
               />
             </div>
+
             <FormError message={error || urlError} />
             <FormSuccess message={success} />
-
             <SubmitButton isPending={isPending} label="Log in" />
-
-            <p
-              className="text-center text-sm hover:underline"
-              onClick={onOpenRegister}
-            >
-              You don&apos;t have an account?
-            </p>
           </form>
-        </Form>
+        </FormProvider>
+
         <Social disabled={isPending} />
-      </ScrollArea>
-    </DialogContent>
+      </div>
+    </div>
   );
-};
+}

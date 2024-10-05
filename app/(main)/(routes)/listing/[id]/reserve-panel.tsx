@@ -14,12 +14,13 @@ import Link from "next/link";
 import { useGuestCount } from "@/app/context/guest-count-context";
 import { formatFloor } from "@/app/lib/format-money";
 import { GUEST_SERVICE_FEE } from "@/app/lib/rates";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 
 import { cn } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
 import { ListingWithReservations } from "./listing-content";
-import { AuthDialog } from "@/app/components/form/auth-dialog";
+import { LoginDialog } from "@/app/components/form/login-dialog";
+import { RegisterDialog } from "@/app/components/form/register-dialog";
 
 interface ReservePanelProps {
   user?: UserWithRoleAndFavoriteIds;
@@ -61,6 +62,33 @@ export const ReservePanel = ({
 
   const [message, setMessage] = useState<string | null>(null);
   const [isPending, setIsPending] = useState(false);
+
+  const [openLoginDialogDesktop, setOpenLoginDialogDesktop] = useState(false);
+  const [openRegisterDialogDesktop, setOpenRegisterDialogDesktop] =
+    useState(false);
+  const [openLoginDialogMobile, setOpenLoginDialogMobile] = useState(false);
+  const [openRegisterDialogMobile, setOpenRegisterDialogMobile] =
+    useState(false);
+
+  const handleOpenRegisterDesktop = () => {
+    setOpenLoginDialogDesktop(false);
+    setOpenRegisterDialogDesktop(true);
+  };
+
+  const handleOpenLoginDesktop = () => {
+    setOpenLoginDialogDesktop(true);
+    setOpenRegisterDialogDesktop(false);
+  };
+
+  const handleOpenRegisterMobile = () => {
+    setOpenLoginDialogMobile(false);
+    setOpenRegisterDialogMobile(true);
+  };
+
+  const handleOpenLoginMobile = () => {
+    setOpenLoginDialogMobile(true);
+    setOpenRegisterDialogMobile(false);
+  };
 
   const onSelectDateClick = () => {
     setMessage("Select both start and end date");
@@ -120,7 +148,10 @@ export const ReservePanel = ({
           <div className="flex flex-col items-center justify-center">
             {!user?.id ? (
               <>
-                <Dialog>
+                <Dialog
+                  open={openLoginDialogDesktop}
+                  onOpenChange={setOpenLoginDialogDesktop}
+                >
                   <DialogTrigger asChild>
                     <button
                       type="button"
@@ -129,9 +160,14 @@ export const ReservePanel = ({
                       Log in to book
                     </button>
                   </DialogTrigger>
-                  <DialogContent className="flex max-h-[75%] flex-col overflow-hidden p-0">
-                    <AuthDialog />
-                  </DialogContent>
+
+                  <LoginDialog onOpenRegister={handleOpenRegisterDesktop} />
+                </Dialog>
+                <Dialog
+                  open={openRegisterDialogDesktop}
+                  onOpenChange={setOpenRegisterDialogDesktop}
+                >
+                  <RegisterDialog onOpenLogin={handleOpenLoginDesktop} />
                 </Dialog>
               </>
             ) : (
@@ -214,19 +250,29 @@ export const ReservePanel = ({
             />
           </div>
           {!user?.id ? (
-            <Dialog>
-              <DialogTrigger asChild>
-                <button
-                  type="button"
-                  className="rounded-full bg-gradient-to-r from-rose-500 to-[#e3326d] px-5 py-3 font-semibold text-white"
-                >
-                  Log in to book
-                </button>
-              </DialogTrigger>
-              <DialogContent className="flex max-h-[75%] flex-col overflow-hidden p-0">
-                <AuthDialog />
-              </DialogContent>
-            </Dialog>
+            <>
+              <Dialog
+                open={openLoginDialogMobile}
+                onOpenChange={setOpenLoginDialogMobile}
+              >
+                <DialogTrigger asChild>
+                  <button
+                    type="button"
+                    className="rounded-full bg-gradient-to-r from-rose-500 to-[#e3326d] px-5 py-3 font-semibold text-white"
+                  >
+                    Log in to book
+                  </button>
+                </DialogTrigger>
+
+                <LoginDialog onOpenRegister={handleOpenRegisterMobile} />
+              </Dialog>
+              <Dialog
+                open={openRegisterDialogMobile}
+                onOpenChange={setOpenRegisterDialogMobile}
+              >
+                <RegisterDialog onOpenLogin={handleOpenLoginMobile} />
+              </Dialog>
+            </>
           ) : (
             <>
               {(user.id && !startDate) || !endDate ? (

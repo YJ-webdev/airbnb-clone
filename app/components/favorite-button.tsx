@@ -7,10 +7,12 @@ import { useFavorites } from "../context/favorite-context";
 import { UserWithRoleAndFavoriteIds } from "@/types";
 import { useToast } from "@/components/ui/use-toast";
 import { ToastLogin } from "./toast-login";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 
 import { useState } from "react";
-import { AuthDialog } from "./form/auth-dialog";
+import { LoginDialog } from "./form/login-dialog";
+import { RegisterDialog } from "./form/register-dialog";
+import { set } from "date-fns";
 
 interface FavoriteButtonProps {
   data: Listing;
@@ -37,7 +39,19 @@ export const FavoriteButton = ({
 }: FavoriteButtonProps) => {
   const { toggleFavorite } = useFavorites();
   const { toast } = useToast();
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const [openLoginDialog, setOpenLoginDialog] = useState(false);
+  const [openRegisterDialog, setOpenRegisterDialog] = useState(false);
+
+  const handleOpenRegister = () => {
+    setOpenLoginDialog(false); // Close login dialog
+    setOpenRegisterDialog(true); // Open register dialog
+  };
+
+  const handleOpenLogin = () => {
+    setOpenLoginDialog(true); // Open login dialog
+    setOpenRegisterDialog(false); // Close register dialog
+  };
 
   const handleFavoriteToggle = async (
     e: React.MouseEvent<HTMLButtonElement>,
@@ -50,7 +64,7 @@ export const FavoriteButton = ({
         title: "Please log in",
         description: "You need to be logged in to save your favorite.",
         action: (
-          <ToastLogin openDialog={() => setIsDialogOpen(true)}>
+          <ToastLogin openDialog={() => setOpenLoginDialog(true)}>
             Log in
           </ToastLogin>
         ),
@@ -85,13 +99,15 @@ export const FavoriteButton = ({
         />
       </button>
 
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+      <Dialog open={openLoginDialog} onOpenChange={setOpenLoginDialog}>
         <DialogTrigger asChild>
           <span style={{ display: "none" }} />
         </DialogTrigger>
-        <DialogContent className="flex max-h-[75%] flex-col overflow-hidden p-0">
-          <AuthDialog />
-        </DialogContent>
+
+        <LoginDialog onOpenRegister={handleOpenRegister} />
+      </Dialog>
+      <Dialog open={openRegisterDialog} onOpenChange={setOpenRegisterDialog}>
+        <RegisterDialog onOpenLogin={handleOpenLogin} />
       </Dialog>
     </>
   );

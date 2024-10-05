@@ -4,9 +4,9 @@ import getSession from "@/app/lib/get-session";
 import { Logo } from "./Logo";
 import { UserMenu } from "./user-menu";
 import { Search } from "./Search";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { continueListing } from "@/app/actions/create-listing";
-import { AuthDialog } from "../form/auth-dialog";
+import { AuthDialog } from "../auth-dialog";
 
 export type Width = {
   width?: "1100px" | "1280px";
@@ -40,14 +40,7 @@ export const Navbar = async ({ width }: Width) => {
               </button>
             </form>
           ) : (
-            <Dialog>
-              <DialogTrigger className="line-clamp-1 hidden cursor-pointer text-nowrap rounded-full py-3 text-center text-[15px] font-semibold transition hover:bg-neutral-100 md:block md:px-4 lg:mr-4">
-                Airbnb your home
-              </DialogTrigger>
-              <DialogContent className="flex max-h-[75%] flex-col overflow-hidden p-0">
-                <AuthDialog />
-              </DialogContent>
-            </Dialog>
+            <AuthDialog />
           )}
 
           <UserMenu user={user} />

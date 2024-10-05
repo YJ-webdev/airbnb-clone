@@ -1,11 +1,8 @@
 "use client";
 
 import { signOut } from "next-auth/react";
-
 import { UserAvatar } from "./user-avatar";
-
 import { AiOutlineMenu } from "react-icons/ai";
-
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,10 +11,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { continueListing } from "@/app/actions/create-listing";
 import { UserWithRoleAndFavoriteIds } from "@/types";
-import { AuthDialog } from "../form/auth-dialog";
+
+import { RegisterDialog } from "../form/register-dialog";
+import { LoginDialog } from "../form/login-dialog";
+import { useRef, useState } from "react";
 
 interface UserMenuProps {
   user?: UserWithRoleAndFavoriteIds;
@@ -25,6 +25,19 @@ interface UserMenuProps {
 
 export const UserMenu = ({ user }: UserMenuProps) => {
   const continueListingWithId = continueListing.bind(null, user?.id as string);
+
+  const [openLoginDialog, setOpenLoginDialog] = useState(false);
+  const [openRegisterDialog, setOpenRegisterDialog] = useState(false);
+
+  const handleOpenRegister = () => {
+    setOpenLoginDialog(false); // Close login dialog
+    setOpenRegisterDialog(true); // Open register dialog
+  };
+
+  const handleOpenLogin = () => {
+    setOpenLoginDialog(true); // Open login dialog
+    setOpenRegisterDialog(false); // Close register dialog
+  };
 
   return (
     <>
@@ -82,7 +95,7 @@ export const UserMenu = ({ user }: UserMenuProps) => {
             align="end"
             className="top-12 w-40 space-y-0 overflow-hidden rounded-xl border-none py-1 shadow-[0_2px_10px_3px_rgba(0,0,0,0.05)]"
           >
-            <Dialog>
+            <Dialog open={openLoginDialog} onOpenChange={setOpenLoginDialog}>
               <DialogTrigger asChild>
                 <DropdownMenuItem
                   onSelect={(e) => e.preventDefault()}
@@ -91,11 +104,13 @@ export const UserMenu = ({ user }: UserMenuProps) => {
                   Log in
                 </DropdownMenuItem>
               </DialogTrigger>
-              <DialogContent className="flex max-h-[75%] flex-col overflow-hidden p-0">
-                <AuthDialog />
-              </DialogContent>
+
+              <LoginDialog onOpenRegister={handleOpenRegister} />
             </Dialog>
-            <Dialog>
+            <Dialog
+              open={openRegisterDialog}
+              onOpenChange={setOpenRegisterDialog}
+            >
               <DialogTrigger asChild>
                 <DropdownMenuItem
                   onSelect={(e) => e.preventDefault()}
@@ -104,9 +119,8 @@ export const UserMenu = ({ user }: UserMenuProps) => {
                   Sign Up
                 </DropdownMenuItem>
               </DialogTrigger>
-              <DialogContent className="flex max-h-[75%] flex-col overflow-hidden p-0">
-                <AuthDialog />
-              </DialogContent>
+
+              <RegisterDialog onOpenLogin={handleOpenLogin} />
             </Dialog>
           </DropdownMenuContent>
         )}

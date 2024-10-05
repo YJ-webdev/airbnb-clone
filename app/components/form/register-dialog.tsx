@@ -21,6 +21,7 @@ import {
   DialogTitle,
   DialogDescription,
   DialogHeader,
+  DialogContent,
 } from "@/components/ui/dialog";
 import { register } from "@/app/actions/register";
 
@@ -30,10 +31,10 @@ import { cn } from "@/lib/utils";
 
 export const RegisterDialog = ({
   className,
-  handleToggle,
+  onOpenLogin,
 }: {
   className?: string;
-  handleToggle: () => void;
+  onOpenLogin: () => void;
 }) => {
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
@@ -61,7 +62,7 @@ export const RegisterDialog = ({
   };
 
   return (
-    <>
+    <DialogContent className="flex max-h-[75%] flex-col overflow-hidden p-0">
       <DialogHeader
         className={cn(
           "sticky top-0 -mb-4 border-b-[1px] px-6 pb-6 pt-6 text-center",
@@ -140,7 +141,7 @@ export const RegisterDialog = ({
 
             <p
               className="text-center text-sm hover:underline"
-              onClick={handleToggle}
+              onClick={onOpenLogin}
             >
               Already have an account?
             </p>
@@ -148,6 +149,6 @@ export const RegisterDialog = ({
         </Form>
         <Social />
       </ScrollArea>
-    </>
+    </DialogContent>
   );
 };

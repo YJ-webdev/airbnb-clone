@@ -1,24 +1,10 @@
-"use client";
+import AuthLogin from "@/app/components/auth-login";
+import getSession from "@/app/lib/get-session";
+import { redirect } from "next/navigation";
 
-import { AuthDialog } from "@/app/components/form/auth-dialog";
-import { Dialog } from "@/components/ui/dialog";
-import { useSearchParams } from "next/navigation";
-import React from "react";
+export default async function AuthLoginPage() {
+  const session = await getSession();
+  const user = session?.user;
 
-export default function AuthLoginPage() {
-  const searchParams = useSearchParams();
-  const urlError =
-    searchParams.get("error") === "OAuthAccountNotLinked"
-      ? "Email already in use with different provider"
-      : "";
-
-  return (
-    <>
-      <Dialog>
-        <div className="mx-auto mb-7 mt-5 flex max-h-[75%] max-w-[480px] flex-col overflow-hidden p-0">
-          <AuthDialog title="Somthing went wrong.." urlError={urlError} />
-        </div>
-      </Dialog>
-    </>
-  );
+  return !user ? <AuthLogin /> : redirect("/");
 }

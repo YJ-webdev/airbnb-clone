@@ -18,16 +18,16 @@ export const SubmitButton = ({
   type,
 }: SubmitButtonProps) => {
   return (
-    <Button
+    <button
       onClick={onClick}
       disabled={isPending}
       type={type === "button" ? "button" : "submit"}
       className={cn(
-        "w-full rounded-lg bg-gradient-to-r from-rose-500 to-[#e3326d] py-[25px] text-[16px] font-semibold",
+        "h-[50px] w-full rounded-lg border bg-gradient-to-r from-rose-500 to-[#e3326d] py-3 text-[16px] font-semibold text-white outline-1",
         className,
       )}
     >
       {isPending ? "Please, wait.." : label}
-    </Button>
+    </button>
   );
 };
