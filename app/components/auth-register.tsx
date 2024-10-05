@@ -1,41 +1,32 @@
 "use client";
 
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-
-import { useState, useTransition } from "react";
-import { FormError } from "./form-error";
-import { FormSuccess } from "./form-success";
-import { Social } from "./social";
-import { FormInput } from "./form-input";
-
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { TriangleAlert } from "lucide-react";
+import { FormError } from "@/app/components/form/form-error";
+import { FormInput } from "@/app/components/form/form-input";
+import { FormSuccess } from "@/app/components/form/form-success";
+import { Social } from "@/app/components/form/social";
+import { SubmitButton } from "@/app/components/form/submit-button";
 import {
-  Form,
   FormControl,
   FormField,
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import {
-  DialogTitle,
-  DialogDescription,
-  DialogHeader,
-  DialogContent,
-} from "@/components/ui/dialog";
-import { register } from "@/app/actions/register";
-
-import { Register, RegisterSchema } from "@/schema/auth";
-import { SubmitButton } from "./submit-button";
 import { cn } from "@/lib/utils";
+import { Register, RegisterSchema } from "@/schema/auth";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useSearchParams } from "next/navigation";
+import React, { useState, useTransition } from "react";
+import { useForm, FormProvider } from "react-hook-form";
+import { register } from "../actions/register";
 
-export const RegisterDialog = ({
-  className,
-  onOpenLogin,
-}: {
-  className?: string;
-  onOpenLogin: () => void;
-}) => {
+export default function AuthRegister() {
+  const searchParams = useSearchParams();
+  const urlError =
+    searchParams.get("error") === "OAuthAccountNotLinked"
+      ? "Email already in use with a different provider."
+      : "";
+
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
   const [isPending, startTransition] = useTransition();
@@ -62,20 +53,25 @@ export const RegisterDialog = ({
   };
 
   return (
-    <DialogContent className="flex max-h-[75%] flex-col overflow-hidden p-0">
-      <DialogHeader
-        className={cn(
-          "sticky top-0 -mb-4 border-b-[1px] px-6 pb-6 pt-6 text-center",
-          className,
-        )}
-      >
-        <DialogTitle className="text-center">Welcome to Airbnb</DialogTitle>
-        <DialogDescription className="text-center">
-          Create your account
-        </DialogDescription>
-      </DialogHeader>
-      <ScrollArea className="flex-1 overflow-auto p-6">
-        <Form {...form}>
+    <div className="mx-auto mb-20 mt-10 flex max-w-[480px] flex-col overflow-hidden p-0">
+      <div className="flex max-h-[75%] flex-col overflow-hidden p-0">
+        <div
+          className={cn(
+            "sticky top-0 space-y-3 border-b-[1px] px-6 pb-6 pt-6 text-center",
+            "mb-2 border-none",
+          )}
+        >
+          <div className="flex items-center justify-center gap-2">
+            <h2 className="relative text-center text-lg font-semibold">
+              <TriangleAlert className="absolute -left-8 top-1 h-5 w-5" />
+              Something went wrong
+            </h2>
+          </div>
+          <p className="text-center text-sm">Create your account</p>
+        </div>
+
+        {/* Wrapping all form fields within the FormProvider */}
+        <FormProvider {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <div className="space-y-4">
               <FormField
@@ -134,21 +130,15 @@ export const RegisterDialog = ({
                 )}
               />
             </div>
-            <FormError message={error} />
+
+            <FormError message={error || urlError} />
             <FormSuccess message={success} />
-
             <SubmitButton isPending={isPending} label="Sign up" />
-
-            <p
-              className="text-center text-sm hover:underline"
-              onClick={onOpenLogin}
-            >
-              Already have an account?
-            </p>
           </form>
-        </Form>
+        </FormProvider>
+
         <Social disabled={isPending} />
-      </ScrollArea>
-    </DialogContent>
+      </div>
+    </div>
   );
-};
+}
