@@ -138,9 +138,17 @@ export default function ResponsiveDateRangePickers({
         label={getFormattedDateRange(value[0], value[1])}
         value={value}
         onChange={(newValue) => {
-          setValue(newValue);
-          setStartDate(dayjs(newValue[0]));
-          setEndDate(dayjs(newValue[1]));
+          const [newStartDate, newEndDate] = newValue;
+
+          // Ensure endDate is always at least 1 day after startDate
+          const validEndDate =
+            newEndDate && newEndDate.isAfter(newStartDate)
+              ? newEndDate
+              : dayjs(newStartDate).add(1, "day");
+
+          setValue([newStartDate, validEndDate]);
+          setStartDate(dayjs(newStartDate));
+          setEndDate(validEndDate); // Ensure endDate is updated properly
         }}
         shouldDisableDate={shouldDisableDate}
       />

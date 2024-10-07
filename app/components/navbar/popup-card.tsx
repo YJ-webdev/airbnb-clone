@@ -7,6 +7,9 @@ import { DateRangeCalendar } from "@mui/x-date-pickers-pro/DateRangeCalendar";
 import { Counter } from "../counter";
 import { cn } from "@/lib/utils";
 import dayjs, { Dayjs } from "dayjs";
+import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
+
+dayjs.extend(isSameOrBefore);
 
 export const continents = [
   { name: "I'm flexible", img: "/images/continent/world-map.jpg" },
@@ -68,7 +71,12 @@ export const CalendarPopup = ({
               if (value) {
                 const [start, end] = value;
                 setCheckIn(start && dayjs(start).format("MMM-DD"));
-                setCheckOut(end && dayjs(end).format("MMM-DD"));
+                const newEndDate =
+                  end ||
+                  (start ? dayjs(start).add(1, "day").format("MMM-DD") : null);
+
+                // Set the check-out date
+                setCheckOut(newEndDate);
               }
             }}
           />

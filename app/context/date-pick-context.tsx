@@ -3,6 +3,10 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { Dayjs } from "dayjs";
 import dayjs from "dayjs";
+import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
+
+// Extend Day.js with the plugin
+dayjs.extend(isSameOrBefore);
 
 interface DatePickContextProps {
   startDate: Dayjs | null;
@@ -40,6 +44,21 @@ export const DatePickProvider = ({
     }
   }, [startDate, endDate]);
 
+  // Function to ensure end date is after start date
+  const handleSetEndDate = (newEndDate: Dayjs | null) => {
+    if (startDate && newEndDate) {
+      // Check if the new end date is before or the same as the start date
+      if (dayjs(newEndDate).isSameOrBefore(startDate, "day")) {
+        const minEndDate = dayjs(startDate).add(1, "day"); // Set to 1 day after start date
+        setEndDate(minEndDate); // Automatically adjust end date
+      } else {
+        setEndDate(newEndDate); // Approve setting the end date
+      }
+    } else {
+      setEndDate(newEndDate); // Set end date as normal
+    }
+  };
+
   return (
     <DatePickContext.Provider
       value={{
@@ -47,7 +66,7 @@ export const DatePickProvider = ({
         endDate,
         stayingNights,
         setStartDate,
-        setEndDate,
+        setEndDate: handleSetEndDate, // Use the new function here
       }}
     >
       {children}

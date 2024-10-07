@@ -7,6 +7,7 @@ import { getUserByEmail } from "@/data/user";
 import { generateVerificationToken } from "@/lib/tokens";
 import { isRedirectError } from "next/dist/client/components/redirect";
 import { Login, LoginSchema } from "@/schema/auth";
+import { sendVerificationEmail } from "@/lib/send";
 
 export const login = async (values: Login) => {
   const validatedfields = LoginSchema.safeParse(values);
@@ -28,6 +29,12 @@ export const login = async (values: Login) => {
     const verificationToken = await generateVerificationToken(
       existingUser.email,
     );
+
+    await sendVerificationEmail(
+      verificationToken.email,
+      verificationToken.token,
+    );
+
     return { success: "Confirmation email sent!" };
   }
 
